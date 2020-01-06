@@ -4,37 +4,23 @@ using System.Collections.Generic;
 
 public abstract class BaseCommand  
 {
-    Dictionary<string, EventCallBack> events;
+    NotiLib eventLib;
     public void FireCommand(string cmd, EventArgs args)
     {
-
-        EventCallBack cbs;
-        if (events != null && events.TryGetValue(cmd,out cbs))
-        {
-            cbs(args);
-        }
+        if (eventLib != null)
+            eventLib.FireEvent(cmd, args);
     }
     public void AddCommand(string cmd, EventCallBack cb)
     {
-        if (events == null)
-            events = new Dictionary<string, EventCallBack>();
-        EventCallBack actions;
-        if (events.TryGetValue(cmd, out actions))
-        {
-            actions += cb;
-        }
-        else
-        {
-            events.Add(cmd, cb);
-        }
+        if (eventLib == null)
+            eventLib =new NotiLib();
+        eventLib.AddEvent(cmd, cb);
+  
     }
     public void RemoveCommand(string cmd, EventCallBack cb)
     {
-        EventCallBack output;
-        if (events.TryGetValue(cmd, out output))
-        {
-            output -= cb;
-        }
+        if (eventLib != null)
+            eventLib.RemoveEvent(cmd, cb);
     }
 
    
@@ -46,6 +32,7 @@ public abstract class BaseCommand
     }
     public void Clear()
     {
+        eventLib = null;
         OnClear();
     }
  

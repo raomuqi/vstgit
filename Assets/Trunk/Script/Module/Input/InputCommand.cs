@@ -34,17 +34,17 @@ public class InputCommand : BaseCommand
         model.vertical = Input.GetAxis(INPUT_VERTICAL);
 
         if (Input.GetButtonDown(INPUT_FIRE1))
-            EventMgr.FireEvent(EventName.INPUT_BTN1_DOWN);
+            EventsMgr.FireEvent(EventName.INPUT_BTN1_DOWN);
         else if (Input.GetButton(INPUT_FIRE1))
-            EventMgr.FireEvent(EventName.INPUT_BTN1_DOWNING);
+            EventsMgr.FireEvent(EventName.INPUT_BTN1_DOWNING);
         else if (Input.GetButtonUp(INPUT_FIRE1))
-            EventMgr.FireEvent(EventName.INPUT_BTN1_UP);
+            EventsMgr.FireEvent(EventName.INPUT_BTN1_UP);
         if (Input.GetButtonDown(INPUT_FIRE2))
-            EventMgr.FireEvent(EventName.INPUT_BTN2_DOWN);
+            EventsMgr.FireEvent(EventName.INPUT_BTN2_DOWN);
         else if (Input.GetButton(INPUT_FIRE2))
-            EventMgr.FireEvent(EventName.INPUT_BTN2_DOWNING);
+            EventsMgr.FireEvent(EventName.INPUT_BTN2_DOWNING);
         else if (Input.GetButtonUp(INPUT_FIRE2))
-            EventMgr.FireEvent(EventName.INPUT_BTN2_UP);
+            EventsMgr.FireEvent(EventName.INPUT_BTN2_UP);
     }
 
     protected override void OnClear()
