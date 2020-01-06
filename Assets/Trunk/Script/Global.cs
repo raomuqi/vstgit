@@ -5,6 +5,7 @@ using UnityEngine;
 public class Global : MonoBehaviour {
        // Use this for initialization
        void Awake () {
+        EventsMgr.AddEvent(EventName.INPUT_BTN1_DOWN,TestInput);
         GameObject.DontDestroyOnLoad(gameObject);
         InputController.instance.InitModule();
 	}
@@ -15,5 +16,9 @@ public class Global : MonoBehaviour {
         InputController.instance.FireCommand(InputCommand.UPDATE_INPUT);
     }
 
+    public void TestInput(EventArgs args)
+    {
+        Debug.Log("|");
+    }
  
 }
