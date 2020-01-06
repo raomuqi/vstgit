@@ -42,13 +42,13 @@ public abstract class BaseController<T>: IController where T : class, new()
     protected virtual void OnClose() { }
     void OnInited()
     {
-        for (int i = 0; i < commandList.Count; i++)
-        {
-            commandList[i].Init();
-        }
         foreach (var model in modelList)
         {
             model.Value.Init();
+        }
+        for (int i = 0; i < commandList.Count; i++)
+        {
+            commandList[i].Init();
         }
     }
     /// <summary>

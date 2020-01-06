@@ -7,6 +7,11 @@ public class InputController: BaseController<InputController>
     protected override void OnInit()
     {
             RegisterCommand(new InputCommand());
+            RegisterModel(InputModel.name, new InputModel());
     }
-    protected override void OnClose() {    }
+    protected override void OnClose()
+    {
+
+
+    }
 }
