@@ -1,0 +1,429 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2650448637422720483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2650448637422720484}
+  - component: {fileID: 2650448637422720487}
+  - component: {fileID: 2650448637422720486}
+  - component: {fileID: 2650448637422720481}
+  m_Layer: 0
+  m_Name: '[PathAnim]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2650448637422720484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650448637422720483}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2650448637422720487
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650448637422720483}
+  m_Mesh: {fileID: 6279199059231915167, guid: 578dab6a7dfc66b4580553df20eb5434, type: 3}
+--- !u!23 &2650448637422720486
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650448637422720483}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &2650448637422720481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650448637422720483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -333801856, guid: aa0b1eebb5db27a419fa4564bbe5c9c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 0
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  delay: 0
+  duration: 120
+  easeType: 6
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loops: 1
+  id: 
+  loopType: 0
+  orientType: 1
+  lookAtTransform: {fileID: 0}
+  lookAtPosition: {x: 0, y: 0, z: 0}
+  lookAhead: 0.01
+  autoPlay: 1
+  autoKill: 1
+  relative: 0
+  isLocal: 0
+  isClosedPath: 0
+  pathResolution: 10
+  pathMode: 1
+  lockRotation: 0
+  assignForwardAndUp: 0
+  forwardDirection: {x: 0, y: 0, z: 1}
+  upDirection: {x: 0, y: 1, z: 0}
+  tweenRigidbody: 0
+  wps:
+  - {x: 18.662918, y: -0.078125, z: 3.917614}
+  - {x: 39.90625, y: 10.362231, z: 17.56189}
+  - {x: 50.47262, y: -0.140625, z: 44.13042}
+  - {x: 38.77295, y: 9.875, z: 89.83463}
+  - {x: -6.978077, y: -14.625, z: 129.6511}
+  - {x: -52.790276, y: -22.0625, z: 212.27904}
+  - {x: -9.129042, y: 4.125, z: 298.56885}
+  - {x: 90.28545, y: -2.625, z: 303.57132}
+  - {x: 153.98407, y: -50, z: 238.7442}
+  fullWps: []
+  path:
+    wpLengths:
+    - 0
+    - 19.224182
+    - 27.761618
+    - 31.407608
+    - 49.214417
+    - 65.96629
+    - 96.489
+    - 103.32749
+    - 102.93163
+    - 103.54089
+    type: 1
+    subdivisionsXSegment: 10
+    subdivisions: 100
+    wps:
+    - {x: 0, y: 0, z: 0}
+    - {x: 18.662918, y: -0.078125, z: 3.917614}
+    - {x: 39.90625, y: 10.362231, z: 17.56189}
+    - {x: 50.47262, y: -0.140625, z: 44.13042}
+    - {x: 38.77295, y: 9.875, z: 89.83463}
+    - {x: -6.978077, y: -14.625, z: 129.6511}
+    - {x: -52.790276, y: -22.0625, z: 212.27904}
+    - {x: -9.129042, y: 4.125, z: 298.56885}
+    - {x: 90.28545, y: -2.625, z: 303.57132}
+    - {x: 153.98407, y: -50, z: 238.7442}
+    controlPoints:
+    - a: {x: 18.662918, y: -0.078125, z: 3.917614}
+      b: {x: 0, y: 0, z: 0}
+    - a: {x: 217.68268, y: -97.375, z: 173.91708}
+      b: {x: 0, y: 0, z: 0}
+    length: 599.91205
+    isFinalized: 1
+    timesTable:
+    - 0.01
+    - 0.02
+    - 0.03
+    - 0.04
+    - 0.049999997
+    - 0.06
+    - 0.07
+    - 0.08
+    - 0.089999996
+    - 0.099999994
+    - 0.11
+    - 0.12
+    - 0.13
+    - 0.14
+    - 0.14999999
+    - 0.16
+    - 0.17
+    - 0.17999999
+    - 0.19
+    - 0.19999999
+    - 0.21
+    - 0.22
+    - 0.22999999
+    - 0.24
+    - 0.25
+    - 0.26
+    - 0.26999998
+    - 0.28
+    - 0.29
+    - 0.29999998
+    - 0.31
+    - 0.32
+    - 0.32999998
+    - 0.34
+    - 0.35
+    - 0.35999998
+    - 0.37
+    - 0.38
+    - 0.39
+    - 0.39999998
+    - 0.41
+    - 0.42
+    - 0.42999998
+    - 0.44
+    - 0.45
+    - 0.45999998
+    - 0.47
+    - 0.48
+    - 0.48999998
+    - 0.5
+    - 0.51
+    - 0.52
+    - 0.53
+    - 0.53999996
+    - 0.55
+    - 0.56
+    - 0.57
+    - 0.58
+    - 0.59
+    - 0.59999996
+    - 0.61
+    - 0.62
+    - 0.63
+    - 0.64
+    - 0.65
+    - 0.65999997
+    - 0.66999996
+    - 0.68
+    - 0.69
+    - 0.7
+    - 0.71
+    - 0.71999997
+    - 0.72999996
+    - 0.74
+    - 0.75
+    - 0.76
+    - 0.77
+    - 0.78
+    - 0.78999996
+    - 0.79999995
+    - 0.81
+    - 0.82
+    - 0.83
+    - 0.84
+    - 0.84999996
+    - 0.85999995
+    - 0.87
+    - 0.88
+    - 0.89
+    - 0.9
+    - 0.90999997
+    - 0.91999996
+    - 0.93
+    - 0.94
+    - 0.95
+    - 0.96
+    - 0.96999997
+    - 0.97999996
+    - 0.98999995
+    - 1
+    lengthsTable:
+    - 0.28315556
+    - 1.080787
+    - 2.3154767
+    - 3.9103713
+    - 5.789388
+    - 7.877525
+    - 10.101345
+    - 12.38973
+    - 14.675167
+    - 16.89593
+    - 19.000046
+    - 21.100296
+    - 23.401642
+    - 25.87478
+    - 28.475805
+    - 31.155354
+    - 33.86295
+    - 36.55053
+    - 39.176228
+    - 41.70934
+    - 44.13748
+    - 46.47659
+    - 48.802296
+    - 51.2343
+    - 53.807987
+    - 56.51971
+    - 59.34505
+    - 62.251015
+    - 65.2052
+    - 68.18387
+    - 71.17998
+    - 74.21153
+    - 77.328964
+    - 80.64816
+    - 84.33216
+    - 88.369995
+    - 92.70477
+    - 97.262634
+    - 101.96465
+    - 106.735016
+    - 111.50861
+    - 116.23946
+    - 120.911285
+    - 125.55022
+    - 130.22916
+    - 135.06288
+    - 140.17131
+    - 145.59558
+    - 151.32257
+    - 157.31042
+    - 163.50706
+    - 169.86453
+    - 176.35103
+    - 182.96248
+    - 189.73352
+    - 196.80733
+    - 204.6395
+    - 213.15019
+    - 222.15218
+    - 231.4608
+    - 240.8977
+    - 250.2949
+    - 259.50095
+    - 268.3898
+    - 276.8746
+    - 284.92953
+    - 292.6787
+    - 300.96677
+    - 309.95676
+    - 319.5123
+    - 329.4653
+    - 339.6316
+    - 349.8209
+    - 359.8446
+    - 369.52356
+    - 378.69888
+    - 387.2484
+    - 395.14554
+    - 403.25073
+    - 411.9348
+    - 421.1302
+    - 430.729
+    - 440.5998
+    - 450.59732
+    - 460.56985
+    - 470.36478
+    - 479.83405
+    - 488.8409
+    - 497.27463
+    - 505.53366
+    - 514.0421
+    - 522.8853
+    - 532.07513
+    - 541.57153
+    - 551.3004
+    - 561.167
+    - 571.0656
+    - 580.8884
+    - 590.53314
+    - 599.91205
+  inspectorMode: 0
+  pathType: 1
+  handlesType: 0
+  livePreview: 1
+  handlesDrawMode: 0
+  perspectiveHandleSize: 0.5
+  showIndexes: 1
+  showWpLength: 0
+  pathColor: {r: 1, g: 1, b: 1, a: 0.5}
+  lastSrcPosition: {x: 0, y: 0, z: 0}
+  lastSrcRotation: {x: 0, y: 0, z: 0, w: 1}
+  wpsDropdown: 0
+  dropToFloorOffset: 0
