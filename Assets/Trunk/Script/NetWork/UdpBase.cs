@@ -13,7 +13,7 @@ public class UdpBase  {
         public IPEndPoint ip;
         public UdpRecver(int index, string ip,int port)
         {
-            index = index;
+            this.index = index;
             this.ip = new IPEndPoint(IPAddress.Parse(ip), port);
         }
     }

@@ -1,0 +1,20 @@
+﻿
+/// <summary>
+/// 生成Json暴露给应用外配置
+/// </summary>
+[System.Serializable]
+public class ExposeCfg 
+{
+ 
+    public bool AutoConnect = false;
+
+    public bool IsHost = true;
+
+    public string TcpPort = "7416";
+
+    public string UdpPort = "2548";
+
+    public string IpAddress = "127.0.0.1";
+
+    public int MaxPlayer = 2;
+}
