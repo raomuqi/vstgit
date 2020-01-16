@@ -6,109 +6,44 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using UnityEngine;
-public class TcpBase 
+
+public abstract class TcpBase 
 {
-    public class SocketAccept
+    protected Socket tcpSocket;
+    protected Queue<byte[]> revceDataList;
+    public int connectStatus = 0;
+
+    public TcpBase()
     {
-       public Socket socket;
-        public int id;
-        public bool send;
-        public bool recv;
-        public Thread sendThread;
-        public Thread recvThread;
-        public Queue<byte[]> sendQueue = new Queue<byte[]>();
-        public SocketAccept(Socket socket,int id)
-        {
-            this.socket = socket;
-            this.id = id;
-            send = true;
-            recv = true;
-        }
+        revceDataList = new Queue<byte[]>(2048);
+        OnInit();
     }
-    Thread acceptThread;
-    private Socket host;
-    bool isListen = false;
-    List<SocketAccept> clientList;
-    private IPAddress iPAddress;
-    int maxClient;
-    int port;
-    bool waitClient = false;
-    public TcpBase( int port,int maxClient)
+    protected IPAddress iPAddress;
+    protected int port;
+    protected virtual void OnInit() { }
+    protected virtual void OnDispose() { }
+    public void Dispose()
     {
-        iPAddress = IPAddress.Parse("127.0.0.1");
-        this.port = port;
-        host = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        host.Bind(new IPEndPoint(iPAddress, port));
-        host.Listen(maxClient+2);
+        OnDispose();
+        if (tcpSocket != null)
+        {
+            tcpSocket.Close();
+            tcpSocket = null;
+        }
+        connectStatus = 0;
     }
 
-    private void WaitClientConnection()
+    public byte[] GetRecv()
     {
-        int index = 0;
-        while (waitClient)
+        byte[] result = null;
+        if (revceDataList.Count > 0)
         {
-            Socket accept = host.Accept();
-            if (accept != null)
-            {
-                SocketAccept client = new SocketAccept(accept, index);
-                clientList.Add(client);
-                //创建接受客户端消息的线程，并将其启动
-                client.recvThread = new Thread(RecvMessage);
-                client.recvThread.Start(client);
-                client.sendThread.Name = index + "recvTr";
-                client.sendThread = new Thread(SendMessage);
-                client.sendThread.Start(client);
-                client.sendThread.Name = index + "sendTr";
-                index++;
-            }
+            result = revceDataList.Dequeue();
         }
-    }
-    void RecvMessage(object parameter)
-    {
-        SocketAccept client = parameter as SocketAccept;
-        Socket clientsocket = client.socket;
-        while (client.recv)
-        {
-            try
-            {
-                byte[] strbyte = new byte[2048];
-                int count = clientsocket.Receive(strbyte);
-            }
-            catch (Exception)
-            {
-                OnClientException(client);
-            }
-        }
-
-    }
-    void SendMessage(object parameter)
-    {
-        SocketAccept client = parameter as SocketAccept;
-        Socket clientsocket = client.socket;
-        while (client.send)
-        {
-            try
-            {
-                while (client.sendQueue.Count > 0)
-                {
-                     clientsocket.Send(client.sendQueue.Dequeue());
-                }
-            }
-            catch (Exception)
-            {
-                OnClientException(client);
-            }
-            Thread.Sleep(10);
-        }
+        return result;
     }
 
-    void OnClientException(SocketAccept client)
-    {
-        client.recv = false;
-        client.send = false;
-        //客户端离去时终止线程
-        Debug.LogError("断开连接" + client.id);
-        client.sendThread.Abort();
-        client.recvThread.Abort();
-    }
+
+  
+
 }
