@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 
@@ -18,23 +20,47 @@ public class Connection
     /// 用于大量数据同步
     /// </summary>
     UdpBase multidataConnection;
+    /// <summary>
+    /// 主机Socket
+    /// </summary>
     TcpHost host;
+    /// <summary>
+    /// 从机Socket
+    /// </summary>
     TcpClient client;
+    //UDP端口
     int udpPort;
-
+    //IP广播端口
     int broadCastPort= 7887;
+    //TCP端口
     int tcpPort;
+    //是否主机
     bool isHose = false;
     string localIP;
+    //广播IP数据
     byte[] broadcastSelfData;
+    //是否广播IP
     bool broadcastSelf = false;
+    //当前人数
     int curPlayer = 0;
+    //最大人连接数
     int maxPlayer = 2;
+    //内网组
     string netGroup ="-";
+    //IP广播间隙
     int broadCastIntervalRate = 300;
+    //IP广播计数器
     int curBroadCastFrame = 0;
+    //序列化工具
+    SerializeUtil serializeUtil;
+    /// 包头
+    const byte PACKER_HEAD = 255;
+
+
+
     public void Init()
     {
+        serializeUtil = new SerializeUtil();
         if (int.TryParse(AppCfg.expose.UdpPort, out udpPort) == false)
         {
             Debug.LogError("UDP端口配置错误");
@@ -48,6 +74,7 @@ public class Connection
         isHose = AppCfg.expose.IsHost;
         curPlayer = 0;
         maxPlayer = AppCfg.expose.MaxPlayer;
+        multidataConnection = new UdpBase(udpPort);
         //作为主机
         if (isHose)
         {
@@ -58,7 +85,6 @@ public class Connection
                 IPAddress localaddr = localhost.AddressList[0];
                 localIP = localaddr.ToString();
                 syncIpConnection = new UdpBase(broadCastPort, false);
-                multidataConnection = new UdpBase(udpPort);
                 broadcastSelfData = Encoding.UTF8.GetBytes(Application.version + "|" + localIP.ToString()+"|"+ netGroup);
                 broadcastSelf = true;
             }
@@ -85,14 +111,13 @@ public class Connection
         {
             if (broadcastSelf == true  )
             {
-                //同步主机IP到内网
                 BroadCastHostIp();
             }
-            // 从机等待主机IP信号
             WaitSyncHostIp();
         }
 
         HandleMutiDataMsg();
+
         if (isHose)
         {
             HandleHostDataMsg();
@@ -102,35 +127,45 @@ public class Connection
             HandleClientDataMsg();
         }
     }
+    public void SendData()
+    {
 
+    }
+    //解析
+     void DeserializeMsg(byte[] data)
+    {
+        if (data != null && data.Length>2)
+        {
+            byte head = data[0];
+            if (head == PACKER_HEAD)
+            {
+                byte protoID = data[1];
+                int offset = 2;
+                 object proto = serializeUtil.Deserialize(data, offset, data.Length - offset);
+            
+            }
+        }
 
+    }
+ 
     void HandleMutiDataMsg()
     {
         byte[] data = multidataConnection.GetMsg();
-        if (data != null)
-        {
-
-
-        }
+            DeserializeMsg(data);
     }
     void HandleHostDataMsg()
     {
         byte[] data = host.GetRecv();
-        if (data != null)
-        {
-
-
-        }
+        DeserializeMsg(data);
     }
     void HandleClientDataMsg()
     {
-        byte[] data = host.GetRecv();
-        if (data != null)
-        {
-
-
-        }
+        byte[] data = client.GetRecv();
+        DeserializeMsg(data);
     }
+    /// <summary>
+    /// 同步主机IP到内网
+    /// </summary>
     void BroadCastHostIp()
     {
         int broadCastInterval = broadCastIntervalRate * (curPlayer + 1);
@@ -145,6 +180,10 @@ public class Connection
         }
 
     }
+
+    /// <summary>
+    /// 从机等待主机IP信号
+    /// </summary>
     void WaitSyncHostIp()
     {
        

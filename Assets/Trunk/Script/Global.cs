@@ -19,9 +19,11 @@ public class Global : MonoBehaviour {
     {
         //更新输入
         InputController.instance.FireCommand(InputCommand.UPDATE_INPUT);
+        connection.OnUpdate();
     }
     void InitConnection()
     {
+        connection = new Connection();
         connection.Init();
     }
 
