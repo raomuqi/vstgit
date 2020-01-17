@@ -6,7 +6,7 @@
 public class ExposeCfg 
 {
  
-    public bool AutoConnect = false;
+    public bool AutoConnect = true;
 
     public bool IsHost = true;
 
@@ -14,7 +14,10 @@ public class ExposeCfg
 
     public string UdpPort = "2548";
 
+
     public string IpAddress = "127.0.0.1";
 
     public int MaxPlayer = 2;
+
+    public string NetGroup = "0";
 }
