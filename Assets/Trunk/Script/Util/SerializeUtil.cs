@@ -1,45 +1,85 @@
 ﻿
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SerializeUtil 
+public static class SerializeUtil 
 {
-    BinaryFormatter bf;
-    MemoryStream memory;
-    public SerializeUtil()
+   static BinaryFormatter bf;
+  static  MemoryStream memory;
+  
+    public static byte[] Serialize(object obj)
     {
-        bf = new BinaryFormatter();
-        memory = new MemoryStream();
-    }
-    public byte[] Serialize(object obj)
-    {
+        if(bf==null)
+            bf = new BinaryFormatter();
+        if(memory==null)
+            memory = new MemoryStream();
         byte[] data = null;
         memory.Flush();
         memory.Position = 0;
-        bf.Serialize(memory, obj);
+        try
+        {
+            bf.Serialize(memory, obj);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
         return memory.GetBuffer();
     }
 
-    public object Deserialize(byte[] data)
+    public static object Deserialize(byte[] data)
     {
+        if (bf == null)
+            bf = new BinaryFormatter();
+        if (memory == null)
+            memory = new MemoryStream();
         memory.Flush();
         memory.Write(data, 0, data.Length);
         memory.Position = 0;
-        object obj = bf.Deserialize(memory);
+        object obj = null;
+        try
+        {
+            obj = bf.Deserialize(memory);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
         return obj;
     }
-    public object Deserialize(byte[] data,int index,int length)
+    public static object Deserialize(byte[] data,int index,int length)
     {
+        if (bf == null)
+            bf = new BinaryFormatter();
+        if (memory == null)
+            memory = new MemoryStream();
         memory.Flush();
         memory.Write(data, index, length);
         memory.Position = 0;
-        object obj = bf.Deserialize(memory);
+        object obj = null;
+        try
+        {
+            obj = bf.Deserialize(memory);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
         return obj;
     }
 
-    public void Dispose()
+    public static void Dispose()
     {
-        memory.Dispose();
+        if (memory != null)
+        {
+            memory.Dispose();
+            memory = null;
+        }
+        if (bf != null)
+        {
+            bf = null;
+        }
     }
 }

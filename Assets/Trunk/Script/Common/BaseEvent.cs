@@ -27,3 +27,7 @@ public class EventVector3Args : EventArgs
 {
     public Vector3 t;
 }
+public class EventObjectArgs : EventArgs
+{
+    public object t;
+}

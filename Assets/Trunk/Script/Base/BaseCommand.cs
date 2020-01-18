@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public abstract class BaseCommand  
 {
-    NotiLib eventLib;
+    NotiLib<string> eventLib;
     public void FireCommand(string cmd, EventArgs args)
     {
         if (eventLib != null)
@@ -13,7 +13,7 @@ public abstract class BaseCommand
     public void AddCommand(string cmd, EventCallBack cb)
     {
         if (eventLib == null)
-            eventLib =new NotiLib();
+            eventLib =new NotiLib<string>();
         eventLib.AddEvent(cmd, cb);
   
     }

@@ -7,7 +7,7 @@ using System;
 /// </summary>
 public static class EventsMgr 
 {
-    public static NotiLib notiLib=new NotiLib();
+    public static NotiLib<string> notiLib=new NotiLib<string>();
     public static Action AddEvent(string cmd, EventCallBack cb)
     {
         return notiLib.AddEvent(cmd, cb);

@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotiLib
+public class NotiLib<T>
 {
-     Dictionary<string, EventsWarp> events=new Dictionary<string, EventsWarp>();
-
-    public  Action AddEvent(string cmd, EventCallBack cb)
+    Dictionary<T, EventsWarp> events;
+    public  Action AddEvent(T cmd, EventCallBack cb)
     {
+        if (events == null) 
+            events = new Dictionary<T, EventsWarp>();
         EventsWarp warp =null;
         if (events.TryGetValue(cmd, out warp))
         {
@@ -23,30 +24,36 @@ public class NotiLib
           };
     }
 
-    public  void RemoveEvent(string cmd, EventCallBack cb)
+    public  void RemoveEvent(T cmd, EventCallBack cb)
     {
-        EventsWarp warp = null;
-        if (events.TryGetValue(cmd, out warp))
+        if (events!=null)
         {
-            warp.cbs -= cb;
-            if (warp.cbs == null)
-                events.Remove(cmd);
+            EventsWarp warp = null;
+            if (events.TryGetValue(cmd, out warp))
+            {
+                warp.cbs -= cb;
+                if (warp.cbs == null)
+                    events.Remove(cmd);
+            }
         }
-      
     }
 
-    public  void FireEvent(string cmd, EventArgs args=null)
+    public  void FireEvent(T cmd, EventArgs args=null)
     {
-        EventsWarp warp = null;
-        if (events.TryGetValue(cmd, out warp))
+        if (events != null)
         {
-            if(warp.cbs!=null)
-            warp.cbs(args);
+            EventsWarp warp = null;
+            if (events.TryGetValue(cmd, out warp))
+            {
+                if (warp.cbs != null)
+                    warp.cbs(args);
+            }
         }
     }
 
     public void Clear()
     {
-        events.Clear();
+        if (events != null)
+            events.Clear();
     }
 }

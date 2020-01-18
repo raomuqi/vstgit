@@ -48,27 +48,22 @@ public class Connection
     //内网组
     string netGroup ="-";
     //IP广播间隙
-    int broadCastIntervalRate = 300;
+    int broadCastIntervalRate = 500;
     //IP广播计数器
     int curBroadCastFrame = 0;
-    //序列化工具
-    SerializeUtil serializeUtil;
-    /// 包头
-    const byte PACKER_HEAD = 255;
-
-
+    // 包头
+    public const byte PACKER_HEAD = 255;
+    //事件库
+    NotiLib<byte> eventLib;
 
     public void Init()
     {
-        serializeUtil = new SerializeUtil();
         if (int.TryParse(AppCfg.expose.UdpPort, out udpPort) == false)
-        {
             Debug.LogError("UDP端口配置错误");
-        };
         if (int.TryParse(AppCfg.expose.TcpPort, out tcpPort) == false)
-        {
             Debug.LogError("Tcp端口配置错误");
-        };
+    
+        eventLib = new NotiLib<byte>();
         autoConnect = AppCfg.expose.AutoConnect;
         netGroup = AppCfg.expose.NetGroup;
         isHose = AppCfg.expose.IsHost;
@@ -88,7 +83,6 @@ public class Connection
                 broadcastSelfData = Encoding.UTF8.GetBytes(Application.version + "|" + localIP.ToString()+"|"+ netGroup);
                 broadcastSelf = true;
             }
-
             SetUpTcp();
         }
         else  //从机
@@ -101,38 +95,79 @@ public class Connection
             {
                 ConenctTcp(AppCfg.expose.IpAddress);
             }
-
         }
-
     }
+
     public void OnUpdate()
     {
         if (syncIpConnection != null)
         {
-            if (broadcastSelf == true  )
-            {
-                BroadCastHostIp();
-            }
             WaitSyncHostIp();
+            if (broadcastSelf == true  )
+                BroadCastHostIp();
         }
 
         HandleMutiDataMsg();
 
         if (isHose)
-        {
             HandleHostDataMsg();
-        }
         else
-        {
             HandleClientDataMsg();
+    }
+
+    /// <summary>
+    /// 发送数据
+    /// </summary>
+    public void SendData(ProtoType msgType,byte[] data)
+    {
+        switch (msgType)
+        {
+            case ProtoType.Importance:
+                if (isHose)
+                    host.SendMsg(data);
+                else
+                    client.SendMsg(data);
+                break;
+            case ProtoType.Unimportance:
+                multidataConnection.BroadCast(data);
+                break;
         }
     }
-    public void SendData()
-    {
 
+    /// <summary>
+    /// 添加监听
+    /// </summary>
+    public void AddLisener(byte protoID, EventCallBack cb)
+    {
+        eventLib.AddEvent(protoID, cb);
     }
-    //解析
-     void DeserializeMsg(byte[] data)
+    /// <summary>
+    /// 移除监听
+    /// </summary>
+    public void RemoveLisener(byte protoID, EventCallBack cb)
+    {
+        eventLib.RemoveEvent(protoID, cb);
+    }
+    /// <summary>
+    /// 清除所有监听
+    /// </summary>
+    public void ClearLisener()
+    {
+        eventLib.Clear();
+    }
+    /// <summary>
+    /// 通知逻辑层
+    /// </summary>
+    void FireEvent(byte protoID,object proto)
+    {
+        eventLib.FireEvent(protoID, proto as EventObjectArgs);
+    }
+
+    /// <summary>
+    /// 解析数据
+    /// </summary>
+    /// <param name="data"></param>
+    void DeserializeMsg(byte[] data)
     {
         if (data != null && data.Length>2)
         {
@@ -141,23 +176,31 @@ public class Connection
             {
                 byte protoID = data[1];
                 int offset = 2;
-                 object proto = serializeUtil.Deserialize(data, offset, data.Length - offset);
-            
+                 object proto = SerializeUtil.Deserialize(data, offset, data.Length - offset);
+                 FireEvent(protoID, proto);
             }
         }
-
     }
  
+    /// <summary>
+    /// 处理多数据消息
+    /// </summary>
     void HandleMutiDataMsg()
     {
         byte[] data = multidataConnection.GetMsg();
             DeserializeMsg(data);
     }
+    /// <summary>
+    /// 主机处理消息
+    /// </summary>
     void HandleHostDataMsg()
     {
         byte[] data = host.GetRecv();
         DeserializeMsg(data);
     }
+    /// <summary>
+    /// 客户端处理消息
+    /// </summary>
     void HandleClientDataMsg()
     {
         byte[] data = client.GetRecv();
@@ -168,7 +211,7 @@ public class Connection
     /// </summary>
     void BroadCastHostIp()
     {
-        int broadCastInterval = broadCastIntervalRate * (curPlayer + 1);
+        int broadCastInterval = broadCastIntervalRate;
         if (curBroadCastFrame >= broadCastInterval)
         {
             curBroadCastFrame = 0;
@@ -178,7 +221,6 @@ public class Connection
         {
             curBroadCastFrame++;
         }
-
     }
 
     /// <summary>
@@ -186,7 +228,6 @@ public class Connection
     /// </summary>
     void WaitSyncHostIp()
     {
-       
         byte[] ipData = syncIpConnection.GetMsg();
         if (ipData != null)
         {
@@ -214,7 +255,7 @@ public class Connection
         client = new TcpClient();
         if (client.Connect(ip, tcpPort))
         {
-
+            Debug.Log("连接成功");
         }
     }
     /// <summary>
