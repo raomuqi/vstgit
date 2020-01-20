@@ -38,7 +38,7 @@ public class TcpHost : TcpBase
             acceptThread.Start();
             connectStatus = 1;
         }
-        catch(Exception e)
+        catch(SocketException e)
         {
             Debug.LogError(e.Message);
         }
@@ -115,7 +115,7 @@ public class TcpHost : TcpBase
                 client.id = id;
                 //创建接受客户端消息的线程，并将其启动
                 client.recvThread = new Thread(RecvMessage);
-               client.recvThread.IsBackground = true;
+                client.recvThread.IsBackground = true;
                 client.recvThread.Name = id + "recvTr";
                 client.recvThread.Start(client);
                 client.sendThread = new Thread(SendMessage);
@@ -138,7 +138,7 @@ public class TcpHost : TcpBase
             try
             {
                 int count = clientsocket.Receive(strbyte);
-                if (count >= Connection.PACKER_OFFSET)
+                if (count > 0)
                 {
                     byte[] result = new byte[count];
                     Array.Copy(strbyte, result, count);
@@ -152,10 +152,10 @@ public class TcpHost : TcpBase
                     }
                 }
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
                 OnClientException(client);
-                Debug.LogError(e.Message);
+                Debug.LogError("client:"+client.id +"  "+e.Message);
             }
         }
 
@@ -176,7 +176,7 @@ public class TcpHost : TcpBase
 
                 }
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
                 OnClientException(client);
                 Debug.LogError(e.Message);
@@ -209,13 +209,16 @@ public class TcpHost : TcpBase
     {
         if (isDispose == true)
             return;
-        int id = client.id;
-        freeID.Enqueue(id);
-        logoutClient.Enqueue(id);
-        curClient--;
-        Debug.Log("断开连接" + client.id);
-        client.Dispose();
-        clientList = null;
+        if (client != null)
+        {
+            int id = client.id;
+            freeID.Enqueue(id);
+            logoutClient.Enqueue(id);
+            curClient--;
+            Debug.Log("断开连接" + client.id);
+            client.Dispose();
+            clientList[id] = null;
+        }
        
     }
 
@@ -261,10 +264,14 @@ public class TcpHost : TcpBase
         {
             recv = false;
             send = false;
+            if (socket != null)
+                socket.Dispose();
             if (recvThread != null)
-                recvThread.Abort();
+                recvThread = null;
+            //   recvThread.Abort();
             if (sendThread != null)
-                sendThread.Abort();
+                sendThread = null;
+               // sendThread.Abort();
         }
     }
 }

@@ -89,7 +89,10 @@ public class GameServer
                 byte id = (byte)socket.id;
                 ProtoPlayerInfo p;
                 if (playerInfos.TryGetValue((byte)id, out p))
+                {
                     p.connectStatus = 1;
+                    host.RemoveClient(id);
+                }
                 else
                 {
                     p = new ProtoPlayerInfo();

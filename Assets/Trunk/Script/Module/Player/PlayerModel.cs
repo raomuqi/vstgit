@@ -17,7 +17,6 @@ public class PlayerModel : BaseModel
     {
         playerID = playerProto.id;
         Debug.Log("玩家ID" + playerID);
-        Connection.GetInstance().DisposeClient();
     }
     public void SetPlayerList(ProtoPlayerList playerList)
     {

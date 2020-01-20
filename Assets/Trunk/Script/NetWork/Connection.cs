@@ -43,7 +43,6 @@ public class Connection
     bool recvBroadCastIP = false;
     //内网组
     string netGroup ="-";
-
     // 包头
     public const byte PACKER_HEAD = 255;
     // 包头
@@ -105,8 +104,11 @@ public class Connection
             server.OnUpdate();
 
         HandleMutiDataMsg();
-        HandleClientDataMsg();
-        HandleConnectStatus();
+        if (client != null)
+        {
+            HandleConnectStatus();
+            HandleClientDataMsg();
+        }
     }
  
     /// <summary>
@@ -176,8 +178,8 @@ public class Connection
     /// </summary>
     void HandleClientDataMsg()
     {
-        byte[] data = client.GetRecv();
-        DeserializeMsg(data);
+            byte[] data = client.GetRecv();
+            DeserializeMsg(data);
     }
  
     /// <summary>
@@ -250,7 +252,10 @@ public class Connection
     public void DisposeClient()
     {
         if (client != null)
+        {
             client.Dispose();
+            client = null;
+        }
     }
     public void Close()
     {

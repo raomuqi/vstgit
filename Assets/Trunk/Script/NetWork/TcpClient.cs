@@ -64,9 +64,9 @@ public class TcpClient : TcpBase
             recvThread.Start();
             connectStatus = 1;
         }
-        catch (Exception e)
+        catch (SocketException e)
         {
-            Debug.LogWarning(e.Message);
+            Debug.LogError(e.Message);
         }
         return result;
     }
@@ -79,13 +79,15 @@ public class TcpClient : TcpBase
     {
         this.iPAddress = IPAddress.Parse(ip);
         this.port = port;
-        if (reConnectThread == null)
+        if (reConnectThread != null)
         {
-            reConnect = true;
-            reConnectTime = 100;
-            reConnectThread = new Thread(TryConnectThread);
-            reConnectThread.Start();
+            reConnectThread.Abort();
+            reConnectThread = null;
         }
+        reConnect = true;
+        reConnectTime = 100;
+        reConnectThread = new Thread(TryConnectThread);
+        reConnectThread.Start();
     }
     void RecvMessage()
     {
@@ -95,18 +97,21 @@ public class TcpClient : TcpBase
             try
             {
                 int count = tcpSocket.Receive(strbyte);
-                byte[] result = new byte[count];
-                Array.Copy(strbyte, result, count);
-                if (revceDataList.Count < 2048)
+                if (count > 0)
                 {
-                    revceDataList.Enqueue(result);
-                }
-                else
-                {
-                    Debug.LogError("丢失数据包");
+                    byte[] result = new byte[count];
+                    Array.Copy(strbyte, result, count);
+                    if (revceDataList.Count < 2048)
+                    {
+                        revceDataList.Enqueue(result);
+                    }
+                    else
+                    {
+                        Debug.LogError("丢失数据包");
+                    }
                 }
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
                 OnSocketException(e);
             }
@@ -126,7 +131,7 @@ public class TcpClient : TcpBase
                     tcpSocket.Send(sendQueue.Dequeue());
                 }
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
                 OnSocketException(e);
 
@@ -159,7 +164,7 @@ public class TcpClient : TcpBase
                 Debug.Log("连接服务器成功");
 
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
                 Debug.LogWarning(e.Message);
             }
@@ -203,21 +208,22 @@ public class TcpClient : TcpBase
         sendMsg = false;
         if (recvThread != null)
         {
-            recvThread.Abort();
+           // recvThread.Abort();
             recvThread = null;
         }
         if (sendThread != null)
         {
-            sendThread.Abort();
+          //  sendThread.Abort();
             sendThread = null;
         }
-        if (reConnectThread == null)
+        if (reConnectThread != null)
         {
-            reConnect = true;
-            reConnectTime = 100;
-            reConnectThread = new Thread(TryConnectThread);
-            reConnectThread.Start();
+           // reConnectThread.Abort();
+            reConnectThread = null;
         }
-
+        reConnect = true;
+        reConnectTime = 100;
+        reConnectThread = new Thread(TryConnectThread);
+        reConnectThread.Start();
     }
 }
