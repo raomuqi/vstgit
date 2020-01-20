@@ -84,13 +84,19 @@ public class UdpBase  {
         isConnect = true;
         while (isConnect)
         {
-            byte[] recvdata = udp.Receive(ref recvEndPoint);
-            Debug.Log(recvdata.Length);
-            if (recvMsgs.Count >= 1024)
+            try
             {
-                recvMsgs.Dequeue();
+                byte[] recvdata = udp.Receive(ref recvEndPoint);
+                if (recvMsgs.Count >= 2048)
+                {
+                    recvMsgs.Dequeue();
+                }
+                recvMsgs.Enqueue(recvdata);
             }
-            recvMsgs.Enqueue(recvdata);
+            catch (Exception e)
+            {
+
+            }
 
         }
     }

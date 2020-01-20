@@ -9,40 +9,47 @@ using UnityEngine;
 public class TcpHost : TcpBase
 {
     Thread acceptThread;
-    List<SocketAccept> clientList;
-    int maxClient;
+    SocketAccept[] clientList;
+    Queue<int> loginClient = new Queue<int>();
+    Queue<int> logoutClient = new Queue<int>();
+    Queue<int> freeID = new Queue<int>();
+    int maxClient=2;
     bool waitClient = false;
-    public static object lockObject = new object();
+    int loginNegative = -1;
+    int curClient = 0;
+    int clientIndex=0;
+    bool isDispose = false;
     protected override void OnInit()
     {
         iPAddress = IPAddress.Parse("127.0.0.1");
-        tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     }
     public void SetHost(int port, int maxClient)
     {
         try
         {
-            clientList = new List<SocketAccept>(maxClient + 2);
+            clientList = new SocketAccept[maxClient];
             this.maxClient = maxClient;
             this.port = port;
+            waitClient = true;
             tcpSocket.Bind(new IPEndPoint(iPAddress, port));
             tcpSocket.Listen(maxClient + 2);
             acceptThread = new Thread(WaitClientConnection);
+            acceptThread.IsBackground = true;
+            acceptThread.Start();
             connectStatus = 1;
         }
         catch(Exception e)
         {
             Debug.LogError(e.Message);
         }
-
     }
+  
     public void SendMsg(byte[] data)
     {
         if (clientList != null)
         {
-            for (int i = 0; i < clientList.Count; i++)
+            for (int i = 0; i < clientList.Length; i++)
             {
-
                 SocketAccept client = clientList[i];
                 if (client != null)
                 {
@@ -51,53 +58,71 @@ public class TcpHost : TcpBase
             }
         }
     }
-
+    public SocketAccept[] GetClientList()
+    {
+        return clientList;
+    }
 
     public void SendMsg(int index, byte[] data)
     {
-        if (clientList != null)
+        if (clientList != null && index< clientList.Length)
         {
-            for (int i = 0; i < clientList.Count; i++)
-            {
-                SocketAccept client = clientList[i];
-                if (client != null && client.id==index)
-                {
-                    client.sendQueue.Enqueue(data);
-                }
-            }
+          SocketAccept client = clientList[index];
+          if (client != null)
+          {
+              client.sendQueue.Enqueue(data);
+          }
         }
     }
     public int GetClientCount()
     {
-        if (clientList != null)
-        {
-            return clientList.Count;
-        }
-        return 0;
+      return curClient;
+    }
+    public Queue<int> GetLogOutClient()
+    {
+        return logoutClient;
+    }
+    public Queue<int> GetLoginClient()
+    {
+        return loginClient;
+    
     }
     /// <summary>
     /// client加入
     /// </summary>
     private void WaitClientConnection()
     {
-        int index = 0;
         while (waitClient)
         {
             Socket accept = tcpSocket.Accept();
-            if (accept != null)
+
+            if (accept != null && GetClientCount()<maxClient)
             {
-                SocketAccept client = new SocketAccept(accept, index);
-                clientList.Add(client);
-                client.id = index;
-                Debug.Log("client登入" + index);
+                int id = 0;
+                if (freeID.Count > 0)
+                {
+                    id = freeID.Dequeue();
+                }
+                else
+                {
+                    id = clientIndex;
+                    clientIndex++;
+                }
+                
+                SocketAccept client = new SocketAccept(accept, id);
+                clientList[id] =client;
+                loginClient.Enqueue(id);
+                client.id = id;
                 //创建接受客户端消息的线程，并将其启动
                 client.recvThread = new Thread(RecvMessage);
+               client.recvThread.IsBackground = true;
+                client.recvThread.Name = id + "recvTr";
                 client.recvThread.Start(client);
-                client.sendThread.Name = index + "recvTr";
                 client.sendThread = new Thread(SendMessage);
+                client.sendThread.Name = id + "sendTr";
                 client.sendThread.Start(client);
-                client.sendThread.Name = index + "sendTr";
-                index++;
+                client.sendThread.IsBackground = true;
+                curClient++;
             }
         }
     }
@@ -113,18 +138,18 @@ public class TcpHost : TcpBase
             try
             {
                 int count = clientsocket.Receive(strbyte);
-                byte[] result = new byte[count];
-                Array.Copy(strbyte, result, count);
-                if (revceDataList.Count < 2048)
+                if (count >= Connection.PACKER_OFFSET)
                 {
-                    lock (lockObject)
+                    byte[] result = new byte[count];
+                    Array.Copy(strbyte, result, count);
+                    if (client.recvQueue.Count < 2048)
                     {
-                        revceDataList.Enqueue(result);
+                        client.recvQueue.Enqueue(result);
                     }
-                }
-                else
-                {
-                    Debug.LogError("丢失数据包");
+                    else
+                    {
+                        Debug.LogError("丢失数据包");
+                    }
                 }
             }
             catch (Exception e)
@@ -148,6 +173,7 @@ public class TcpHost : TcpBase
                 if (client.sendQueue.Count > 0)
                 {
                     clientsocket.Send(client.sendQueue.Dequeue());
+
                 }
             }
             catch (Exception e)
@@ -159,46 +185,59 @@ public class TcpHost : TcpBase
             Thread.Sleep(10);
         }
     }
+    /// <summary>
+    /// 踢出Clietn
+    /// </summary>
+    public void RemoveClient(int id)
+    {
+        if (clientList != null)
+        {
+            for (int i = 0; i < clientList.Length; i++)
+            {
+                SocketAccept client = clientList[i];
+                if (client != null && client.id == id)
+                {
+                    OnClientException(client);
+                }
+            }
+        }
+
+    }
+
     //client异常
     void OnClientException(SocketAccept client)
     {
-        client.recv = false;
-        client.send = false;
+        if (isDispose == true)
+            return;
+        int id = client.id;
+        freeID.Enqueue(id);
+        logoutClient.Enqueue(id);
+        curClient--;
         Debug.Log("断开连接" + client.id);
-        if (client.sendThread != null)
-        {
-            client.sendThread.Abort();
-            client.sendThread = null;
-        }
-        if (client.recvThread != null)
-        {
-            client.recvThread.Abort();
-            client.recvThread = null;
-        }
-        if (clientList!=null && clientList.Contains(client))
-        {
-            clientList.Remove(client);
-        }
+        client.Dispose();
+        clientList = null;
+       
     }
 
     protected override void OnDispose()
     {
+        isDispose = true;
         waitClient = false;
         if (acceptThread != null)
             acceptThread.Abort();
         if (clientList != null)
         {
-            for (int i = 0; i < clientList.Count; i++)
+            for (int i = 0; i < clientList.Length; i++)
             {
                 SocketAccept client = clientList[i];
-                client.recv = false;
-                client.send = false;
-                if(client.recvThread!=null)
-                  client.recvThread.Abort();
-                if(client.sendThread != null)
-                 client.sendThread.Abort();
+                if (client != null)
+                {
+                    client.Dispose();
+                }
             }
         }
+        clientIndex = 0;
+        curClient = 0;
         clientList = null;
     }
     public class SocketAccept
@@ -210,12 +249,22 @@ public class TcpHost : TcpBase
         public Thread sendThread;
         public Thread recvThread;
         public Queue<byte[]> sendQueue = new Queue<byte[]>();
+        public Queue<byte[]> recvQueue = new Queue<byte[]>(2048);
         public SocketAccept(Socket socket, int id)
         {
             this.socket = socket;
             this.id = id;
             send = true;
             recv = true;
+        }
+        public void Dispose()
+        {
+            recv = false;
+            send = false;
+            if (recvThread != null)
+                recvThread.Abort();
+            if (sendThread != null)
+                sendThread.Abort();
         }
     }
 }

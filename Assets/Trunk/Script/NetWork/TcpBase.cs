@@ -15,12 +15,15 @@ public abstract class TcpBase
 
     public TcpBase()
     {
-        revceDataList = new Queue<byte[]>(2048);
+        tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         OnInit();
     }
     protected IPAddress iPAddress;
     protected int port;
-    protected virtual void OnInit() { }
+    protected virtual void OnInit()
+    {
+        revceDataList = new Queue<byte[]>(2048);
+    }
     protected virtual void OnDispose() { }
     public void Dispose()
     {
@@ -33,7 +36,7 @@ public abstract class TcpBase
         connectStatus = 0;
     }
 
-    public byte[] GetRecv()
+    public virtual byte[] GetRecv()
     {
         byte[] result = null;
         if (revceDataList.Count > 0)

@@ -20,4 +20,6 @@ public class ExposeCfg
     public int MaxPlayer = 2;
 
     public string NetGroup = "0";
+
+    public int WaitConnectTime = 60;
 }

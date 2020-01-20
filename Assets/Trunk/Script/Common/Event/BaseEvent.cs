@@ -16,7 +16,6 @@ public class EventsWarp
 
 public  class EventArgs
 {
-    public object[] data;
 }
 public class EventFloatArgs: EventArgs
 {

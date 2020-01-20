@@ -5,7 +5,7 @@ public static class ProtoParse
     public static byte GetProtoID<T>(T t)
     {
         byte type=1;
-        if (t is CmdProto)
+        if (t is ProtoString)
         {
             type= 1;
         }

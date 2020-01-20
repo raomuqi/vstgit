@@ -13,8 +13,10 @@ public class Global : MonoBehaviour {
         InitAppCfg();
         InitConnection();
         InitModule();
-	}
-  
+        PlayerController.instance.SendNetMsg(ProtoIDCfg.LOGIN);
+
+    }
+
     void Update ()
     {
         //更新输入
@@ -23,7 +25,7 @@ public class Global : MonoBehaviour {
     }
     void InitConnection()
     {
-        connection = new Connection();
+        connection = Connection.GetInstance();
         connection.Init();
     }
 
@@ -37,7 +39,7 @@ public class Global : MonoBehaviour {
             string json = File.ReadAllText(AppCfg.CfgPath);
             ExposeCfg expose = JsonUtility.FromJson<ExposeCfg>(json);
             AppCfg.expose = expose;
-            Debug.LogWarning("获取应用配置成功");
+            Debug.Log("获取应用配置成功");
         }
         catch(Exception e)
         {
@@ -56,6 +58,16 @@ public class Global : MonoBehaviour {
     {
         //输入模块
         InputController.instance.InitModule();
+        //玩家模块
+        PlayerController.instance.InitModule();
+    }
 
+    private void OnDestroy()
+    {
+        if (connection != null)
+        {
+            connection.Close();
+            connection = null;
+        }
     }
 }
