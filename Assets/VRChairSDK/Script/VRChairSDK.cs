@@ -37,12 +37,12 @@ public class VRChairSDK : MonoBehaviour {
       
             if (sendUdp == null)
             {
-                sendUdp = new UdpBase(33002, false);
+                sendUdp = new UdpBase(33002,"ChairSDKSend", false);
                 recverID = sendUdp.GetRecverID("127.0.0.1");
             }
             if (recvUdp == null)
             {
-                recvUdp = new UdpBase(33001, true);
+                recvUdp = new UdpBase(33001, "ChairSDKRecv",true);
             }
       
     }

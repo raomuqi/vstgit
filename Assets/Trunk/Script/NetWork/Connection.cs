@@ -47,6 +47,12 @@ public class Connection
     public const byte PACKER_HEAD = 255;
     // 包头
     public const byte PACKER_OFFSET = 5;
+    //心跳时间
+    public const float HEART_BEAT_TIME = 4;
+    //当前心跳时间
+    float curHeartBeatTime = 0;
+    //心跳状态
+    byte curHeartStatus = 0;
     //事件库
     NotiLib<byte> eventLib;
     /// <summary>
@@ -65,34 +71,27 @@ public class Connection
             Debug.LogError("UDP端口配置错误");
         if (int.TryParse(AppCfg.expose.TcpPort, out tcpPort) == false)
             Debug.LogError("Tcp端口配置错误");
-    
         eventLib = new NotiLib<byte>();
         autoConnect = AppCfg.expose.AutoConnect;
         netGroup = AppCfg.expose.NetGroup;
         isHost = AppCfg.expose.IsHost;
-  
-        multidataConnection = new UdpBase(udpPort);
+        multidataConnection = new UdpBase(udpPort,"MultiData");
         //作为主机
         if (isHost)
-        {
             server = new GameServer(autoConnect,tcpPort, broadCastPort, netGroup);
-        }
+
         if (autoConnect)
         {
             if (isHost)
-            {
                 ConenctTcp("127.0.0.1");
-            }
             else
             {
                 recvBroadCastIP = true;
-                syncIpConnection = new UdpBase(broadCastPort);
+                syncIpConnection = new UdpBase(broadCastPort,"SyncIP_Client");
             }
         }
         else
-        {
             ConenctTcp(AppCfg.expose.IpAddress);
-        }
     }
 
     public void OnUpdate()
@@ -108,6 +107,20 @@ public class Connection
         {
             HandleConnectStatus();
             HandleClientDataMsg();
+            if (client.connectStatus == 1)
+            {
+                float interval = Time.time - curHeartBeatTime;
+                if (interval > HEART_BEAT_TIME)
+                {
+                    curHeartStatus++;
+                    if (curHeartStatus > 3)
+                    {
+                        Debug.LogWarning("客户端检测心跳超时");
+                        client.DisConnect();
+                    }
+                    curHeartBeatTime = Time.time;
+                }
+            }
         }
     }
  
@@ -136,17 +149,38 @@ public class Connection
     /// <param name="data"></param>
     public void DeserializeMsg(byte[] data)
     {
-        if (data != null && data.Length>PACKER_OFFSET)
+        if (data != null && data.Length>=PACKER_OFFSET)
         {
             byte head = data[0];
             if (head == PACKER_HEAD)
             {
                 byte protoID = data[1];
                 int offset = PACKER_OFFSET;
-                 object proto = SerializeUtil.Deserialize(data, offset, data.Length - offset);
-                FireEvent(protoID, proto);
+                if (protoID == ProtoIDCfg.HEARTBEAT)
+                {
+                    SendData(ProtoIDCfg.HEARTBEAT, null, ProtoType.Importance);
+                    ResetHeartBeat();
+                }
+                else
+                {
+                    object proto = SerializeUtil.Deserialize(data, offset, data.Length - offset);
+                    FireEvent(protoID, proto);
+                }
             }
         }
+    }
+    void OnConnect()
+    {
+        ResetHeartBeat();
+    }
+
+    /// <summary>
+    /// 重置心跳
+    /// </summary>
+    void ResetHeartBeat()
+    {
+        curHeartStatus = 0;
+        curHeartBeatTime = 0;
     }
     /// <summary>
     /// 处理重连 断线
@@ -154,16 +188,24 @@ public class Connection
     void HandleConnectStatus()
     {
         int connectStatus = client.GetConnectStatus();
+        bool onConnect = client.GetOnConnect();
+        if (onConnect == true)
+        {
+            OnConnect();
+        }
         if (connectStatus == 2)
         {
+            ResetHeartBeat();
             if (onDisConnect != null)
                 onDisConnect();
         }
         else if (connectStatus == 1)
         {
+            ResetHeartBeat();
             if (onReConnectSuccesss != null)
                 onReConnectSuccesss();
         }
+
     }
     /// <summary>
     /// 处理多数据消息

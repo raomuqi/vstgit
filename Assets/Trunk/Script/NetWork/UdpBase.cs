@@ -26,11 +26,13 @@ public class UdpBase  {
     List<UdpRecver> recverList;
     int connectPort = -1;
     bool canRecv = true;
+    string name;
     // Use this for initialization
-    public UdpBase(int port,bool canRecv=true)
+    public UdpBase(int port, string name, bool canRecv=true)
     {
         try
         {
+            this.name = name;
             connectPort = port;
             IPEndPoint broadcastIP = new IPEndPoint(IPAddress.Broadcast, port);
             udp = new UdpClient(new IPEndPoint(IPAddress.Any, port));
@@ -38,6 +40,7 @@ public class UdpBase  {
             if (canRecv)
             {
                 recvThread = new Thread(Listen);
+                recvThread.Name = "recv_" + this.name;
                 recvThread.Start();
             }
         }  
@@ -75,6 +78,7 @@ public class UdpBase  {
         if (canRecv)
         {
             recvThread = new Thread(Listen);
+            recvThread.Name = "recv_" + this.name;
             recvThread.Start();
         }
     }

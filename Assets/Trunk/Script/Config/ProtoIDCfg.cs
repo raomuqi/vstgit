@@ -4,6 +4,10 @@
 public static class ProtoIDCfg
 {
     /// <summary>
+    /// 心跳包
+    /// </summary>
+    public const byte HEARTBEAT = 0;
+    /// <summary>
     /// 登录协议
     /// </summary>
     public const byte LOGIN = 1;

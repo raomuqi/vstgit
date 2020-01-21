@@ -32,6 +32,10 @@ public class GameServer
     int broadCastIntervalRate = 500;
     //IP广播计数器
     int curBroadCastFrame = 0;
+    /// <summary>
+    /// 最大心跳时间
+    /// </summary>
+    float MAX_HEARTBEAT_TIME = Connection.HEART_BEAT_TIME * 2;
 
     public System.Action<int,int> onClientChange = null;
 
@@ -50,7 +54,7 @@ public class GameServer
             IPHostEntry localhost = Dns.GetHostEntry(hostname);
             IPAddress localaddr = localhost.AddressList[0];
             localIP = localaddr.ToString();
-            syncIpConnection = new UdpBase(broadCastPort, false);
+            syncIpConnection = new UdpBase(broadCastPort,"SyncIP_Host", false);
             broadcastSelfData = Encoding.UTF8.GetBytes(Application.version + "|" + localIP.ToString() + "|" + netGroup);
             broadcastSelf = true;
         }
@@ -85,6 +89,10 @@ public class GameServer
     {
         switch (protoID)
         {
+            case ProtoIDCfg.HEARTBEAT:
+                socket.heartbeatTime =Time.time;
+                socket.heartbeatStatus = 0;
+                break;
             case ProtoIDCfg.LOGIN:
                 byte id = (byte)socket.id;
                 ProtoPlayerInfo p;
@@ -102,18 +110,20 @@ public class GameServer
                     p.id = id;
                     playerInfos.Add(id, p);
                 }
+                //返回角色数据
                 SendMsg(socket.id, ProtoIDCfg.LOGIN, p);
                 break;
 
         }
     }
+
     /// <summary>
     /// 用户加入
     /// </summary>
-    void OnClientLogin(int clientID)
-    {
-     
-    }
+    void OnClientLogin(int clientID){}
+    /// <summary>
+    /// 用户登出
+    /// </summary>
     void OnClientLogOut(int clientID)
     {
         ProtoPlayerInfo p;
@@ -134,25 +144,8 @@ public class GameServer
         SyncPlayerList();
         
     }
-    public void Broadcast(byte protoID, object obj)
-    {
-        byte[] data = Util.SerializeProtoData(protoID, obj);
-        host.SendMsg(data);
-    }
-    public void Broadcast(byte[] data)
-    {
-        host.SendMsg(data);
-    }
-    public void SendMsg(int clientID,byte protoID, object obj)
-    {
-        byte[] data = Util.SerializeProtoData(protoID, obj);
-        host.SendMsg(clientID, data);
-    }
-    public void SendMsg(int clientID,byte[] data)
-    {
-        host.SendMsg(clientID,data);
-    }
-  
+
+   
     /// <summary>
     /// 主机处理消息
     /// </summary>
@@ -166,29 +159,34 @@ public class GameServer
             {
                  while (client.recvQueue.Count > 0)
                 {
-              
                     byte[] data = client.recvQueue.Dequeue();
                     if (data != null && data.Length > 0 && data[0]==Connection.PACKER_HEAD)
                     {
                         int offset =Connection.PACKER_OFFSET;
                         object proto = data.Length==offset?null:SerializeUtil.Deserialize(data, offset, data.Length - offset);
                         ParseMsg(client, data[1], proto);
-                        // Broadcast(data);
-                    
                     }
-
+                }
+                 //心跳
+                float heartbeatInterval = Time.time - client.heartbeatTime;
+                if (heartbeatInterval > Connection.HEART_BEAT_TIME)
+                {
+                    if (client.heartbeatStatus > 0)
+                    {
+                        Debug.LogWarning(client.id + "心跳超时");
+                        host.RemoveClient(client.id);
+                    }
+                    else
+                    {
+                        SendMsg(client.id, ProtoIDCfg.HEARTBEAT, null);
+                        client.heartbeatStatus++;
+                    }
+                    client.heartbeatTime = Time.time;
                 }
             }
         }
     }
-    public void Close()
-    {
-        Debug.Log("关闭服务器");
-        host.Dispose();
-        host = null;
-        if (syncIpConnection != null)
-            syncIpConnection.Dispose();
-    }
+
     /// <summary>
     /// 同步玩家信息
     /// </summary>
@@ -225,5 +223,32 @@ public class GameServer
         {
             OnClientChange(curPlayer);
         }
+    }
+
+    public void Broadcast(byte protoID, object obj)
+    {
+        byte[] data = Util.SerializeProtoData(protoID, obj);
+        host.SendMsg(data);
+    }
+    public void Broadcast(byte[] data)
+    {
+        host.SendMsg(data);
+    }
+    public void SendMsg(int clientID, byte protoID, object obj)
+    {
+        byte[] data = Util.SerializeProtoData(protoID, obj);
+        host.SendMsg(clientID, data);
+    }
+    public void SendMsg(int clientID, byte[] data)
+    {
+        host.SendMsg(clientID, data);
+    }
+    public void Close()
+    {
+        Debug.Log("关闭服务器");
+        host.Dispose();
+        host = null;
+        if (syncIpConnection != null)
+            syncIpConnection.Dispose();
     }
 }

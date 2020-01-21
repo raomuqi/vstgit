@@ -19,6 +19,7 @@ public class TcpClient : TcpBase
     bool isDispose = false;
      bool isBreakFlag = false;
     bool isConnectFlag = false;
+    byte onConnect = 0;
     protected override void OnInit()
     {
         base.OnInit();
@@ -47,30 +48,7 @@ public class TcpClient : TcpBase
         Debug.Log("关闭client");
 
     }
-    public bool Connect(string ip, int port)
-    {
-        bool result = false;
-        try
-        {
-            this.iPAddress = IPAddress.Parse(ip);
-            this.port = port;
-            tcpSocket.Connect(iPAddress, port);
-            recvMsg = true;
-            result = true;
-            sendMsg = true;
-            sendThread = new Thread(SendMessage);
-            sendThread.Start();
-            recvThread = new Thread(RecvMessage);
-            recvThread.Start();
-            connectStatus = 1;
-        }
-        catch (SocketException e)
-        {
-            Debug.LogError(e.Message);
-        }
-        return result;
-    }
-
+   
     public void SendMsg(byte[] data)
     {
        sendQueue.Enqueue(data);
@@ -79,15 +57,20 @@ public class TcpClient : TcpBase
     {
         this.iPAddress = IPAddress.Parse(ip);
         this.port = port;
-        if (reConnectThread != null)
+        TryConnect(this.iPAddress, port);
+    }
+    public void TryConnect(IPAddress ip, int port)
+    {
+        this.iPAddress = ip;
+        this.port = port;
+        if (reConnectThread == null)
         {
-            reConnectThread.Abort();
-            reConnectThread = null;
+            reConnect = true;
+            reConnectTime = 100;
+            reConnectThread = new Thread(TryConnectThread);
+            reConnectThread.Name = "ConnectThread_Client";
+            reConnectThread.Start();
         }
-        reConnect = true;
-        reConnectTime = 100;
-        reConnectThread = new Thread(TryConnectThread);
-        reConnectThread.Start();
     }
     void RecvMessage()
     {
@@ -102,34 +85,35 @@ public class TcpClient : TcpBase
                     byte[] result = new byte[count];
                     Array.Copy(strbyte, result, count);
                     if (revceDataList.Count < 2048)
-                    {
                         revceDataList.Enqueue(result);
-                    }
                     else
-                    {
                         Debug.LogError("丢失数据包");
-                    }
                 }
             }
-            catch (SocketException e)
+            catch (Exception e)
             {
                 OnSocketException(e);
             }
         }
-
+    }
+    public bool GetOnConnect()
+    {
+        if (onConnect == 1)
+        {
+            onConnect = 2;
+            return true;
+         }
+        return false;
     }
     //client独立发送线程
     void SendMessage()
     {
         while (sendMsg)
         {
-
             try
             {
                 if (sendQueue.Count > 0)
-                {
                     tcpSocket.Send(sendQueue.Dequeue());
-                }
             }
             catch (SocketException e)
             {
@@ -148,21 +132,24 @@ public class TcpClient : TcpBase
             {
                 Thread.Sleep(reConnectTime);
                 if (reConnectTime < 10000)
-                {
                     reConnectTime = reConnectTime * 2;
-                }
                 Debug.Log("尝试连接");
                 tcpSocket.Connect(iPAddress, port);
                 recvMsg = true;
                 sendMsg = true;
                 sendThread = new Thread(SendMessage);
+                sendThread.Name = "Send_Client";
                 sendThread.Start();
                 recvThread = new Thread(RecvMessage);
+                recvThread.Name = "Recv_Client";
                 recvThread.Start();
                 reConnect = false;
                 connectStatus = 1;
+                reConnectThread = null;
+                if (onConnect == 0)
+                    onConnect=1;
                 Debug.Log("连接服务器成功");
-
+                break;
             }
             catch (SocketException e)
             {
@@ -188,6 +175,12 @@ public class TcpClient : TcpBase
         }
         return -1;
     }
+    public void DisConnect()
+    {
+        tcpSocket.Dispose();
+
+        // OnSocketException(new Exception("主动重置"));
+    }
     /// <summary>
     /// 异常处理
     /// </summary>
@@ -202,8 +195,7 @@ public class TcpClient : TcpBase
         isBreakFlag = true;
         isConnectFlag = true;
         revceDataList.Clear();
-        tcpSocket.Dispose();
-        tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+      
         recvMsg = false;
         sendMsg = false;
         if (recvThread != null)
@@ -213,17 +205,12 @@ public class TcpClient : TcpBase
         }
         if (sendThread != null)
         {
-          //  sendThread.Abort();
+           // sendThread.Abort();
             sendThread = null;
         }
-        if (reConnectThread != null)
-        {
-           // reConnectThread.Abort();
-            reConnectThread = null;
-        }
-        reConnect = true;
-        reConnectTime = 100;
-        reConnectThread = new Thread(TryConnectThread);
-        reConnectThread.Start();
+        tcpSocket.Dispose();
+        tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        TryConnect(this.iPAddress, this.port);
+ 
     }
 }
