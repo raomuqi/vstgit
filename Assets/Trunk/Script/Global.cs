@@ -9,19 +9,25 @@ public class Global : MonoBehaviour {
        // Use this for initialization
     void Awake ()
     {
+
         GameObject.DontDestroyOnLoad(gameObject);
         InitAppCfg();
         InitConnection();
         InitModule();
-        PlayerController.instance.SendNetMsg(ProtoIDCfg.LOGIN);
-
+       
+    
     }
 
+    private void Start()
+    {
+         PlayerController.instance.SendNetMsg(ProtoIDCfg.LOGIN);
+    }
     void Update ()
     {
         //更新输入
         InputController.instance.FireCommand(InputCommand.UPDATE_INPUT);
         connection.OnUpdate();
+       
     }
     void InitConnection()
     {
@@ -60,8 +66,10 @@ public class Global : MonoBehaviour {
         InputController.instance.InitModule();
         //玩家模块
         PlayerController.instance.InitModule();
+        //场景模块
+        SceneController.instance.InitModule();
     }
-
+  
     private void OnDestroy()
     {
         if (connection != null)

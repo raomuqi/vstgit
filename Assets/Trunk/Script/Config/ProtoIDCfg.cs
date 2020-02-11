@@ -15,4 +15,8 @@ public static class ProtoIDCfg
     /// 推送玩家列表
     /// </summary>
     public const byte S_PLAYERS= 2;
+    /// <summary>
+    /// 进入场景
+    /// </summary>
+    public const byte ENTER_SCENE = 3;
 }

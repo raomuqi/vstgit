@@ -19,7 +19,10 @@ public class InputCommand : BaseCommand
         VRChairSDK.GetInstance().RegisterBtnChangeCallback(onBtnDown);
         AddCommand(UPDATE_INPUT, UpdateInput);
     }
-
+    protected override void OnClear()
+    {
+        VRChairSDK.GetInstance().Dispose();
+    }
     public void onBtnDown(byte index,byte status)
     {
 
@@ -47,8 +50,5 @@ public class InputCommand : BaseCommand
             EventsMgr.FireEvent(EventName.INPUT_BTN2_UP);
     }
 
-    protected override void OnClear()
-    {
-        VRChairSDK.GetInstance().Dispose();
-    }
+  
 }

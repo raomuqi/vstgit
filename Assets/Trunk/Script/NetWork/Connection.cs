@@ -67,30 +67,40 @@ public class Connection
     System.Action onDisConnect;
     public void Init()
     {
+        //*******************获取配置START**********************************
         if (int.TryParse(AppCfg.expose.UdpPort, out udpPort) == false)
             Debug.LogError("UDP端口配置错误");
         if (int.TryParse(AppCfg.expose.TcpPort, out tcpPort) == false)
             Debug.LogError("Tcp端口配置错误");
-        eventLib = new NotiLib<byte>();
         autoConnect = AppCfg.expose.AutoConnect;
         netGroup = AppCfg.expose.NetGroup;
         isHost = AppCfg.expose.IsHost;
+        //*******************获取配置END**********************************
+
+        //通知逻辑层的事件
+        eventLib = new NotiLib<byte>();
+
+        //同步量大的数据用UDP收发
         multidataConnection = new UdpBase(udpPort,"MultiData");
+
         //作为主机
         if (isHost)
             server = new GameServer(autoConnect,tcpPort, broadCastPort, netGroup);
 
+        //通过主机UDP广播自动连接
         if (autoConnect)
         {
             if (isHost)
                 ConenctTcp("127.0.0.1");
             else
             {
+                //建立UDP获取主机广播IP
                 recvBroadCastIP = true;
                 syncIpConnection = new UdpBase(broadCastPort,"SyncIP_Client");
             }
         }
         else
+            //不自动连接会直接连接配置里的主机IP
             ConenctTcp(AppCfg.expose.IpAddress);
     }
 
@@ -99,14 +109,21 @@ public class Connection
         //同步主机IP
         UpdateSyncIpConnect();
 
+        //服务器Update
         if (isHost)
             server.OnUpdate();
 
+        //处理大数据UDP信息
         HandleMutiDataMsg();
+
+        //TCP用户逻辑
         if (client != null)
         {
             HandleConnectStatus();
+            //接收TCP信息
             HandleClientDataMsg();
+
+            //TCP检测断线重连
             if (client.connectStatus == 1)
             {
                 float interval = Time.time - curHeartBeatTime;

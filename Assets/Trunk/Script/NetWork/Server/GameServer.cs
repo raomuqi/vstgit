@@ -6,23 +6,18 @@ using UnityEngine;
 
 public class GameServer
 {
-    /// <summary>
     /// 开启自动连接
-    /// </summary>
     bool autoConnect = false;
-    /// <summary>
     /// 用于主机同步内网IP的Socket
-    /// </summary>
     UdpBase syncIpConnection;
     string localIP;
     //广播IP数据
     byte[] broadcastSelfData;
     //是否广播IP
     bool broadcastSelf = false;
+    //连接器
     Connection connect;
-    /// <summary>
     /// 主机Socket
-    /// </summary>
     TcpHost host;
     //当前人数
     int curPlayer = 0;
@@ -32,11 +27,16 @@ public class GameServer
     int broadCastIntervalRate = 500;
     //IP广播计数器
     int curBroadCastFrame = 0;
-    /// <summary>
     /// 最大心跳时间
-    /// </summary>
     float MAX_HEARTBEAT_TIME = Connection.HEART_BEAT_TIME * 2;
-
+    //部署时间
+    float startUpTime = 0;
+    //等待连接时间
+    float waitConnectTime = 0;
+    //地图ID
+    int MapID = 0;
+    //游戏状态
+    GameStatus gameStatus = GameStatus.WaitConnect;
     public System.Action<int,int> onClientChange = null;
 
     public Dictionary<byte,ProtoPlayerInfo> playerInfos = new Dictionary<byte, ProtoPlayerInfo>();
@@ -44,6 +44,7 @@ public class GameServer
     public GameServer(bool autoConnect, int port,int broadCastPort,string netGroup)
     {
         maxPlayer = AppCfg.expose.MaxPlayer;
+        waitConnectTime = AppCfg.expose.WaitConnectTime;
         host = new TcpHost();
         curPlayer = 1;
         host.SetHost(port, maxPlayer);
@@ -58,10 +59,18 @@ public class GameServer
             broadcastSelfData = Encoding.UTF8.GetBytes(Application.version + "|" + localIP.ToString() + "|" + netGroup);
             broadcastSelf = true;
         }
+        gameStatus = GameStatus.WaitConnect;
+        startUpTime = Time.time;
         Debug.Log("部署服务器成功");
     }
     public void OnUpdate()
     {
+        switch (gameStatus)
+        {
+            case GameStatus.WaitConnect:
+                CheckStartGame();
+                break;
+        }
         //处理接收消息
         HandleHostDataMsg();
         //检测client状态变化
@@ -87,15 +96,17 @@ public class GameServer
     /// </summary>
     void ParseMsg(TcpHost.SocketAccept socket, byte protoID, object protoData)
     {
+        ProtoPlayerInfo p;
         switch (protoID)
         {
+            //心跳
             case ProtoIDCfg.HEARTBEAT:
                 socket.heartbeatTime =Time.time;
                 socket.heartbeatStatus = 0;
                 break;
+            //登入
             case ProtoIDCfg.LOGIN:
                 byte id = (byte)socket.id;
-                ProtoPlayerInfo p;
                 if (playerInfos.TryGetValue((byte)id, out p))
                 {
                     p.connectStatus = 1;
@@ -113,10 +124,29 @@ public class GameServer
                 //返回角色数据
                 SendMsg(socket.id, ProtoIDCfg.LOGIN, p);
                 break;
-
+            //进入场景
+            case ProtoIDCfg.ENTER_SCENE:
+                ProtoInt intP = protoData as ProtoInt;
+                int playerMapID = intP.context;
+                if (playerInfos.TryGetValue((byte)socket.id, out p))
+                {
+                    p.mapID = playerMapID;
+                }
+              
+              break;
         }
     }
-
+    void CheckStartGame()
+    {
+        if (MapID == 0 && Time.time - startUpTime > waitConnectTime && curPlayer > 0)
+        {
+            MapID = 1;
+            ProtoInt proto = new ProtoInt();
+            proto.context = MapID;
+            Broadcast(ProtoIDCfg.ENTER_SCENE, proto);
+            gameStatus = GameStatus.EnterScene;
+        }
+    }
     /// <summary>
     /// 用户加入
     /// </summary>

@@ -21,5 +21,5 @@ public class ExposeCfg
 
     public string NetGroup = "0";
 
-    public int WaitConnectTime = 60;
+    public int WaitConnectTime = 5;
 }

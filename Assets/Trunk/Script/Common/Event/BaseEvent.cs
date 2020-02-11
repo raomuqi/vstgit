@@ -3,6 +3,7 @@ using UnityEngine;
 
 
 public delegate void EventCallBack(EventArgs args);
+public delegate void NetCallBack(ProtoBase protoBase);
 
 public class EventsWarp
 {
@@ -17,6 +18,10 @@ public class EventsWarp
 public  class EventArgs
 {
 }
+public class EventIntArgs : EventArgs
+{
+    public int t;
+}
 public class EventFloatArgs: EventArgs
 {
     public float t;
@@ -29,4 +34,11 @@ public class EventVector3Args : EventArgs
 public class EventObjectArgs : EventArgs
 {
     public object t;
+}
+
+public class EventLoadSceneArgs : EventArgs
+{
+    public int index;
+    public System.Action<int> complete;
+    public System.Action<float> progress;
 }
