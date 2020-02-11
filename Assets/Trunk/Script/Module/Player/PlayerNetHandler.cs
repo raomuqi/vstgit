@@ -28,28 +28,19 @@ public class PlayerNetHandler : BaseNetHandler
     /// <summary>
     /// 获取用户ID
     /// </summary>
-    void OnLogin(EventArgs arg)
+    void OnLogin(object p)
     {
-        EventObjectArgs objArg= arg as EventObjectArgs;
-        if (objArg != null)
-        {
-           ProtoPlayerInfo proto=   objArg.t as ProtoPlayerInfo;
-            if (proto != null)
-                model.SetPlayerInfo(proto);
-        }
+        ProtoPlayerInfo proto=   p as ProtoPlayerInfo;
+        model.SetPlayerInfo(proto);
     }
 
     /// <summary>
     /// 玩家状态变更
     /// </summary>
-    void OnGetPlayerList(EventArgs arg)
+    void OnGetPlayerList(object p)
     {
-        EventObjectArgs objArg = arg as EventObjectArgs;
-        if (objArg != null)
-        {
-            ProtoPlayerList proto = objArg.t as ProtoPlayerList;
-            if (proto != null)
-                model.SetPlayerList(proto);
-        }
+       ProtoPlayerList proto = p as ProtoPlayerList;
+       if (proto != null)
+           model.SetPlayerList(proto);
     }
 }

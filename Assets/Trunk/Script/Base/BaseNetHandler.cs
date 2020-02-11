@@ -17,7 +17,7 @@ public abstract class BaseNetHandler
         sendEvets.AddEvent(cmd, cb);
 
     }
-    protected void RegisterListenProto(byte protoID, EventCallBack cb)
+    protected void RegisterListenProto(byte protoID, ProtoCallBack cb)
     {
         Connection.GetInstance().AddLisener(protoID, cb);
     }

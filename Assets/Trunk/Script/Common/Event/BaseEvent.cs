@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 public delegate void EventCallBack(EventArgs args);
-public delegate void NetCallBack(ProtoBase protoBase);
+
 
 public class EventsWarp
 {

@@ -54,7 +54,7 @@ public class Connection
     //心跳状态
     byte curHeartStatus = 0;
     //事件库
-    NotiLib<byte> eventLib;
+    NetNotiLib<byte> eventLib;
     /// <summary>
     /// 服务器
     /// </summary>
@@ -78,7 +78,7 @@ public class Connection
         //*******************获取配置END**********************************
 
         //通知逻辑层的事件
-        eventLib = new NotiLib<byte>();
+        eventLib = new NetNotiLib<byte>();
 
         //同步量大的数据用UDP收发
         multidataConnection = new UdpBase(udpPort,"MultiData");
@@ -281,14 +281,14 @@ public class Connection
     /// <summary>
     /// 添加监听
     /// </summary>
-    public void AddLisener(byte protoID, EventCallBack cb)
+    public void AddLisener(byte protoID, ProtoCallBack cb)
     {
         eventLib.AddEvent(protoID, cb);
     }
     /// <summary>
     /// 移除监听
     /// </summary>
-    public void RemoveLisener(byte protoID, EventCallBack cb)
+    public void RemoveLisener(byte protoID, ProtoCallBack cb)
     {
         eventLib.RemoveEvent(protoID, cb);
     }
@@ -304,9 +304,7 @@ public class Connection
     /// </summary>
     void FireEvent(byte protoID, object proto)
     {
-        EventObjectArgs arg = new EventObjectArgs();
-        arg.t = proto;
-        eventLib.FireEvent(protoID, arg);
+        eventLib.FireEvent(protoID, proto);
     }
     public void DisposeClient()
     {

@@ -13,12 +13,11 @@ public class SceneNetHandler : BaseNetHandler
     /// <summary>
     /// 进入场景
     /// </summary>
-    void OnEnterScene(EventArgs arg)
+    void OnEnterScene(object p)
     {
-        EventObjectArgs objArg = arg as EventObjectArgs;
-        ProtoInt intArg = objArg.t as ProtoInt;
+        ProtoInt proto = p as ProtoInt;
         EventLoadSceneArgs loadSceneCfg = new EventLoadSceneArgs();
-        loadSceneCfg.index = intArg.context;
+        loadSceneCfg.index = proto.context;
         loadSceneCfg.progress = null;
         loadSceneCfg.complete = SendEnterScene;
         MonoHelper.GetInstance().LoadSceneAsync(loadSceneCfg);
