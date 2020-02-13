@@ -22,7 +22,9 @@ public class PlayerNetHandler : BaseNetHandler
     /// </summary>
     void Login(EventArgs arg)
     {
-        Send(ProtoIDCfg.LOGIN, null, ProtoType.Importance);
+        ProtoInt loginProto = new ProtoInt();
+        loginProto.context = AppCfg.expose.pos;
+        Send(ProtoIDCfg.LOGIN, loginProto, ProtoType.Importance);
     }
 
     /// <summary>

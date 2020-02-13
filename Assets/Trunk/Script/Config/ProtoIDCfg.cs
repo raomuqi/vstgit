@@ -19,4 +19,12 @@ public static class ProtoIDCfg
     /// 进入场景
     /// </summary>
     public const byte ENTER_SCENE = 3;
+    /// <summary>
+    /// 初始化船仓信息
+    /// </summary>
+    public const byte S_INITSHIP = 4;
+    /// <summary>
+    /// 开始游戏
+    /// </summary>
+    public const byte S_STARTGAME = 5;
 }

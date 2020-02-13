@@ -17,11 +17,12 @@ public class InputCommand : BaseCommand
         VRChairSDK.GetInstance().Init();
         model = InputController.instance.GetModel<InputModel>(InputModel.name);
         VRChairSDK.GetInstance().RegisterBtnChangeCallback(onBtnDown);
-        AddCommand(UPDATE_INPUT, UpdateInput);
+        Global.instance.AddUpdateFunction(UpdateInput);
     }
     protected override void OnClear()
     {
         VRChairSDK.GetInstance().Dispose();
+        Global.instance.RemoveUpdateFunction(UpdateInput);
     }
     public void onBtnDown(byte index,byte status)
     {
@@ -30,8 +31,7 @@ public class InputCommand : BaseCommand
     /// <summary>
     /// 更新输入
     /// </summary>
-    /// <param name="args"></param>
-    public void UpdateInput(EventArgs args)
+    public void UpdateInput()
     {
         model.horizontal = Input.GetAxis(INPUT_HORIZONTAL);
         model.vertical = Input.GetAxis(INPUT_VERTICAL);

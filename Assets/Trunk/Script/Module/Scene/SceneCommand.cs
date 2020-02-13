@@ -24,5 +24,9 @@ public class SceneCommand : BaseCommand
         else
             Debug.LogError("参数错误");
     }
-  
+    void InitPlayerShip()
+    {
+
+
+    }
 }

@@ -33,6 +33,10 @@ public class GameServer
     float startUpTime = 0;
     //等待连接时间
     float waitConnectTime = 0;
+    //进入场景时间
+    float waitEnterSceneTime;
+    //最大进入场景时间
+    float maxEnterSceneTime;
     //地图ID
     int MapID = 0;
     //游戏状态
@@ -41,13 +45,18 @@ public class GameServer
 
     public Dictionary<byte,ProtoPlayerInfo> playerInfos = new Dictionary<byte, ProtoPlayerInfo>();
 
+    public Dictionary<int, SceneObject> sceneObjes = new Dictionary<int, SceneObject>();
+
+
     public GameServer(bool autoConnect, int port,int broadCastPort,string netGroup)
     {
         maxPlayer = AppCfg.expose.MaxPlayer;
         waitConnectTime = AppCfg.expose.WaitConnectTime;
+        maxEnterSceneTime = ServerCfg.MaxEnterSceneTime;
         host = new TcpHost();
         curPlayer = 1;
         host.SetHost(port, maxPlayer);
+       
         this.autoConnect = autoConnect;
         if (autoConnect)
         {
@@ -61,16 +70,22 @@ public class GameServer
         }
         gameStatus = GameStatus.WaitConnect;
         startUpTime = Time.time;
-        Debug.Log("部署服务器成功");
+        Debug.LogWarning("部署服务器成功");
     }
     public void OnUpdate()
     {
         switch (gameStatus)
         {
             case GameStatus.WaitConnect:
-                CheckStartGame();
+                CheckPlayerConnetTime();
+                break;
+            case GameStatus.EnterScene:
+                CheckEnterScene();
+                break;
+            case GameStatus.Running:
                 break;
         }
+
         //处理接收消息
         HandleHostDataMsg();
         //检测client状态变化
@@ -114,11 +129,35 @@ public class GameServer
                 }
                 else
                 {
+                    ProtoInt loginProto = protoData as ProtoInt;
+                    int loginPos = loginProto.context;
+                    bool[] inPosPlayers = new bool[10];
+                    bool canUsePos = true;
+                    foreach (var player in playerInfos)
+                    {
+                        if (player.Value.pos == loginPos)
+                        {
+                            canUsePos = false;
+                        }
+                        inPosPlayers[player.Value.pos] = true; 
+                    }
+                    if (!canUsePos)
+                    {
+                        for (int i = 1; i < inPosPlayers.Length; i++)
+                        {
+                            if (inPosPlayers[i] == false)
+                            {
+                                loginPos = i;
+                                break;
+                            }
+                        }
+                    }
                     p = new ProtoPlayerInfo();
                     p.hp = PlayerCfg.HP;
                     p.score = PlayerCfg.score;
                     p.connectStatus = 1;
                     p.id = id;
+                    p.pos = loginPos;
                     playerInfos.Add(id, p);
                 }
                 //返回角色数据
@@ -132,21 +171,11 @@ public class GameServer
                 {
                     p.mapID = playerMapID;
                 }
-              
+
               break;
         }
     }
-    void CheckStartGame()
-    {
-        if (MapID == 0 && Time.time - startUpTime > waitConnectTime && curPlayer > 0)
-        {
-            MapID = 1;
-            ProtoInt proto = new ProtoInt();
-            proto.context = MapID;
-            Broadcast(ProtoIDCfg.ENTER_SCENE, proto);
-            gameStatus = GameStatus.EnterScene;
-        }
-    }
+
     /// <summary>
     /// 用户加入
     /// </summary>
@@ -174,8 +203,89 @@ public class GameServer
         SyncPlayerList();
         
     }
+    /// <summary>
+    /// 同步玩家信息
+    /// </summary>
+    void SyncPlayerList()
+    {
+        ProtoPlayerList proto = new ProtoPlayerList();
+        proto.players = new ProtoPlayerInfo[playerInfos.Count];
+        foreach (var key in playerInfos)
+        {
+            proto.players[(int)key.Key] = key.Value;
+        }
+        Broadcast(ProtoIDCfg.S_PLAYERS, proto);
+    }
+    /// <summary>
+    /// 更新用户状态
+    /// </summary>
+    void UpdateClientStatus()
+    {
+        curPlayer = host.GetClientCount();
+        Queue<int> loginClient = host.GetLoginClient();
+        bool updatePlayerInfo = false;
+        while (loginClient.Count > 0)
+        {
+            OnClientLogin(loginClient.Dequeue());
+            updatePlayerInfo = true;
+        }
+        Queue<int> logoutClient = host.GetLogOutClient();
+        while (logoutClient.Count > 0)
+        {
+            OnClientLogOut(logoutClient.Dequeue());
+            updatePlayerInfo = true;
+        }
+        if (updatePlayerInfo)
+        {
+            OnClientChange(curPlayer);
+        }
+    }
 
-   
+    /// <summary>
+    /// 检查准备时间，时间到了进入场景
+    /// </summary>
+    void CheckPlayerConnetTime()
+    {
+        if (MapID == 0 && Time.time - startUpTime > waitConnectTime && curPlayer > 0)
+        {
+            MapID = 1;
+            ProtoInt proto = new ProtoInt();
+            proto.context = MapID;
+            Broadcast(ProtoIDCfg.ENTER_SCENE, proto);
+            waitEnterSceneTime = Time.time;
+            gameStatus = GameStatus.EnterScene;
+            SceneObject shipObj = new SceneObject();
+            shipObj.objectID = 0;
+            CreateSceneObject(shipObj);
+        }
+    }
+    /// <summary>
+    /// 检查开始游戏
+    /// </summary>
+    void CheckEnterScene()
+    {
+        int enterCount = 0;
+        foreach (var player in playerInfos)
+        {
+            if (player.Value.mapID == MapID)
+                enterCount++;
+        }
+        if (Time.time-waitEnterSceneTime >= maxEnterSceneTime  && enterCount>0)
+        {
+            Broadcast(ProtoIDCfg.S_STARTGAME,null);
+            gameStatus = GameStatus.Running;
+        }
+
+    }
+    void CreateSceneObject(SceneObject obj)
+    {
+        if (sceneObjes.ContainsKey(obj.objectID))
+        {
+            sceneObjes.Add(obj.objectID, obj);
+        }
+    }
+
+    #region 收发消息实现函数
     /// <summary>
     /// 主机处理消息
     /// </summary>
@@ -217,43 +327,7 @@ public class GameServer
         }
     }
 
-    /// <summary>
-    /// 同步玩家信息
-    /// </summary>
-    void SyncPlayerList()
-    {
-        ProtoPlayerList proto = new ProtoPlayerList();
-        proto.players = new ProtoPlayerInfo[playerInfos.Count];
-        foreach (var key in playerInfos)
-        {
-            proto.players[(int)key.Key] = key.Value;
-        }
-        Broadcast(ProtoIDCfg.S_PLAYERS, proto);
-    }
-    /// <summary>
-    /// 更新用户状态
-    /// </summary>
-    void UpdateClientStatus()
-    {
-        curPlayer = host.GetClientCount();
-        Queue<int> loginClient = host.GetLoginClient();
-        bool updatePlayerInfo = false;
-        while (loginClient.Count > 0)
-        {
-            OnClientLogin(loginClient.Dequeue());
-            updatePlayerInfo = true;
-        }
-        Queue<int> logoutClient = host.GetLogOutClient();
-        while (logoutClient.Count > 0)
-        {
-            OnClientLogOut(logoutClient.Dequeue());
-            updatePlayerInfo = true;
-        }
-        if (updatePlayerInfo)
-        {
-            OnClientChange(curPlayer);
-        }
-    }
+    
 
     public void Broadcast(byte protoID, object obj)
     {
@@ -275,10 +349,11 @@ public class GameServer
     }
     public void Close()
     {
-        Debug.Log("关闭服务器");
+        Debug.LogWarning("关闭服务器");
         host.Dispose();
         host = null;
         if (syncIpConnection != null)
             syncIpConnection.Dispose();
     }
+    #endregion
 }

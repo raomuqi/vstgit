@@ -22,4 +22,8 @@ public class ExposeCfg
     public string NetGroup = "0";
 
     public int WaitConnectTime = 5;
+
+    public int IsDebuger = 0;
+
+    public int pos = 1;
 }

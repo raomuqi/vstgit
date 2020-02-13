@@ -7,9 +7,10 @@ public class SceneNetHandler : BaseNetHandler
     {
         model = SceneController.instance.GetModel<SceneModel>(SceneModel.name);
         RegisterListenProto(ProtoIDCfg.ENTER_SCENE, OnEnterScene);
- 
+        RegisterListenProto(ProtoIDCfg.S_STARTGAME, OnStartGmae);
+
     }
- 
+
     /// <summary>
     /// 进入场景
     /// </summary>
@@ -29,6 +30,11 @@ public class SceneNetHandler : BaseNetHandler
         ProtoInt intArgs = new ProtoInt();
         intArgs.context = mapID;
         Send(ProtoIDCfg.ENTER_SCENE, intArgs,ProtoType.Importance);
+    }
+
+    void OnStartGmae(object p)
+    {
+        UnityEngine.Debug.Log("开始游戏");
     }
     protected override void OnClear()
     {

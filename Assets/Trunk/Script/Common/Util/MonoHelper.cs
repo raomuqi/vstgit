@@ -51,6 +51,7 @@ public class MonoHelper : MonoBehaviour
         loadSceneCor = null;
 
     }
+   
     /// <summary>
     /// 开启携程
     /// </summary>
@@ -65,5 +66,20 @@ public class MonoHelper : MonoBehaviour
     public void StopCoroutineInMono(Coroutine cor)
     {
         StopCoroutine(cor);
+    }
+
+    public Action Delay(float delayTime,System.Action action,int invokeTime=1)
+    {
+        Coroutine co=  StartCoroutine(IEDelay(delayTime, action, invokeTime));
+        return () => { StopCoroutine(co); };
+    }
+    IEnumerator IEDelay(float delayTime, System.Action action, int invokeTime)
+    {
+        for (int i = 0; i < invokeTime; i++)
+        {
+            yield return new WaitForSeconds(delayTime);
+            action();
+        }
+
     }
 }

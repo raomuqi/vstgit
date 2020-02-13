@@ -16,7 +16,7 @@ public class PlayerModel : BaseModel
     public void SetPlayerInfo(ProtoPlayerInfo playerProto)
     {
         playerID = playerProto.id;
-        Debug.Log("玩家ID" + playerID);
+        Debug.Log("玩家ID：" + playerID + " 位置:" + playerProto.pos);
     }
     public void SetPlayerList(ProtoPlayerList playerList)
     {
