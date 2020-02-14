@@ -34,6 +34,7 @@ public class SceneNetHandler : BaseNetHandler
 
     void OnStartGmae(object p)
     {
+        EventsMgr.FireEvent(EventName.START_GAME);
         UnityEngine.Debug.Log("开始游戏");
     }
     protected override void OnClear()

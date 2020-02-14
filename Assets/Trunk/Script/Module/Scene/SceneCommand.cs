@@ -5,12 +5,15 @@ using UnityEngine;
 public class SceneCommand : BaseCommand
 {
     public const string LOAD_SCENE = "LOAD_SCENE";
+    public const string SET_PLAYER_SHIP = "SET_PLAYER_SHIP";
     SceneModel model;
+    SyncModel syncModel;
     protected override void OnInit()
     {
         model = SceneController.instance.GetModel<SceneModel>(SceneModel.name);
+        syncModel = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
         AddCommand(LOAD_SCENE, LoadScene);
-
+        AddCommand(SET_PLAYER_SHIP, InitPlayerShip);
     }
 
     protected override void OnClear()
@@ -24,8 +27,16 @@ public class SceneCommand : BaseCommand
         else
             Debug.LogError("参数错误");
     }
-    void InitPlayerShip()
+
+    /// <summary>
+    /// 初始化飞船
+    /// </summary>
+    void InitPlayerShip(EventArgs args)
     {
+        EventObjectArgs shipArgs = args as EventObjectArgs;
+        PlayerShip ship = shipArgs.t as PlayerShip;
+        model.SetPlayerShip(ship);
+        ship.SetSyncStatus(ship.sceneObject.objectID, true);
 
 
     }

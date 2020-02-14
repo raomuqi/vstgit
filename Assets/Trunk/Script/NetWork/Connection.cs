@@ -36,9 +36,9 @@ public class Connection
     //TCP端口
     int tcpPort;
     //是否主机
-    bool isHost = false;
+    public  bool isHost = false;
     //IP广播端口
-    int broadCastPort = 7887;
+    int broadCastPort = 7888;
     //接受广播IP
     bool recvBroadCastIP = false;
     //内网组
@@ -63,10 +63,19 @@ public class Connection
     /// 用于主机同步内网IP的Socket
     /// </summary>
     UdpBase syncIpConnection;
+    public System.Action onConnect;
     System.Action onReConnectSuccesss;
     System.Action onDisConnect;
+#if UNITY_EDITOR
+    UnityEngine.Profiling.CustomSampler sendSampler;
+    UnityEngine.Profiling.CustomSampler recvSampler;
+#endif
     public void Init()
     {
+#if UNITY_EDITOR
+        sendSampler= UnityEngine.Profiling.CustomSampler.Create("sendSampler"); 
+        recvSampler= UnityEngine.Profiling.CustomSampler.Create("recvSampler"); 
+#endif
         //*******************获取配置START**********************************
         if (int.TryParse(AppCfg.expose.UdpPort, out udpPort) == false)
             Debug.LogError("UDP端口配置错误");
@@ -75,13 +84,14 @@ public class Connection
         autoConnect = AppCfg.expose.AutoConnect;
         netGroup = AppCfg.expose.NetGroup;
         isHost = AppCfg.expose.IsHost;
+        Debug.Log("isHost:" + isHost + " autoConnect:" + autoConnect + " netGroup:" + netGroup + " tcpPort:" + tcpPort + " udpPort:" + udpPort);
         //*******************获取配置END**********************************
 
         //通知逻辑层的事件
         eventLib = new NetNotiLib<byte>();
-
+        bool recvMultidata = !isHost;
         //同步量大的数据用UDP收发
-        multidataConnection = new UdpBase(udpPort,"MultiData");
+        multidataConnection = new UdpBase(udpPort,"MultiData",recvMultidata);
 
         //作为主机
         if (isHost)
@@ -96,7 +106,7 @@ public class Connection
             {
                 //建立UDP获取主机广播IP
                 recvBroadCastIP = true;
-                syncIpConnection = new UdpBase(broadCastPort,"SyncIP_Client");
+                syncIpConnection = new UdpBase(broadCastPort, "SyncIP_Client");
             }
         }
         else
@@ -106,6 +116,7 @@ public class Connection
 
     public void OnUpdate()
     {
+
         //同步主机IP
         UpdateSyncIpConnect();
 
@@ -139,13 +150,17 @@ public class Connection
                 }
             }
         }
+
     }
- 
+
     /// <summary>
     /// 发送数据
     /// </summary>
     public void SendData(byte protoID,object obj, ProtoType msgType)
     {
+#if UNITY_EDITOR
+        sendSampler.Begin();
+#endif
         byte[] data= Util.SerializeProtoData(protoID, obj);
         switch (msgType)
         {
@@ -157,8 +172,11 @@ public class Connection
               //  DeserializeMsg(data);
             break;
         }
+#if UNITY_EDITOR
+        sendSampler.End();
+#endif
     }
- 
+
 
     /// <summary>
     /// 解析数据
@@ -180,8 +198,14 @@ public class Connection
                 }
                 else
                 {
+#if UNITY_EDITOR
+                    recvSampler.Begin();
+#endif
                     object proto = SerializeUtil.Deserialize(data, offset, data.Length - offset);
                     FireEvent(protoID, proto);
+#if UNITY_EDITOR
+                    recvSampler.End();
+#endif
                 }
             }
         }
@@ -189,6 +213,8 @@ public class Connection
     void OnConnect()
     {
         ResetHeartBeat();
+        if (onConnect != null)
+            onConnect();
     }
 
     /// <summary>

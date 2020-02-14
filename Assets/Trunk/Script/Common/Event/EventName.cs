@@ -12,4 +12,6 @@ public static class EventName
     public const string INPUT_BTN2_DOWNING = "input_btn2_downing";
     public const string INPUT_BTN2_UP = "input_btn2_up";
 
+    //开始游戏
+    public const string START_GAME = "START_GAME";
 }

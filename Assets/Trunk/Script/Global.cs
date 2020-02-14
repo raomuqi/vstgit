@@ -12,6 +12,7 @@ public class Global : MonoBehaviour {
     void Awake ()
     {
         instance = this;
+        Application.runInBackground = true;
         GameObject.DontDestroyOnLoad(gameObject);
         InitAppCfg();
         if (AppCfg.expose.IsDebuger == 1)
@@ -24,13 +25,10 @@ public class Global : MonoBehaviour {
 
     private void Start()
     {
-         PlayerController.instance.SendNetMsg(ProtoIDCfg.LOGIN);
     }
     void Update ()
     {
-        //更新输入
-        InputController.instance.FireCommand(InputCommand.UPDATE_INPUT);
-        connection.OnUpdate();
+          connection.OnUpdate();
         if (OnUpdate != null)
             OnUpdate();
 
@@ -55,8 +53,15 @@ public class Global : MonoBehaviour {
     {
         connection = Connection.GetInstance();
         connection.Init();
+        connection.onConnect += OnConnectSuccess;
     }
-
+    /// <summary>
+    /// 连接成功
+    /// </summary>
+    void OnConnectSuccess()
+    {
+        PlayerController.instance.SendNetMsg(ProtoIDCfg.LOGIN);
+    }
     /// <summary>
     /// 初始化配置
     /// </summary>
@@ -97,6 +102,8 @@ public class Global : MonoBehaviour {
     /// </summary>
     void InitModule()
     {
+        //同步模块
+        SyncController.instance.InitModule();
         //输入模块
         InputController.instance.InitModule();
         //玩家模块

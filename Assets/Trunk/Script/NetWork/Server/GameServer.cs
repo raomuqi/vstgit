@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 
@@ -60,10 +61,18 @@ public class GameServer
         this.autoConnect = autoConnect;
         if (autoConnect)
         {
-            string hostname = Dns.GetHostName();//
-            IPHostEntry localhost = Dns.GetHostEntry(hostname);
-            IPAddress localaddr = localhost.AddressList[0];
-            localIP = localaddr.ToString();
+            //string hostname = Dns.GetHostName();//
+            //IPHostEntry localhost = Dns.GetHostEntry(hostname);
+            //IPAddress localaddr = localhost.AddressList[1];
+            IPHostEntry IpEntry = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ipa in IpEntry.AddressList)
+            {
+                if (ipa.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIP = ipa.ToString();
+                    break;
+                }
+            }
             syncIpConnection = new UdpBase(broadCastPort,"SyncIP_Host", false);
             broadcastSelfData = Encoding.UTF8.GetBytes(Application.version + "|" + localIP.ToString() + "|" + netGroup);
             broadcastSelf = true;
@@ -72,6 +81,8 @@ public class GameServer
         startUpTime = Time.time;
         Debug.LogWarning("部署服务器成功");
     }
+
+   
     public void OnUpdate()
     {
         switch (gameStatus)

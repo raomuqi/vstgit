@@ -12,16 +12,30 @@ public class InputCommand : BaseCommand
     const string INPUT_FIRE2 = "Fire2";
 
     InputModel model;
+    SyncModel syncModel;
+#if UNITY_EDITOR
+    UnityEngine.Profiling.CustomSampler sampler;
+#endif
     protected override void OnInit()
     {
-        VRChairSDK.GetInstance().Init();
+        syncModel = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
+        if (syncModel.IsUploader())
+        {
+            VRChairSDK.GetInstance().Init();
+            VRChairSDK.GetInstance().RegisterBtnChangeCallback(onBtnDown);
+        }
         model = InputController.instance.GetModel<InputModel>(InputModel.name);
-        VRChairSDK.GetInstance().RegisterBtnChangeCallback(onBtnDown);
         Global.instance.AddUpdateFunction(UpdateInput);
+#if UNITY_EDITOR
+        sampler = UnityEngine.Profiling.CustomSampler.Create("UpdateInput");
+#endif
     }
     protected override void OnClear()
     {
-        VRChairSDK.GetInstance().Dispose();
+        if (syncModel.IsUploader())
+        {
+            VRChairSDK.GetInstance().Dispose();
+        }
         Global.instance.RemoveUpdateFunction(UpdateInput);
     }
     public void onBtnDown(byte index,byte status)
@@ -33,6 +47,9 @@ public class InputCommand : BaseCommand
     /// </summary>
     public void UpdateInput()
     {
+#if UNITY_EDITOR
+        sampler.Begin();
+#endif
         model.horizontal = Input.GetAxis(INPUT_HORIZONTAL);
         model.vertical = Input.GetAxis(INPUT_VERTICAL);
 
@@ -48,7 +65,10 @@ public class InputCommand : BaseCommand
             EventsMgr.FireEvent(EventName.INPUT_BTN2_DOWNING);
         else if (Input.GetButtonUp(INPUT_FIRE2))
             EventsMgr.FireEvent(EventName.INPUT_BTN2_UP);
+#if UNITY_EDITOR
+        sampler.End();
+#endif
     }
 
-  
+
 }

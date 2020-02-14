@@ -5,7 +5,13 @@ using UnityEngine;
 public class SyncObject 
 {
    public int objectID;
-   public Vector3 pos;
-   public Quaternion rotation;
+    public float posX;
+    public float posY;
+    public float posZ;
+
+    public float rotX;
+    public float rotY;
+    public float rotZ;
+    public float rotW;
 }
 

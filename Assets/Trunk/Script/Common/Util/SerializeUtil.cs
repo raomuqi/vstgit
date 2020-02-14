@@ -7,8 +7,9 @@ using UnityEngine;
 public static class SerializeUtil 
 {
    static BinaryFormatter bf;
-  static  MemoryStream memory;
-  
+   static  MemoryStream memory;
+
+
     public static byte[] Serialize(object obj)
     {
         if(bf==null)

@@ -35,13 +35,17 @@ public class UdpBase  {
             this.name = name;
             connectPort = port;
             IPEndPoint broadcastIP = new IPEndPoint(IPAddress.Broadcast, port);
-            udp = new UdpClient(new IPEndPoint(IPAddress.Any, port));
             this.canRecv = canRecv;
             if (canRecv)
             {
+                udp = new UdpClient(new IPEndPoint(IPAddress.Any, port));
                 recvThread = new Thread(Listen);
                 recvThread.Name = "recv_" + this.name;
                 recvThread.Start();
+            }
+            else
+            {
+                udp = new UdpClient();
             }
         }  
         catch (Exception e)
@@ -73,13 +77,18 @@ public class UdpBase  {
     {
         connectPort = port;
         Dispose();
-        udp = new UdpClient(new IPEndPoint(IPAddress.Any, port));
+        
         this.canRecv = canRecv;
         if (canRecv)
         {
+            udp = new UdpClient(new IPEndPoint(IPAddress.Any, port));
             recvThread = new Thread(Listen);
             recvThread.Name = "recv_" + this.name;
             recvThread.Start();
+        }
+        else
+        {
+            udp = new UdpClient();
         }
     }
 

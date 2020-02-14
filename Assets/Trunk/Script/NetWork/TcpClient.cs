@@ -133,7 +133,7 @@ public class TcpClient : TcpBase
                 Thread.Sleep(reConnectTime);
                 if (reConnectTime < 10000)
                     reConnectTime = reConnectTime * 2;
-                Debug.Log("尝试连接");
+                Debug.Log("尝试连接"+ iPAddress.ToString()+":"+ port);
                 tcpSocket.Connect(iPAddress, port);
                 recvMsg = true;
                 sendMsg = true;

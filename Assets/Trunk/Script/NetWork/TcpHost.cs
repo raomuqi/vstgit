@@ -21,7 +21,7 @@ public class TcpHost : TcpBase
     bool isDispose = false;
     protected override void OnInit()
     {
-        iPAddress = IPAddress.Parse("127.0.0.1");
+        iPAddress = IPAddress.Any;// IPAddress.Parse("127.0.0.1");
     }
     public void SetHost(int port, int maxClient)
     {

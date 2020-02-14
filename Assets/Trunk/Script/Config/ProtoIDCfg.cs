@@ -27,4 +27,8 @@ public static class ProtoIDCfg
     /// 开始游戏
     /// </summary>
     public const byte S_STARTGAME = 5;
+    /// <summary>
+    /// 同步对象
+    /// </summary>
+    public const byte SYNC_OBJECTS = 6;
 }
