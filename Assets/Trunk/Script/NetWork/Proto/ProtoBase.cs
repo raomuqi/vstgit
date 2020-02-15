@@ -8,16 +8,7 @@ using UnityEngine;
 
 public  class ProtoBase
 {
-    static MemoryStream _serializeBuffer;
-    static MemoryStream serializeBuffer
-    {
-        get
-        {
-            if (_serializeBuffer == null)
-                _serializeBuffer = new MemoryStream();
-            return _serializeBuffer;
-        }
-    }
+   
     public byte[] Serialize()
     {
         try

@@ -16,13 +16,11 @@ public class SyncObject : ProtoBase
     public float rotY;
     public float rotZ;
     public float rotW;
-    static byte[] serializeBuffer;
+
 
     protected override byte[] OnSerialize()
     {
-        if (serializeBuffer == null)
-            serializeBuffer = new byte[32];
-
+        byte[] serializeBuffer = new byte[32];
         byte[] temp = null;
        // 8 * 4
         temp = BitConverter.GetBytes(objectID);
@@ -41,6 +39,8 @@ public class SyncObject : ProtoBase
         Array.Copy(temp, 0, serializeBuffer, 24, 4);
         temp = BitConverter.GetBytes(rotW);
         Array.Copy(temp, 0, serializeBuffer, 28, 4);
+
+
         return serializeBuffer;
     }
 
