@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerNetHandler : BaseNetHandler
 {
     PlayerModel model;
+    ProtoPlayerList playerListProto;
     protected override void OnInit()
     {
         model = PlayerController.instance.GetModel<PlayerModel>(PlayerModel.name);
@@ -22,27 +23,35 @@ public class PlayerNetHandler : BaseNetHandler
     /// </summary>
     void Login(EventArgs arg)
     {
-        ProtoInt loginProto = new ProtoInt();
-        loginProto.context = AppCfg.expose.pos;
-        Send(ProtoIDCfg.LOGIN, loginProto, ProtoType.Importance);
+   
+        byte[] pos = new byte[1];
+        pos[0] = (byte)AppCfg.expose.pos;
+        Send(ProtoIDCfg.LOGIN, pos, ProtoType.Importance);
     }
 
     /// <summary>
     /// 获取用户ID
     /// </summary>
-    void OnLogin(object p)
+    void OnLogin(byte[] pData)
     {
-        ProtoPlayerInfo proto=   p as ProtoPlayerInfo;
-        model.SetPlayerInfo(proto);
+        ProtoPlayerInfo proto=   Util.DeSerializeProto<ProtoPlayerInfo>(pData);
+        if (proto != null)
+        {
+            model.SetPlayerInfo(proto);
+        }
     }
 
     /// <summary>
     /// 玩家状态变更
     /// </summary>
-    void OnGetPlayerList(object p)
+    void OnGetPlayerList(byte[] p)
     {
-       ProtoPlayerList proto = p as ProtoPlayerList;
-       if (proto != null)
-           model.SetPlayerList(proto);
+        if (playerListProto == null)
+            playerListProto = new ProtoPlayerList();
+
+          Util.DeSerializeProto<ProtoPlayerList>(p, playerListProto);
+
+       if (playerListProto != null)
+           model.SetPlayerList(playerListProto);
     }
 }

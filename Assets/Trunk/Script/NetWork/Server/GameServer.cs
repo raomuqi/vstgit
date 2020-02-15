@@ -120,7 +120,7 @@ public class GameServer
     /// <summary>
     /// 处理Proto
     /// </summary>
-    void ParseMsg(TcpHost.SocketAccept socket, byte protoID, object protoData)
+    void ParseMsg(TcpHost.SocketAccept socket, byte protoID, byte[] protoData)
     {
         ProtoPlayerInfo p;
         switch (protoID)
@@ -140,8 +140,7 @@ public class GameServer
                 }
                 else
                 {
-                    ProtoInt loginProto = protoData as ProtoInt;
-                    int loginPos = loginProto.context;
+                    byte loginPos = protoData[0];
                     bool[] inPosPlayers = new bool[10];
                     bool canUsePos = true;
                     foreach (var player in playerInfos)
@@ -158,7 +157,7 @@ public class GameServer
                         {
                             if (inPosPlayers[i] == false)
                             {
-                                loginPos = i;
+                                loginPos = (byte)i;
                                 break;
                             }
                         }
@@ -170,13 +169,16 @@ public class GameServer
                     p.id = id;
                     p.pos = loginPos;
                     playerInfos.Add(id, p);
+                    Debug.LogWarning("玩家加入"+ id);
+                    SyncPlayerList();
                 }
                 //返回角色数据
                 SendMsg(socket.id, ProtoIDCfg.LOGIN, p);
                 break;
             //进入场景
             case ProtoIDCfg.ENTER_SCENE:
-                ProtoInt intP = protoData as ProtoInt;
+                ProtoInt intP = new ProtoInt();
+                intP.Parse(protoData);
                 int playerMapID = intP.context;
                 if (playerInfos.TryGetValue((byte)socket.id, out p))
                 {
@@ -201,6 +203,8 @@ public class GameServer
         {
             p.connectStatus = 2;
         }
+        SyncPlayerList();
+
     }
     /// <summary>
     /// 用户数改变
@@ -211,21 +215,27 @@ public class GameServer
             broadcastSelf = false;
         else
             broadcastSelf = true;
-        SyncPlayerList();
         
     }
+    ProtoPlayerList playerListProto;
     /// <summary>
     /// 同步玩家信息
     /// </summary>
     void SyncPlayerList()
     {
-        ProtoPlayerList proto = new ProtoPlayerList();
-        proto.players = new ProtoPlayerInfo[playerInfos.Count];
-        foreach (var key in playerInfos)
+        if (playerInfos.Count > 0)
         {
-            proto.players[(int)key.Key] = key.Value;
+            if (playerListProto == null)
+            {
+                playerListProto = new ProtoPlayerList();
+            }
+            playerListProto.players = new ProtoPlayerInfo[playerInfos.Count];
+            foreach (var key in playerInfos)
+            {
+                playerListProto.players[(int)key.Key] = key.Value;
+            }
+            Broadcast(ProtoIDCfg.S_PLAYERS, playerListProto);
         }
-        Broadcast(ProtoIDCfg.S_PLAYERS, proto);
     }
     /// <summary>
     /// 更新用户状态
@@ -314,7 +324,7 @@ public class GameServer
                     if (data != null && data.Length > 0 && data[0]==Connection.PACKER_HEAD)
                     {
                         int offset =Connection.PACKER_OFFSET;
-                        object proto = data.Length==offset?null:SerializeUtil.Deserialize(data, offset, data.Length - offset);
+                        byte[] proto = data.Length==offset?null:SerializeUtil.GetContextData(data, offset, data.Length - offset);
                         ParseMsg(client, data[1], proto);
                     }
                 }
@@ -340,18 +350,22 @@ public class GameServer
 
     
 
-    public void Broadcast(byte protoID, object obj)
+    public void Broadcast(byte protoID, ProtoBase obj)
     {
         byte[] data = Util.SerializeProtoData(protoID, obj);
+        if (data == null)
+            return;
         host.SendMsg(data);
     }
     public void Broadcast(byte[] data)
     {
         host.SendMsg(data);
     }
-    public void SendMsg(int clientID, byte protoID, object obj)
+    public void SendMsg(int clientID, byte protoID, ProtoBase obj)
     {
         byte[] data = Util.SerializeProtoData(protoID, obj);
+        if (data == null)
+            return;
         host.SendMsg(clientID, data);
     }
     public void SendMsg(int clientID, byte[] data)

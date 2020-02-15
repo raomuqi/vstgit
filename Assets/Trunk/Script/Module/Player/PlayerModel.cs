@@ -22,6 +22,5 @@ public class PlayerModel : BaseModel
     {
         this.playerList = playerList.players;
         Debug.Log("更新玩家列表");
-    
     }
 }

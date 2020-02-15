@@ -53,8 +53,7 @@ public class SceneGameObject : MonoBehaviour
             Vector3 pos = new Vector3(sceneObject.sync.posX, sceneObject.sync.posY, sceneObject.sync.posZ);
             Quaternion rot = new Quaternion(sceneObject.sync.rotX, sceneObject.sync.rotY, sceneObject.sync.rotZ, sceneObject.sync.rotW);
            /// transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime);
-           transform.rotation =Quaternion.Lerp(transform.rotation, rot,Time.deltaTime*0.5f);
-
+           transform.rotation =Quaternion.Slerp(transform.rotation, rot,Time.deltaTime*10);
             double timeDiffOfUpdates = Time.time - this.lastTime;
             this.movementVector = (pos - this.latestCorrectPos) / (float)timeDiffOfUpdates;
             this.errorVector = (pos - transform.localPosition) / (float)timeDiffOfUpdates;

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 
-public static class OjectPool  {
+public static class ObjectPool  {
     static PoolForGameObject _goPool;
-    static PoolForGameObject goPool
+    public static PoolForGameObject goPool
     {
         get
         {
@@ -12,21 +12,16 @@ public static class OjectPool  {
             return _goPool;
         }
     }
-
-   
-    public enum PoolType
+    static ProtoPool _protoPool;
+    public static ProtoPool protoPool
     {
-        GameObject,
-        Bullet
-    }
-    static public void Recycle<T>(T obj, PoolType poolType = PoolType.GameObject)
-    {
-        switch (poolType)
+        get
         {
-            case PoolType.GameObject:
-                goPool.Recycle(obj as GameObject);
-            break;
-          
+            if (_protoPool == null)
+                _protoPool = new ProtoPool();
+            return _protoPool;
         }
     }
+
+   
 }

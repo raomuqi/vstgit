@@ -28,12 +28,15 @@ public abstract class BaseNetHandler
         if (sendEvets != null)
             sendEvets.RemoveEvent(cmd, cb);
     }
-    protected void Send(byte protoID, object obj, ProtoType msgType)
+    protected void Send(byte protoID, ProtoBase obj, ProtoType msgType)
     {
         Connection.GetInstance().SendData(protoID, obj, msgType);
     }
 
-
+    protected void Send(byte protoID, byte[] obj, ProtoType msgType)
+    {
+        Connection.GetInstance().SendBytes(protoID, obj, msgType);
+    }
     public void Init()
     {
         OnInit();

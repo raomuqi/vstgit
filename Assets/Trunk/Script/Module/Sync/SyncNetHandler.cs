@@ -12,6 +12,8 @@ public class SyncNetHandler : BaseNetHandler
 #endif
     protected override void OnInit()
     {
+
+        udpWarp = new ProtoUdpWarp();
 #if UNITY_EDITOR
         updateSyncSampler = UnityEngine.Profiling.CustomSampler.Create("OnSyncObjectList");
         uploadSyncSampler= UnityEngine.Profiling.CustomSampler.Create("SendSyncObjectList");
@@ -19,7 +21,6 @@ public class SyncNetHandler : BaseNetHandler
         model = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
         if (model.IsUploader())
         {
-            udpWarp = new ProtoUdpWarp();
             Global.instance.AddUpdateFunction(SendSyncObjectList);
         }
         else
@@ -29,7 +30,9 @@ public class SyncNetHandler : BaseNetHandler
     {
         Global.instance.RemoveUpdateFunction(SendSyncObjectList);
     }
-
+    /// <summary>
+    /// 发送同步数据
+    /// </summary>
     void SendSyncObjectList()
     {
 #if UNITY_EDITOR
@@ -37,7 +40,11 @@ public class SyncNetHandler : BaseNetHandler
 #endif
         if (model.syncList.Count > 0)
         {
-            udpWarp.objList = model.syncList;
+            udpWarp.objList = new SyncObject[model.syncList.Count];
+            for (int i = 0; i < model.syncList.Count; i++)
+            {
+                udpWarp.objList[i] = model.syncList[i];
+            }
             Send(ProtoIDCfg.SYNC_OBJECTS, udpWarp, ProtoType.Unimportance);
         }
 #if UNITY_EDITOR
@@ -45,16 +52,20 @@ public class SyncNetHandler : BaseNetHandler
 #endif
 
     }
-    void OnSyncObjectList(object protoObj)
+    void OnSyncObjectList(byte[] protoObj)
     {
 #if UNITY_EDITOR
         updateSyncSampler.Begin();
 #endif
-        ProtoUdpWarp warp = protoObj as ProtoUdpWarp;
-        List<SyncObject> protoList = warp.objList;
-        model.UpdateSyncData(protoList);
+         Util.DeSerializeUDPProto(protoObj,ref udpWarp);
 #if UNITY_EDITOR
         updateSyncSampler.End();
 #endif
+        if (udpWarp != null)
+        {
+            SyncObject[] protoList = udpWarp.objList;
+            model.UpdateSyncData(protoList);
+        }
+
     }
 }

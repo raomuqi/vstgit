@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public delegate void ProtoCallBack(object proto);
+public delegate void ProtoCallBack(byte[] proto);
 
 
 
@@ -50,7 +50,7 @@ public class NetNotiLib<T>
         }
     }
 
-    public void FireEvent(T cmd, object proto = null)
+    public void FireEvent(T cmd, byte[] proto = null)
     {
         if (events != null)
         {

@@ -26,9 +26,9 @@ public class SyncModel : BaseModel
     /// <summary>
     /// 刷新同步数据
     /// </summary>
-    public void UpdateSyncData(List<SyncObject> updateList)
+    public void UpdateSyncData(SyncObject[] updateList)
     {
-        for (int i = 0; i < updateList.Count; i++)
+        for (int i = 0; i < updateList.Length; i++)
         {
             SyncObject updateObj = updateList[i];
             SyncObject srcObj;

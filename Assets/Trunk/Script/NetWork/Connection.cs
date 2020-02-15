@@ -156,12 +156,14 @@ public class Connection
     /// <summary>
     /// 发送数据
     /// </summary>
-    public void SendData(byte protoID,object obj, ProtoType msgType)
+    public void SendData(byte protoID, ProtoBase obj, ProtoType msgType)
     {
 #if UNITY_EDITOR
         sendSampler.Begin();
 #endif
         byte[] data= Util.SerializeProtoData(protoID, obj);
+        if (data == null)
+            return;
         switch (msgType)
         {
             case ProtoType.Importance:
@@ -177,7 +179,29 @@ public class Connection
 #endif
     }
 
-
+    /// <summary>
+    /// 发送数据
+    /// </summary>
+    public void SendBytes(byte protoID, byte[] obj, ProtoType msgType)
+    {
+#if UNITY_EDITOR
+        sendSampler.Begin();
+#endif
+        byte[] data = Util.SerializeProtoData(protoID, obj);
+        switch (msgType)
+        {
+            case ProtoType.Importance:
+                client.SendMsg(data);
+                break;
+            case ProtoType.Unimportance:
+                multidataConnection.BroadCast(data);
+                //  DeserializeMsg(data);
+                break;
+        }
+#if UNITY_EDITOR
+        sendSampler.End();
+#endif
+    }
     /// <summary>
     /// 解析数据
     /// </summary>
@@ -201,7 +225,7 @@ public class Connection
 #if UNITY_EDITOR
                     recvSampler.Begin();
 #endif
-                    object proto = SerializeUtil.Deserialize(data, offset, data.Length - offset);
+                    byte[] proto = SerializeUtil.GetContextData(data, offset, data.Length - offset);
                     FireEvent(protoID, proto);
 #if UNITY_EDITOR
                     recvSampler.End();
@@ -328,7 +352,7 @@ public class Connection
     /// <summary>
     /// 通知逻辑层
     /// </summary>
-    void FireEvent(byte protoID, object proto)
+    void FireEvent(byte protoID, byte[] proto)
     {
         eventLib.FireEvent(protoID, proto);
     }
