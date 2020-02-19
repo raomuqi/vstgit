@@ -66,6 +66,9 @@ public class Connection
     public System.Action onConnect;
     System.Action onReConnectSuccesss;
     System.Action onDisConnect;
+    Dictionary<int, IPEndPoint> broadCastList;
+    //方便测试一机多端口
+   public static  bool differentUdpPort = false;
 #if UNITY_EDITOR
     UnityEngine.Profiling.CustomSampler sendSampler;
     UnityEngine.Profiling.CustomSampler recvSampler;
@@ -84,14 +87,14 @@ public class Connection
         autoConnect = AppCfg.expose.AutoConnect;
         netGroup = AppCfg.expose.NetGroup;
         isHost = AppCfg.expose.IsHost;
+        differentUdpPort = AppCfg.expose.differentUdpPort;
         Debug.Log("isHost:" + isHost + " autoConnect:" + autoConnect + " netGroup:" + netGroup + " tcpPort:" + tcpPort + " udpPort:" + udpPort);
         //*******************获取配置END**********************************
+        if (differentUdpPort)
+            broadCastList = new Dictionary<int, IPEndPoint>();
 
         //通知逻辑层的事件
         eventLib = new NetNotiLib<byte>();
-        bool recvMultidata = !isHost;
-        //同步量大的数据用UDP收发
-        multidataConnection = new UdpBase(udpPort,"MultiData",recvMultidata);
 
         //作为主机
         if (isHost)
@@ -107,6 +110,7 @@ public class Connection
                 //建立UDP获取主机广播IP
                 recvBroadCastIP = true;
                 syncIpConnection = new UdpBase(broadCastPort, "SyncIP_Client");
+                Debug.Log("等待主机发送IP");
             }
         }
         else
@@ -162,23 +166,11 @@ public class Connection
         sendSampler.Begin();
 #endif
         byte[] data= Util.SerializeProtoData(protoID, obj);
-        if (data == null)
-            return;
-        switch (msgType)
-        {
-            case ProtoType.Importance:
-                 client.SendMsg(data);
-            break;
-            case ProtoType.Unimportance:
-                multidataConnection.BroadCast(data);
-              //  DeserializeMsg(data);
-            break;
-        }
+        Send(data,msgType);
 #if UNITY_EDITOR
         sendSampler.End();
 #endif
     }
-
     /// <summary>
     /// 发送数据
     /// </summary>
@@ -188,19 +180,67 @@ public class Connection
         sendSampler.Begin();
 #endif
         byte[] data = Util.SerializeProtoData(protoID, obj);
+        Send(data, msgType);
+#if UNITY_EDITOR
+        sendSampler.End();
+#endif
+    }
+    void Send(byte[] data, ProtoType msgType)
+    {
+        if (data == null)
+            return;
         switch (msgType)
         {
             case ProtoType.Importance:
                 client.SendMsg(data);
                 break;
             case ProtoType.Unimportance:
-                multidataConnection.BroadCast(data);
-                //  DeserializeMsg(data);
+                if (differentUdpPort)
+                {
+                    foreach (var ip in broadCastList)
+                        multidataConnection.SendTo(data, ip.Value);
+                }
+                else
+                      multidataConnection.BroadCast(data);
                 break;
         }
-#if UNITY_EDITOR
-        sendSampler.End();
-#endif
+    }
+    /// <summary>
+    ///同步量大的数据用UDP收发
+    /// </summary>
+    public void SetUpMutiDataUdp(int id)
+    {
+         if (multidataConnection == null)
+         {
+            int port = udpPort;
+            port = differentUdpPort? udpPort + id:udpPort;
+            multidataConnection = new UdpBase(port, "MultiData", true);
+            Debug.Log("部署同步多数据Udp " + port);
+        }
+    }
+    /// <summary>
+    /// 添加广播对象
+    /// </summary>
+    public void AddBroadCastPort(int id)
+    {
+        IPEndPoint add = null;
+        int port = udpPort + id;
+        if (!broadCastList.TryGetValue(port, out add))
+        {
+            broadCastList.Add(port, new IPEndPoint(IPAddress.Broadcast, port));
+            Debug.Log("添加广播对象:" + port);
+        }
+    }
+
+    /// <summary>
+    /// 移除广播对象
+    /// </summary>
+    public void RemoveBroadCastPort(int port)
+    {
+        if (broadCastList.ContainsKey(port))
+        {
+            broadCastList.Remove(port);
+        }
     }
     /// <summary>
     /// 解析数据
@@ -279,8 +319,11 @@ public class Connection
     /// </summary>
     void HandleMutiDataMsg()
     {
-        byte[] data = multidataConnection.GetMsg();
+        if (multidataConnection != null)
+        {
+            byte[] data = multidataConnection.GetMsg();
             DeserializeMsg(data);
+        }
     }
     /// <summary>
     /// 客户端处理消息

@@ -27,31 +27,35 @@ public class UdpBase  {
     int connectPort = -1;
     bool canRecv = true;
     string name;
+    IPEndPoint selfIP;
     // Use this for initialization
     public UdpBase(int port, string name, bool canRecv=true)
     {
-        try
-        {
+        
             this.name = name;
             connectPort = port;
             IPEndPoint broadcastIP = new IPEndPoint(IPAddress.Broadcast, port);
             this.canRecv = canRecv;
             if (canRecv)
             {
-                udp = new UdpClient(new IPEndPoint(IPAddress.Any, port));
-                recvThread = new Thread(Listen);
-                recvThread.Name = "recv_" + this.name;
+                 try
+                 {
+                     selfIP = new IPEndPoint(IPAddress.Any, port);
+                     udp = new UdpClient(port);
+                     recvThread = new Thread(Listen);
+                 }
+                 catch (Exception e)
+                 {
+                     Debug.LogError(e.Message);
+                 }
+                 recvThread.Name = "recv_" + this.name;
                 recvThread.Start();
             }
             else
             {
                 udp = new UdpClient();
             }
-        }  
-        catch (Exception e)
-        {
-            Debug.LogError(e.Message);
-        }
+      
     }
     public byte[] GetMsg()
     {
@@ -134,6 +138,17 @@ public class UdpBase  {
         if (udp != null)
         {
             udp.Send(data, data.Length, recverList[recverID].ip);
+        }
+    }
+
+    /// <summary>
+    /// 发送数据
+    /// </summary>
+    public void SendTo(byte[] data,IPEndPoint ip)
+    {
+        if (udp != null)
+        {
+            udp.Send(data, data.Length, ip);
         }
     }
     /// <summary>

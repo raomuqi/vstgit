@@ -54,4 +54,18 @@ public static class CfgGenerate
         }
 
     }
+    [MenuItem("配置工具/打开配置文件夹")]
+    public static void OpenExposeCfgFolder()
+    {
+        string path = AppCfg.CfgPath;
+        try
+        {
+            Application.OpenURL(Path.GetDirectoryName(path));
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+
+    }
 }

@@ -5,7 +5,7 @@ using System.IO;
 using System;
 
 public class Global : MonoBehaviour {
-     Connection connection;
+   public Connection connection { get; set; }
     System.Action OnUpdate;
     public static Global instance;
        // Use this for initialization
@@ -77,8 +77,9 @@ public class Global : MonoBehaviour {
         catch(Exception e)
         {
             Debug.LogWarning("获取应用配置失败"+e.Message);
-            AppCfg.expose = new ExposeCfg();
-            string json = JsonUtility.ToJson(AppCfg.CfgPath);
+            ExposeCfg cfg = new ExposeCfg();
+            string json = JsonUtility.ToJson(cfg);
+            AppCfg.expose = cfg;
             File.WriteAllText(AppCfg.CfgPath, json);
             Debug.LogWarning(AppCfg.CfgPath);
         }

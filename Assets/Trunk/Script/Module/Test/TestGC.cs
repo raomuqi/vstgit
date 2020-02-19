@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -17,39 +19,13 @@ public class TestGC : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        // ProtoUdpWarp pl = new ProtoUdpWarp();
-        // pl.objList = new List<SyncObject>();
-         k = new SyncObject();
-        k.objectID = 0;
-        k.posX = 0;
-        // pl.objList.Add(k);
-        // SyncObject k2 = new SyncObject();
-        // k2.objectID = 1;
-        // k2.posZ = 1;
-        // pl.objList.Add(k2);
-        // SyncObject k3 = new SyncObject();
-        // k3.objectID = 3;
-        // k3.rotW = 3;
-        // pl.objList.Add(k3);
-        // ProtoBase dd = pl as ProtoBase;
-
-       
-        // Debug.Log(src.Length);        //    byte[] t= BitConverter.GetBytes()
-
-        //np = new ProtoUdpWarp();
-        //Debug.Log(np.objList[0].posX);
-        //Debug.Log(np.objList[1].objectID);
-        //Debug.Log(np.objList[1].posZ);
-        //Debug.Log(np.objList[2].rotW);
-
-
-
-
+       var udp = new UdpClient(1222);
+        var udp2 = new UdpClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1222));
     }
     SyncObject k;
     void Update()
     {
-        src = k.Serialize();
+     //   src = k.Serialize();
 
     }
 

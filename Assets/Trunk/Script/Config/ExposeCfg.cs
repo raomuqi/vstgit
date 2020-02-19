@@ -26,4 +26,6 @@ public class ExposeCfg
     public int IsDebuger = 0;
 
     public int pos = 1;
+
+    public bool differentUdpPort = false;
 }

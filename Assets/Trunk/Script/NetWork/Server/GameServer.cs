@@ -168,6 +168,7 @@ public class GameServer
                     p.connectStatus = 1;
                     p.id = id;
                     p.pos = loginPos;
+                    
                     playerInfos.Add(id, p);
                     Debug.LogWarning("玩家加入"+ id);
                     SyncPlayerList();

@@ -38,6 +38,7 @@ public class PlayerNetHandler : BaseNetHandler
         if (proto != null)
         {
             model.SetPlayerInfo(proto);
+            Global.instance.connection.SetUpMutiDataUdp(proto.id);
         }
     }
 
@@ -51,7 +52,20 @@ public class PlayerNetHandler : BaseNetHandler
 
           Util.DeSerializeProto<ProtoPlayerList>(p, playerListProto);
 
-       if (playerListProto != null)
-           model.SetPlayerList(playerListProto);
+        if ( Connection.differentUdpPort && playerListProto != null )
+        {
+            ProtoPlayerInfo selfInfo = model.GetPlayerInfo();
+            if (selfInfo != null)
+            {
+                for (int i = 0; i < playerListProto.players.Length; i++)
+                {
+                    ProtoPlayerInfo info = playerListProto.players[i];
+                    if (selfInfo.id != info.id)
+                    {
+                        Global.instance.connection.AddBroadCastPort(info.id);
+                    }
+                }
+            }
+        }
     }
 }

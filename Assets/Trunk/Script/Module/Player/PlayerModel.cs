@@ -6,6 +6,7 @@ public class PlayerModel : BaseModel
 {
     public const string name = "PlayerModel";
     ProtoPlayerInfo[] playerList;
+    ProtoPlayerInfo selfInfo;
     int playerID = 0;
     protected override void OnInit()
     {
@@ -16,7 +17,14 @@ public class PlayerModel : BaseModel
     public void SetPlayerInfo(ProtoPlayerInfo playerProto)
     {
         playerID = playerProto.id;
+        selfInfo = playerProto;
         Debug.Log("玩家ID：" + playerID + " 位置:" + playerProto.pos);
+
+    }
+
+    public ProtoPlayerInfo GetPlayerInfo()
+    {
+        return selfInfo;
     }
     public void SetPlayerList(ProtoPlayerList playerList)
     {
