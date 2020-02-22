@@ -75,6 +75,7 @@ public static class Util
         T result = d==null? new T(): d;
         if (!result.Parse(data))
         {
+            result.Recycle();
             return null;
         }
         return result;

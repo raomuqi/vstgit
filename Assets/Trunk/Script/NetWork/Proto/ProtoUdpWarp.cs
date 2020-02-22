@@ -20,9 +20,9 @@ public class ProtoUdpWarp :ProtoBase
         {
             for (int i = 0; i < objList.Length; i++)
             {
-                ObjectPool.protoPool.Recycle(ProtoPool.ProtoRecycleType.SyncObject, objList[i]);
+                objList[i].Recycle();
             }
         }
-        objList = ArrayDeSerializem<SyncObject>(data);
+        objList = ArrayDeSerializem<SyncObject>(data,ProtoPool.ProtoRecycleType.SyncObject);
     }
 }

@@ -2,12 +2,12 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.IO;
+
 
 public class SyncObject : ProtoBase
 {
-    public int objectID;
+    public int serverID=int.MaxValue;
+    public int objectIndex = 0;
     public float posX;
     public float posY;
     public float posZ;
@@ -17,13 +17,34 @@ public class SyncObject : ProtoBase
     public float rotZ;
     public float rotW;
 
+    public void SetPos(UnityEngine.Vector3 pos)
+    {
+        posX = pos.x;
+        posY = pos.y;
+        posZ = pos.z;
+    }
+    public void SetRot(UnityEngine.Quaternion rot)
+    {
+        rotX = rot.x;
+        rotY = rot.y;
+        rotZ = rot.z;
+        rotW = rot.w;
+    }
 
+    public UnityEngine.Vector3 GetPos()
+    {
+        return new UnityEngine.Vector3(posX, posY, posZ);
+    }
+    public UnityEngine.Quaternion GetRot()
+    {
+        return new UnityEngine.Quaternion(rotX, rotY, rotZ, rotW);
+    }
     protected override byte[] OnSerialize()
     {
-        byte[] serializeBuffer = new byte[32];
+        byte[] serializeBuffer = new byte[36];
         byte[] temp = null;
-       // 8 * 4
-        temp = BitConverter.GetBytes(objectID);
+       // 4* 9
+        temp = BitConverter.GetBytes(serverID);
         Array.Copy(temp, 0, serializeBuffer, 0, 4);
         temp = BitConverter.GetBytes(posX);
         Array.Copy(temp, 0, serializeBuffer, 4, 4);
@@ -39,14 +60,14 @@ public class SyncObject : ProtoBase
         Array.Copy(temp, 0, serializeBuffer, 24, 4);
         temp = BitConverter.GetBytes(rotW);
         Array.Copy(temp, 0, serializeBuffer, 28, 4);
-
-
+        temp= BitConverter.GetBytes(objectIndex);
+        Array.Copy(temp, 0, serializeBuffer, 32, 4);
         return serializeBuffer;
     }
 
     protected override void OnParse(byte[] data)
     {
-        objectID = BitConverter.ToInt32(data, 0);
+        serverID = BitConverter.ToInt32(data, 0);
         posX = BitConverter.ToSingle(data, 4);
         posY = BitConverter.ToSingle(data, 8);
         posZ = BitConverter.ToSingle(data, 12);
@@ -54,6 +75,12 @@ public class SyncObject : ProtoBase
         rotY = BitConverter.ToSingle(data, 20);
         rotZ = BitConverter.ToSingle(data, 24);
         rotW = BitConverter.ToSingle(data, 28);
+        objectIndex = BitConverter.ToInt32(data, 32);
+    }
+
+    protected override void OnRecycle()
+    {
+        ObjectPool.protoPool.Recycle(ProtoPool.ProtoRecycleType.SyncObject, this);
     }
 }
 

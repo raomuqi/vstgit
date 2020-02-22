@@ -18,8 +18,7 @@ public class InputCommand : BaseCommand
 #endif
     protected override void OnInit()
     {
-        syncModel = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
-        if (syncModel.IsUploader())
+        if (Connection.GetInstance().isHost)
         {
             VRChairSDK.GetInstance().Init();
             VRChairSDK.GetInstance().RegisterBtnChangeCallback(onBtnDown);
@@ -32,7 +31,7 @@ public class InputCommand : BaseCommand
     }
     protected override void OnClear()
     {
-        if (syncModel.IsUploader())
+        if (Connection.GetInstance().isHost)
         {
             VRChairSDK.GetInstance().Dispose();
         }

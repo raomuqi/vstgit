@@ -23,7 +23,6 @@ public class SceneModel : BaseModel
     public void SetPlayerShip(PlayerShip inputShip)
     {
         playerShip = inputShip;
-        sceneObjs.Add(0, inputShip.sceneObject);
     }
 
  
@@ -32,9 +31,17 @@ public class SceneModel : BaseModel
     /// </summary>
     public void RemoveSceneObject(SceneObject sObject)
     {
-        if (sceneObjs.ContainsKey(sObject.objectID))
+        if (sceneObjs.ContainsKey(sObject.sync.serverID))
         {
-            sceneObjs.Remove(sObject.objectID);
+            sceneObjs.Remove(sObject.sync.serverID);
+        }
+    }
+
+    public void AddSceneObject(SceneObject sObject)
+    {
+        if (!sceneObjs.ContainsKey(sObject.sync.serverID))
+        {
+            sceneObjs.Add(sObject.sync.serverID,sObject);
         }
     }
 }

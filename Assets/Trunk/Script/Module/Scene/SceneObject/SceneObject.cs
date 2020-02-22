@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class SceneObject
 {
-    public SyncObject sync;
+    SyncObject _sync;
+    public SyncObject sync
+    {
+        get { if (_sync == null)
+                _sync = new SyncObject();
+            return _sync;
+                    }
+    }
 
-    public int objectID;
     public SceneObject(){}
     SceneGameObject sgo;
     public SceneObject(SceneGameObject sgo)
     {
         this.sgo = sgo;
     }
-
+  
 }

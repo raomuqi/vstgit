@@ -5,13 +5,14 @@ using System.IO;
 using System;
 
 public class Global : MonoBehaviour {
-   public Connection connection { get; set; }
+    Connection connection { get; set; }
     System.Action OnUpdate;
     public static Global instance;
        // Use this for initialization
     void Awake ()
     {
         instance = this;
+       
         Application.runInBackground = true;
         GameObject.DontDestroyOnLoad(gameObject);
         InitAppCfg();
@@ -25,6 +26,7 @@ public class Global : MonoBehaviour {
 
     private void Start()
     {
+        Application.targetFrameRate = 90;
     }
     void Update ()
     {

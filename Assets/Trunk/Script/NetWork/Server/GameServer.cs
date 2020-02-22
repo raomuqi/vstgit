@@ -46,7 +46,7 @@ public class GameServer
 
     public Dictionary<byte,ProtoPlayerInfo> playerInfos = new Dictionary<byte, ProtoPlayerInfo>();
 
-    public Dictionary<int, SceneObject> sceneObjes = new Dictionary<int, SceneObject>();
+    public Dictionary<int, SyncObject> sceneObjes = new Dictionary<int, SyncObject>();
 
 
     public GameServer(bool autoConnect, int port,int broadCastPort,string netGroup)
@@ -61,9 +61,6 @@ public class GameServer
         this.autoConnect = autoConnect;
         if (autoConnect)
         {
-            //string hostname = Dns.GetHostName();//
-            //IPHostEntry localhost = Dns.GetHostEntry(hostname);
-            //IPAddress localaddr = localhost.AddressList[1];
             IPHostEntry IpEntry = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress ipa in IpEntry.AddressList)
             {
@@ -122,7 +119,7 @@ public class GameServer
     /// </summary>
     void ParseMsg(TcpHost.SocketAccept socket, byte protoID, byte[] protoData)
     {
-        ProtoPlayerInfo p;
+       
         switch (protoID)
         {
             //心跳
@@ -132,61 +129,109 @@ public class GameServer
                 break;
             //登入
             case ProtoIDCfg.LOGIN:
-                byte id = (byte)socket.id;
-                if (playerInfos.TryGetValue((byte)id, out p))
-                {
-                    p.connectStatus = 1;
-                    host.RemoveClient(id);
-                }
-                else
-                {
-                    byte loginPos = protoData[0];
-                    bool[] inPosPlayers = new bool[10];
-                    bool canUsePos = true;
-                    foreach (var player in playerInfos)
-                    {
-                        if (player.Value.pos == loginPos)
-                        {
-                            canUsePos = false;
-                        }
-                        inPosPlayers[player.Value.pos] = true; 
-                    }
-                    if (!canUsePos)
-                    {
-                        for (int i = 1; i < inPosPlayers.Length; i++)
-                        {
-                            if (inPosPlayers[i] == false)
-                            {
-                                loginPos = (byte)i;
-                                break;
-                            }
-                        }
-                    }
-                    p = new ProtoPlayerInfo();
-                    p.hp = PlayerCfg.HP;
-                    p.score = PlayerCfg.score;
-                    p.connectStatus = 1;
-                    p.id = id;
-                    p.pos = loginPos;
-                    
-                    playerInfos.Add(id, p);
-                    Debug.LogWarning("玩家加入"+ id);
-                    SyncPlayerList();
-                }
-                //返回角色数据
-                SendMsg(socket.id, ProtoIDCfg.LOGIN, p);
+                OnMsgLogin(socket,protoData);
                 break;
             //进入场景
             case ProtoIDCfg.ENTER_SCENE:
-                ProtoInt intP = new ProtoInt();
-                intP.Parse(protoData);
-                int playerMapID = intP.context;
-                if (playerInfos.TryGetValue((byte)socket.id, out p))
-                {
-                    p.mapID = playerMapID;
-                }
-
+                OnMsgEnterScene(socket, protoData);
               break;
+             //创建对象
+            case ProtoIDCfg.CREATE_OBJECTS:
+                OnMsgCreateObject(socket, protoData);
+                break;
+            case ProtoIDCfg.SYNC_OBJECTS:
+                ProtoUdpWarp warp = new ProtoUdpWarp();
+                if (warp.Parse(protoData))
+                {
+                    Broadcast(ProtoIDCfg.SYNC_OBJECTS, warp);
+                }
+            
+                break;
+        }
+    }
+    void OnMsgLogin(TcpHost.SocketAccept socket,  byte[] protoData)
+    {
+        ProtoPlayerInfo p;
+        byte id = (byte)socket.id;
+        if (playerInfos.TryGetValue((byte)id, out p))
+        {
+            p.connectStatus = 1;
+            host.RemoveClient(id);
+        }
+        else
+        {
+            byte loginPos = protoData[0];
+            bool[] inPosPlayers = new bool[10];
+            bool canUsePos = true;
+            foreach (var player in playerInfos)
+            {
+                if (player.Value.pos == loginPos)
+                {
+                    canUsePos = false;
+                }
+                inPosPlayers[player.Value.pos] = true;
+            }
+            if (!canUsePos)
+            {
+                for (int i = 1; i < inPosPlayers.Length; i++)
+                {
+                    if (inPosPlayers[i] == false)
+                    {
+                        loginPos = (byte)i;
+                        break;
+                    }
+                }
+            }
+            p = new ProtoPlayerInfo();
+            p.hp = PlayerCfg.HP;
+            p.score = PlayerCfg.score;
+            p.connectStatus = 1;
+            p.id = id;
+            p.pos = loginPos;
+
+            playerInfos.Add(id, p);
+            Debug.LogWarning("玩家加入" + id);
+            SyncPlayerList();
+        }
+        //返回角色数据
+        SendMsg(socket.id, ProtoIDCfg.LOGIN, p);
+
+    }
+
+    void OnMsgEnterScene(TcpHost.SocketAccept socket,  byte[] protoData)
+    {
+        ProtoPlayerInfo p;
+        ProtoInt intP = new ProtoInt();
+        intP.Parse(protoData);
+        int playerMapID = intP.context;
+        intP.Recycle();
+        if (playerInfos.TryGetValue((byte)socket.id, out p))
+        {
+            p.mapID = playerMapID;
+            Debug.LogWarning(socket.id + "进入场景完成");
+        }
+    }
+
+    void OnMsgCreateObject(TcpHost.SocketAccept socket, byte[] protoData)
+    {
+        SyncObject syncObj = new SyncObject();
+        if (syncObj.Parse(protoData))
+        {
+            CreateSceneObject(syncObj);
+        }
+    }
+    /// <summary>
+    /// 创建创建对象
+    /// </summary>
+    void CreateSceneObject(SyncObject obj)
+    {
+        int serverId = sceneObjes.Count;
+        obj.serverID = serverId;
+        if (!sceneObjes.ContainsKey(obj.serverID))
+        {
+            sceneObjes.Add(obj.serverID, obj);
+            Broadcast(ProtoIDCfg.CREATE_OBJECTS, obj);
+            Debug.LogWarning("创建对象：" + obj.objectIndex);
         }
     }
 
@@ -276,9 +321,6 @@ public class GameServer
             Broadcast(ProtoIDCfg.ENTER_SCENE, proto);
             waitEnterSceneTime = Time.time;
             gameStatus = GameStatus.EnterScene;
-            SceneObject shipObj = new SceneObject();
-            shipObj.objectID = 0;
-            CreateSceneObject(shipObj);
         }
     }
     /// <summary>
@@ -299,13 +341,7 @@ public class GameServer
         }
 
     }
-    void CreateSceneObject(SceneObject obj)
-    {
-        if (sceneObjes.ContainsKey(obj.objectID))
-        {
-            sceneObjes.Add(obj.objectID, obj);
-        }
-    }
+ 
 
     #region 收发消息实现函数
     /// <summary>

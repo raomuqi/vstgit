@@ -14,5 +14,9 @@ public class ProtoInt :ProtoBase
     {
         context = System.BitConverter.ToInt32(data,0);
     }
-
+    protected override void OnRecycle()
+    {
+        ObjectPool.protoPool.Recycle(ProtoPool.ProtoRecycleType.Int, this);
+    }
+   
 }

@@ -1,38 +1,32 @@
 ﻿
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SyncModel : BaseModel
 {
     public const string name = "SyncModel";
-    public List<SyncObject> syncList = new List<SyncObject>();
-    Dictionary<int, SyncObject> syncDic = new Dictionary<int, SyncObject>();
-    /// <summary>
-    /// 是否上传者
-    /// </summary>
-    public static bool isUploader = false;
+    public List<SyncObject> uploadList = new List<SyncObject>();
+    Dictionary<int, SyncObject> updataList = new Dictionary<int, SyncObject>();
+
     protected override void OnInit()
     {
-        isUploader = Connection.GetInstance().isHost;
     }
 
     protected override void OnClear() { }
 
 
-    public bool IsUploader()
-    {
-        return isUploader;
-    }
     /// <summary>
     /// 刷新同步数据
     /// </summary>
     public void UpdateSyncData(SyncObject[] updateList)
     {
+
         for (int i = 0; i < updateList.Length; i++)
         {
             SyncObject updateObj = updateList[i];
             SyncObject srcObj;
-            if (syncDic.TryGetValue(updateObj.objectID, out srcObj))
+            if (updataList.TryGetValue(updateObj.serverID, out srcObj))
             {
                 srcObj.posX = updateObj.posX;
                 srcObj.posY = updateObj.posY;
@@ -42,32 +36,56 @@ public class SyncModel : BaseModel
                 srcObj.rotZ = updateObj.rotZ;
                 srcObj.rotW = updateObj.rotW;
             }
+            else
+            {
+                if (SyncCreater.instance != null)
+                    SyncCreater.instance.CreateObject(updateObj.objectIndex, updateObj.serverID, updateObj);
+            }
+            updateObj.Recycle();
         }
 
     } 
     /// <summary>
-    /// 添加同步物体
+    /// 添加同步物体到上传列表
     /// </summary>
-    public void AddSyncObj(SyncObject sync)
+    public void AddUpLoadList(SyncObject sync)
     {
-        if (!syncList.Contains(sync))
+        if (!uploadList.Contains(sync))
         {
-            syncList.Add(sync);
-            syncDic.Add(sync.objectID, sync);
+            Debug.Log("添加上传物体"+sync.serverID);
+            uploadList.Add(sync);
+        }
+    }
+    /// <summary>
+    /// 添加同步物体到更新列表
+    /// </summary>
+    public void AddUpUpdateList(SyncObject sync)
+    {
+        if (!updataList.ContainsKey(sync.serverID))
+        {
+            updataList.Add(sync.serverID, sync);
         }
     }
 
     /// <summary>
-    /// 移除同步物体
+    /// 移除上传物体
     /// </summary>
-    public void RemoveSyncObj(SyncObject sync)
+    public void RemoveUpLoadObj(SyncObject sync)
     {
-        if (syncList.Contains(sync))
+        if (uploadList.Contains(sync))
         {
-            syncList.Remove(sync);
-            syncDic.Remove(sync.objectID);
+            uploadList.Remove(sync);
         }
     }
-
+    /// <summary>
+    /// 移除更新物体
+    /// </summary>
+    public void RemoveUpDataObj(SyncObject sync)
+    {
+        if (updataList.ContainsKey(sync.serverID))
+        {
+            updataList.Remove(sync.serverID);
+        }
+    }
 
 }

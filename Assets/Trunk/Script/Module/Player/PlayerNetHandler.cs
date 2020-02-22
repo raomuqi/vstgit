@@ -38,7 +38,8 @@ public class PlayerNetHandler : BaseNetHandler
         if (proto != null)
         {
             model.SetPlayerInfo(proto);
-            Global.instance.connection.SetUpMutiDataUdp(proto.id);
+            Connection.GetInstance().RemoveBroadCastPort(proto.id);
+            Connection.GetInstance().SetUpMutiDataUdp(proto.id);
         }
     }
 
@@ -50,22 +51,23 @@ public class PlayerNetHandler : BaseNetHandler
         if (playerListProto == null)
             playerListProto = new ProtoPlayerList();
 
-          Util.DeSerializeProto<ProtoPlayerList>(p, playerListProto);
+        Util.DeSerializeProto<ProtoPlayerList>(p, playerListProto);
 
-        if ( Connection.differentUdpPort && playerListProto != null )
+        if (Connection.GetInstance().differentUdpPort && playerListProto != null)
         {
             ProtoPlayerInfo selfInfo = model.GetPlayerInfo();
-            if (selfInfo != null)
+            int selfID = 255;
+            selfID = selfInfo == null ? selfID : selfInfo.id;
+            for (int i = 0; i < playerListProto.players.Length; i++)
             {
-                for (int i = 0; i < playerListProto.players.Length; i++)
+                ProtoPlayerInfo info = playerListProto.players[i];
+                if (selfID != info.id)
                 {
-                    ProtoPlayerInfo info = playerListProto.players[i];
-                    if (selfInfo.id != info.id)
-                    {
-                        Global.instance.connection.AddBroadCastPort(info.id);
-                    }
+                    Connection.GetInstance().AddBroadCastPort(info.id);
                 }
             }
         }
+        Debug.Log("刷新玩家信息");
+
     }
 }

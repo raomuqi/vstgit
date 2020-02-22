@@ -8,20 +8,39 @@ public class SceneGameObject : MonoBehaviour
     protected virtual void OnUpdate() { }
     protected virtual void OnStart() { }
     protected virtual void OnDestroyed() { }
-    public SceneObject sceneObject;
+    SceneObject _sceneObject;
+    public SceneObject sceneObject
+    {
+        get
+        {
+            if (_sceneObject == null)
+                _sceneObject = new SceneObject(this);
+            return _sceneObject;
+        }
+    }
     bool syncIng=false;
     private Vector3 latestCorrectPos = Vector3.zero;
     private Vector3 movementVector = Vector3.zero;
     private Vector3 errorVector = Vector3.zero;
     private double lastTime = 0;
-
-    public SceneGameObject()
+    [Header("控制权(0:主机  >0:玩家ID)")]
+    public int controlPos = -1;
+    public SyncSetting syncSetting=SyncSetting.LocalPosAndRot;
+    protected SyncModel _syncModel;
+    protected SyncType syncType=SyncType.None;
+    protected SyncModel syncModel
     {
-        sceneObject = new SceneObject(this);
+        get
+        {
+            if (_syncModel == null)
+                _syncModel=  SyncController.instance.GetModel<SyncModel>(SyncModel.name);
+            return _syncModel;
+        }
     }
+ 
     private void Awake()
     {
-        this.latestCorrectPos = transform.position;
+    
         OnAwake();
 
     }
@@ -37,29 +56,91 @@ public class SceneGameObject : MonoBehaviour
     }
     public void UplodeSync()
     {
-        if (SyncModel.isUploader)
+        if (syncType==SyncType.UpLoad)
         {
-             
-            sceneObject.sync.posX = transform.position.x;
-            sceneObject.sync.posY = transform.position.y;
-            sceneObject.sync.posZ = transform.position.z;
-            sceneObject.sync.rotX = transform.rotation.x;
-            sceneObject.sync.rotY = transform.rotation.y;
-            sceneObject.sync.rotZ = transform.rotation.z;
-            sceneObject.sync.rotW = transform.rotation.w;
+
+            if (syncSetting == SyncSetting.LocalPos || syncSetting == SyncSetting.LocalPosAndRot)
+            {
+                sceneObject.sync.SetPos(transform.localPosition);
+            }
+            else if (syncSetting == SyncSetting.WorldPos || syncSetting == SyncSetting.WorldPosAndRot)
+            {
+                sceneObject.sync.SetPos(transform.position);
+            }
+
+            if (syncSetting == SyncSetting.LocalRot || syncSetting == SyncSetting.LocalPosAndRot)
+            {
+                sceneObject.sync.SetRot(transform.localRotation);
+            }
+            else if (syncSetting == SyncSetting.WorldRot || syncSetting == SyncSetting.WorldPosAndRot)
+            {
+                sceneObject.sync.SetRot(transform.rotation);
+            }
         }
         else
         {
-            Vector3 pos = new Vector3(sceneObject.sync.posX, sceneObject.sync.posY, sceneObject.sync.posZ);
-            Quaternion rot = new Quaternion(sceneObject.sync.rotX, sceneObject.sync.rotY, sceneObject.sync.rotZ, sceneObject.sync.rotW);
-           /// transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime);
-           transform.rotation =Quaternion.Slerp(transform.rotation, rot,Time.deltaTime*10);
-            double timeDiffOfUpdates = Time.time - this.lastTime;
-            this.movementVector = (pos - this.latestCorrectPos) / (float)timeDiffOfUpdates;
-            this.errorVector = (pos - transform.localPosition) / (float)timeDiffOfUpdates;
-            this.latestCorrectPos = pos;
-            transform.position += (this.movementVector + this.errorVector) * 0.98f * Time.deltaTime;
+           
+            SmoothPos(sceneObject.sync.GetPos());
+            SmoothRot(sceneObject.sync.GetRot());
         }
+    }
+   
+    void SmoothPos(Vector3 pos)
+    {
+        double timeDiffOfUpdates = Time.time - this.lastTime;
+        this.lastTime = Time.time;
+        this.movementVector = (pos - this.latestCorrectPos) / (float)timeDiffOfUpdates;
+        this.errorVector = (pos - transform.localPosition) / (float)timeDiffOfUpdates;
+        this.latestCorrectPos = pos;
+        Vector3 temp = (this.movementVector + this.errorVector) * 0.98f * Time.deltaTime;
+      
+        if (syncSetting == SyncSetting.LocalPos || syncSetting == SyncSetting.LocalPosAndRot)
+        {
+           // transform.localPosition = pos;
+            transform.localPosition += temp;
+        }
+        else if (syncSetting == SyncSetting.WorldPos || syncSetting == SyncSetting.WorldPosAndRot)
+        {
+          //  transform.position = pos;
+           transform.position += temp;
+        }
+    }
+    void SmoothRot(Quaternion rot)
+    {
+        if (syncSetting == SyncSetting.LocalRot || syncSetting == SyncSetting.LocalPosAndRot)
+        {
+           // transform.localRotation = rot;
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, rot, Time.deltaTime * 10);
+        }
+        else if (syncSetting == SyncSetting.WorldRot || syncSetting == SyncSetting.WorldPosAndRot)
+        {
+           // transform.rotation = rot;
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 10);
+        }
+    }
+    public Vector3 GetStartPos()
+    {
+        if (syncSetting == SyncSetting.LocalPos || syncSetting == SyncSetting.LocalPosAndRot)
+        {
+            return transform.localPosition;
+        }
+        else if (syncSetting == SyncSetting.WorldPos || syncSetting == SyncSetting.WorldPosAndRot)
+        {
+            return transform.position;
+        }
+        return transform.localPosition;
+    }
+    public Quaternion GetStartRot()
+    {
+        if (syncSetting == SyncSetting.LocalRot || syncSetting == SyncSetting.LocalPosAndRot)
+        {
+            return transform.localRotation;
+        }
+        else if (syncSetting == SyncSetting.WorldRot || syncSetting == SyncSetting.WorldPosAndRot)
+        {
+            return transform.rotation;
+        }
+        return transform.localRotation;
     }
     // Update is called once per frame
     void Update()
@@ -73,22 +154,46 @@ public class SceneGameObject : MonoBehaviour
     /// <summary>
     /// 设置同步
     /// </summary>
-    public void SetSyncStatus(int objectID,bool needSync)
+    public void SetSyncStatus(int prefabIndex, int serverID, bool needSync,int pos,Vector3 position,Quaternion rot)
     {
-        SyncModel syncModel = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
+        if (controlPos == 0 && Connection.GetInstance().isHost)
+            syncType= SyncType.UpLoad;
+        else if(controlPos == pos)
+            syncType = SyncType.UpLoad;
+        else
+            syncType = SyncType.UpDate;
+
         if (needSync)
         {
-            if (sceneObject.sync == null)
+            sceneObject.sync.serverID = serverID;
+            sceneObject.sync.objectIndex = prefabIndex;
+
+            if (syncSetting == SyncSetting.LocalPos || syncSetting == SyncSetting.LocalPosAndRot)
             {
-                sceneObject.sync = new SyncObject();
-                sceneObject.objectID = objectID;
+                transform.localPosition = position;
+                latestCorrectPos = transform.localPosition ;
             }
-            syncModel.AddSyncObj(sceneObject.sync);
+            else if (syncSetting == SyncSetting.WorldPos || syncSetting == SyncSetting.WorldPosAndRot)
+            {
+                transform.position = position;
+                latestCorrectPos = transform.position ;
+            }
+            SmoothRot(rot);
+
+            if (syncType==SyncType.UpLoad)
+                syncModel.AddUpLoadList(sceneObject.sync);
+            else
+                syncModel.AddUpUpdateList(sceneObject.sync);
         }
         else
         {
-            if(sceneObject.sync != null)
-               syncModel.RemoveSyncObj(sceneObject.sync);
+            if (sceneObject.sync != null)
+            {
+                if (syncType == SyncType.UpLoad)
+                    syncModel.RemoveUpLoadObj(sceneObject.sync);
+                else
+                    syncModel.RemoveUpDataObj(sceneObject.sync);
+            }
         }
         syncIng = needSync;
     }

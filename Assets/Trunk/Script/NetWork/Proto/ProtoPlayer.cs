@@ -46,4 +46,8 @@ public class ProtoPlayerInfo : ProtoBase
         mapID = BitConverter.ToInt32(data, 8);
     }
 
+    protected override void OnRecycle()
+    {
+        ObjectPool.protoPool.Recycle(ProtoPool.ProtoRecycleType.PlayerInfo, this);
+    }
 }

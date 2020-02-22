@@ -17,7 +17,7 @@ public class ProtoPlayerList :ProtoBase
         {
             for (int i = 0; i < players.Length; i++)
             {
-                ObjectPool.protoPool.Recycle(ProtoPool.ProtoRecycleType.PlayerInfo,players[i]);
+                players[i].Recycle();
             }
         }
         players = ArrayDeSerializem<ProtoPlayerInfo>(data,ProtoPool.ProtoRecycleType.PlayerInfo);

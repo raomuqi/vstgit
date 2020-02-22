@@ -28,19 +28,19 @@ public class UdpBase  {
     bool canRecv = true;
     string name;
     IPEndPoint selfIP;
+    public int maxCache =5;
     // Use this for initialization
     public UdpBase(int port, string name, bool canRecv=true)
     {
         
             this.name = name;
             connectPort = port;
-            IPEndPoint broadcastIP = new IPEndPoint(IPAddress.Broadcast, port);
             this.canRecv = canRecv;
             if (canRecv)
             {
                  try
                  {
-                     selfIP = new IPEndPoint(IPAddress.Any, port);
+                     selfIP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
                      udp = new UdpClient(port);
                      recvThread = new Thread(Listen);
                  }
@@ -99,20 +99,21 @@ public class UdpBase  {
     void Listen()
     {
         isConnect = true;
+        recvEndPoint = new IPEndPoint(IPAddress.Any, connectPort);
         while (isConnect)
         {
             try
             {
                 byte[] recvdata = udp.Receive(ref recvEndPoint);
-                if (recvMsgs.Count >= 2048)
+                if (recvMsgs.Count >= maxCache)
                 {
                     recvMsgs.Dequeue();
                 }
                 recvMsgs.Enqueue(recvdata);
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
-
+                    Debug.LogError(e.Message);
             }
 
         }

@@ -5,51 +5,50 @@ using UnityEngine;
 public class SyncNetHandler : BaseNetHandler
 {
     SyncModel model;
-    ProtoUdpWarp udpWarp;
+    ProtoUdpWarp upLoadWarp;
+    ProtoUdpWarp upDateWarp;
 #if UNITY_EDITOR
     UnityEngine.Profiling.CustomSampler updateSyncSampler;
     UnityEngine.Profiling.CustomSampler uploadSyncSampler;
 #endif
     protected override void OnInit()
     {
-
-        udpWarp = new ProtoUdpWarp();
+        upLoadWarp = new ProtoUdpWarp();
+        upDateWarp = new ProtoUdpWarp();
 #if UNITY_EDITOR
         updateSyncSampler = UnityEngine.Profiling.CustomSampler.Create("OnSyncObjectList");
         uploadSyncSampler= UnityEngine.Profiling.CustomSampler.Create("SendSyncObjectList");
 #endif
         model = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
-        if (model.IsUploader())
-        {
-            Global.instance.AddUpdateFunction(SendSyncObjectList);
-        }
-        else
-            RegisterListenProto(ProtoIDCfg.SYNC_OBJECTS, OnSyncObjectList);
+        Global.instance.AddUpdateFunction(SendSyncObjectList);
+        RegisterListenProto(ProtoIDCfg.SYNC_OBJECTS, OnSyncObjectList);
     }
     protected override void OnClear()
     {
         Global.instance.RemoveUpdateFunction(SendSyncObjectList);
     }
     /// <summary>
-    /// 发送同步数据
+    /// 发送上传数据
     /// </summary>
     void SendSyncObjectList()
     {
-#if UNITY_EDITOR
-        uploadSyncSampler.Begin();
-#endif
-        if (model.syncList.Count > 0)
+//#if UNITY_EDITOR
+//        uploadSyncSampler.Begin();
+//#endif
+        if (model.uploadList.Count > 0)
         {
-            udpWarp.objList = new SyncObject[model.syncList.Count];
-            for (int i = 0; i < model.syncList.Count; i++)
+            upLoadWarp.objList = new SyncObject[model.uploadList.Count];
+            for (int i = 0; i < model.uploadList.Count; i++)
             {
-                udpWarp.objList[i] = model.syncList[i];
+                upLoadWarp.objList[i] = model.uploadList[i];
+
             }
-            Send(ProtoIDCfg.SYNC_OBJECTS, udpWarp, ProtoType.Unimportance);
+            Send(ProtoIDCfg.SYNC_OBJECTS, upLoadWarp, ProtoType.Unimportance);
         }
-#if UNITY_EDITOR
-        uploadSyncSampler.End();
-#endif
+
+//#if UNITY_EDITOR
+//        uploadSyncSampler.End();
+//#endif
 
     }
     void OnSyncObjectList(byte[] protoObj)
@@ -57,13 +56,15 @@ public class SyncNetHandler : BaseNetHandler
 #if UNITY_EDITOR
         updateSyncSampler.Begin();
 #endif
-         Util.DeSerializeUDPProto(protoObj,ref udpWarp);
+         Util.DeSerializeUDPProto(protoObj,ref upDateWarp);
 #if UNITY_EDITOR
         updateSyncSampler.End();
 #endif
-        if (udpWarp != null)
+        if (upDateWarp != null)
         {
-            SyncObject[] protoList = udpWarp.objList;
+            SyncObject[] protoList = upDateWarp.objList;
+            //for (int i = 0; i < upDateWarp.objList.Length; i++)
+            //    Debug.Log(upDateWarp.objList[i].serverID);
             model.UpdateSyncData(protoList);
         }
 

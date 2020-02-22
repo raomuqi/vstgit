@@ -10,6 +10,11 @@ public abstract class BaseNetHandler
         if (sendEvets != null)
             sendEvets.FireEvent(cmd, args);
     }
+    /// <summary>
+    /// 发送Proto
+    /// </summary>
+    /// <param name="cmd"></param>
+    /// <param name="cb"></param>
     protected void RegisterSendProto(byte cmd, EventCallBack cb)
     {
         if (sendEvets == null)
@@ -17,6 +22,11 @@ public abstract class BaseNetHandler
         sendEvets.AddEvent(cmd, cb);
 
     }
+    /// <summary>
+    /// 监听Proto
+    /// </summary>
+    /// <param name="protoID"></param>
+    /// <param name="cb"></param>
     protected void RegisterListenProto(byte protoID, ProtoCallBack cb)
     {
         Connection.GetInstance().AddLisener(protoID, cb);

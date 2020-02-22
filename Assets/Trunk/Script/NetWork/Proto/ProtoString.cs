@@ -15,5 +15,8 @@ public class ProtoString : ProtoBase
     {
         context = System.Text.Encoding.UTF8.GetString(data);
     }
-
+    protected override void OnRecycle()
+    {
+        ObjectPool.protoPool.Recycle(ProtoPool.ProtoRecycleType.String, this);
+    }
 }

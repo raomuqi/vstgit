@@ -2,9 +2,6 @@
 
 using System;
 
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 
 public  class ProtoBase
 {
@@ -14,7 +11,7 @@ public  class ProtoBase
         try
         {
             return OnSerialize();
-         }
+        }
         catch (Exception e)
         {
             UnityEngine.Debug.LogError(e.Message);
@@ -36,7 +33,26 @@ public  class ProtoBase
         }
     }
     /// <summary>
-    /// 必须每个组员长度一样
+    /// 回收如对象池
+    /// </summary>
+    public void Recycle()
+    {
+        OnRecycle();
+    }
+
+    protected virtual byte[] OnSerialize()
+    {
+        byte[] temp = null;
+        return temp;
+    }
+    protected virtual void OnParse(byte[] data) { }
+
+
+    protected virtual void OnRecycle()
+    {
+    }
+    /// <summary>
+    /// 通用数组序列化,必须每个组员长度一样
     /// </summary>
     /// <returns></returns>
     protected  byte[] ArraySerialize<T>(ProtoBase[] array) where T :ProtoBase
@@ -70,7 +86,10 @@ public  class ProtoBase
         }
         return result;
     }
-
+    /// <summary>
+    /// 通用数组反序列化
+    /// </summary>
+    /// <returns></returns>
     protected T[] ArrayDeSerializem<T>(byte[] array,ProtoPool.ProtoRecycleType poolType= ProtoPool.ProtoRecycleType.None) where T : ProtoBase,new()
     {
         T[] result = null;
@@ -93,17 +112,7 @@ public  class ProtoBase
             
         return result;
     }
-   
-    protected virtual byte[] OnSerialize()
-    {
-        byte[] temp = null;
-        return temp;
-    }
-    protected  virtual void OnParse(byte[] data)
-    {
-
-
-    }
+ 
 
  
 

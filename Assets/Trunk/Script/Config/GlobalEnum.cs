@@ -13,3 +13,21 @@ public enum GameStatus
     Running,
     End
 }
+
+
+
+public enum SyncType
+{
+    None,
+    UpLoad,
+    UpDate
+}
+public enum SyncSetting
+{
+  LocalPosAndRot,
+  LocalPos,
+  LocalRot,
+  WorldPosAndRot,
+  WorldPos,
+  WorldRot
+}

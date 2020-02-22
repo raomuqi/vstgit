@@ -35,7 +35,9 @@ public class Connection
  
     //TCP端口
     int tcpPort;
-    //是否主机
+    /// <summary>
+    /// 是否主机
+    /// </summary>
     public  bool isHost = false;
     //IP广播端口
     int broadCastPort = 7888;
@@ -68,7 +70,7 @@ public class Connection
     System.Action onDisConnect;
     Dictionary<int, IPEndPoint> broadCastList;
     //方便测试一机多端口
-   public static  bool differentUdpPort = false;
+   public  bool differentUdpPort = false;
 #if UNITY_EDITOR
     UnityEngine.Profiling.CustomSampler sendSampler;
     UnityEngine.Profiling.CustomSampler recvSampler;
@@ -188,7 +190,10 @@ public class Connection
     void Send(byte[] data, ProtoType msgType)
     {
         if (data == null)
+        {
+            Debug.LogError("发送数据错误");
             return;
+        }
         switch (msgType)
         {
             case ProtoType.Importance:
@@ -198,7 +203,9 @@ public class Connection
                 if (differentUdpPort)
                 {
                     foreach (var ip in broadCastList)
+                    {
                         multidataConnection.SendTo(data, ip.Value);
+                    }
                 }
                 else
                       multidataConnection.BroadCast(data);
@@ -225,21 +232,24 @@ public class Connection
     {
         IPEndPoint add = null;
         int port = udpPort + id;
-        if (!broadCastList.TryGetValue(port, out add))
+        if (broadCastList!=null && !broadCastList.TryGetValue(port, out add))
         {
-            broadCastList.Add(port, new IPEndPoint(IPAddress.Broadcast, port));
-            Debug.Log("添加广播对象:" + port);
+            IPEndPoint p = new IPEndPoint(IPAddress.Broadcast,port);
+            broadCastList.Add(port, p);
+            Debug.Log("添加广播对象:" + p);
         }
     }
 
     /// <summary>
     /// 移除广播对象
     /// </summary>
-    public void RemoveBroadCastPort(int port)
+    public void RemoveBroadCastPort(int id)
     {
-        if (broadCastList.ContainsKey(port))
+        int port = udpPort + id;
+        if (broadCastList!=null && broadCastList.ContainsKey(port))
         {
             broadCastList.Remove(port);
+            Debug.Log("移除广播对象:" + port);
         }
     }
     /// <summary>
@@ -365,6 +375,8 @@ public class Connection
                     if (version == Application.version && netGroup == group)
                     {
                         recvBroadCastIP = false;
+                        syncIpConnection.Dispose();
+                        syncIpConnection = null;
                         ConenctTcp(ip);
                     }
                 }
