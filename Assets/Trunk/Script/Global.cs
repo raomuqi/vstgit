@@ -105,12 +105,12 @@ public class Global : MonoBehaviour {
     /// </summary>
     void InitModule()
     {
-        //同步模块
-        SyncController.instance.InitModule();
         //输入模块
         InputController.instance.InitModule();
         //玩家模块
         PlayerController.instance.InitModule();
+        //同步模块
+        SyncController.instance.InitModule();
         //场景模块
         SceneController.instance.InitModule();
     }

@@ -35,4 +35,8 @@ public static class ProtoIDCfg
     /// 创建对象
     /// </summary>
     public const byte CREATE_OBJECTS = 7;
+    /// <summary>
+    /// 同步输入
+    /// </summary>
+    public const byte SYNC_INPUT = 8;
 }

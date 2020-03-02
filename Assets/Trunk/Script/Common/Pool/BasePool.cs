@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BasePool<T>
 {
-    Queue<T> objectList = new Queue<T>();
-    public void Recycle(T obj)
+    Dictionary<int, Queue<T>> objectList = new Dictionary<int, Queue<T>>();
+    protected virtual void OnRecycle(T obj) { }
+    public void Recycle(int key, T obj)
     {
+        Queue<T> queue;
+        if (!objectList.TryGetValue(key, out queue))
+        {
+            queue = new Queue<T>();
+            objectList.Add(key, queue);
+        }
+        queue.Enqueue(obj);
         OnRecycle(obj);
-        objectList.Enqueue(obj);
     }
 
-    public T GetObj()
+    public T GetObj(int key)
     {
-        T obj = objectList.Dequeue();
-        OnGet(obj);
+        Queue<T> queue;
+        T obj=default(T);
+        if (objectList.TryGetValue(key, out queue))
+        {
+            if(queue.Count>0)
+            obj = queue.Dequeue();
+        }
         return obj;
     }
-    protected virtual void OnRecycle(T obj) { }
-    protected virtual void OnGet(T obj) { }
+
 }
