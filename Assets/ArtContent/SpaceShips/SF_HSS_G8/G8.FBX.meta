@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: ee78f968c8a2ede40989ba52b861df9d
+timeCreated: 1490091863
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: HSS_G8-AR_Node
+    100004: HSS_G8-AR_Node001
+    100006: HSS_G8-AR_Node002
+    100008: HSS_G8-AR_Node003
+    100010: HSS_G8-AR_Node004
+    100012: HSS_G8-BA_Module
+    100014: HSS_G8-BA_Module001
+    100016: HSS_G8-BE_Arrays
+    100018: HSS_G8-BE_Arrays001
+    100020: HSS_G8-BK_Module
+    100022: HSS_G8-BR_Module
+    100024: HSS_G8-BT_Module
+    100026: HSS_G8-Core
+    100028: HSS_G8-Docking_Bay
+    100030: HSS_G8-RA_Containers
+    100032: HSS_G8-RA_Containers001
+    100034: HSS_G8-SK_Module
+    100036: HSS_G8-SK_Module001
+    400000: //RootNode
+    400002: HSS_G8-AR_Node
+    400004: HSS_G8-AR_Node001
+    400006: HSS_G8-AR_Node002
+    400008: HSS_G8-AR_Node003
+    400010: HSS_G8-AR_Node004
+    400012: HSS_G8-BA_Module
+    400014: HSS_G8-BA_Module001
+    400016: HSS_G8-BE_Arrays
+    400018: HSS_G8-BE_Arrays001
+    400020: HSS_G8-BK_Module
+    400022: HSS_G8-BR_Module
+    400024: HSS_G8-BT_Module
+    400026: HSS_G8-Core
+    400028: HSS_G8-Docking_Bay
+    400030: HSS_G8-RA_Containers
+    400032: HSS_G8-RA_Containers001
+    400034: HSS_G8-SK_Module
+    400036: HSS_G8-SK_Module001
+    2300000: HSS_G8-AR_Node
+    2300002: HSS_G8-AR_Node001
+    2300004: HSS_G8-AR_Node002
+    2300006: HSS_G8-AR_Node003
+    2300008: HSS_G8-AR_Node004
+    2300010: HSS_G8-BA_Module
+    2300012: HSS_G8-BA_Module001
+    2300014: HSS_G8-BE_Arrays
+    2300016: HSS_G8-BE_Arrays001
+    2300018: HSS_G8-BK_Module
+    2300020: HSS_G8-BR_Module
+    2300022: HSS_G8-BT_Module
+    2300024: HSS_G8-Core
+    2300026: HSS_G8-Docking_Bay
+    2300028: HSS_G8-RA_Containers
+    2300030: HSS_G8-RA_Containers001
+    2300032: HSS_G8-SK_Module
+    2300034: HSS_G8-SK_Module001
+    3300000: HSS_G8-AR_Node
+    3300002: HSS_G8-AR_Node001
+    3300004: HSS_G8-AR_Node002
+    3300006: HSS_G8-AR_Node003
+    3300008: HSS_G8-AR_Node004
+    3300010: HSS_G8-BA_Module
+    3300012: HSS_G8-BA_Module001
+    3300014: HSS_G8-BE_Arrays
+    3300016: HSS_G8-BE_Arrays001
+    3300018: HSS_G8-BK_Module
+    3300020: HSS_G8-BR_Module
+    3300022: HSS_G8-BT_Module
+    3300024: HSS_G8-Core
+    3300026: HSS_G8-Docking_Bay
+    3300028: HSS_G8-RA_Containers
+    3300030: HSS_G8-RA_Containers001
+    3300032: HSS_G8-SK_Module
+    3300034: HSS_G8-SK_Module001
+    4300000: HSS_G8-BA_Module
+    4300002: HSS_G8-Docking_Bay
+    4300004: HSS_G8-Core
+    4300006: HSS_G8-RA_Containers
+    4300008: HSS_G8-BR_Module
+    4300010: HSS_G8-BE_Arrays
+    4300012: HSS_G8-BK_Module
+    4300014: HSS_G8-AR_Node
+    4300016: HSS_G8-BT_Module
+    4300018: HSS_G8-SK_Module
+    4300020: HSS_G8-BA_Module001
+    4300022: HSS_G8-SK_Module001
+    4300024: HSS_G8-AR_Node001
+    4300026: HSS_G8-BE_Arrays001
+    4300028: HSS_G8-AR_Node002
+    4300030: HSS_G8-AR_Node003
+    4300032: HSS_G8-AR_Node004
+    4300034: HSS_G8-RA_Containers001
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
