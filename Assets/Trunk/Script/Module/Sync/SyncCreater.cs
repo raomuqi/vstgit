@@ -1,6 +1,10 @@
 ﻿
 using UnityEngine;
-
+/// <summary>
+/// 专门用来创建同步对象，如果是预制在场景的使用preSetPrefabs
+/// 如果动态创建的使用cratePrefabs
+/// 一般用来创建 自身飞船，玩家炮口，道具，AI飞机 等对象
+/// </summary>
 public class SyncCreater : MonoBehaviour
 {
     public static SyncCreater instance;
@@ -22,6 +26,11 @@ public class SyncCreater : MonoBehaviour
     {
         instance = this;
     }
+    /// <summary>
+    /// objectIndex是对象索引，预制在场景的是正数，当态创建的是负数
+    /// </summary>
+    /// <param name="objectIndex"></param>
+    /// <returns></returns>
     public GameObject GetPrefab(int objectIndex)
     {
         GameObject go=null;

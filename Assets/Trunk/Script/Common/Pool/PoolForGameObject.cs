@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PoolForGameObject : BasePool<GameObject>
 {
-    GameObject root;
+    Transform root;
     public PoolForGameObject()
     {
-        root = new GameObject("[GameObjectPool]");
+        GameObject go= new GameObject("[GameObjectPool]");
+        root = go.transform;
         GameObject.DontDestroyOnLoad(root);
     }
     protected override void OnRecycle(GameObject obj)
     {
         obj.SetActive(false);
-        obj.transform.SetParent(root.transform);
+        obj.transform.SetParent(root);
     }
 }

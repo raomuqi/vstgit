@@ -8,14 +8,29 @@ public class SyncModel : BaseModel
     public const string name = "SyncModel";
     public List<SyncObject> uploadList = new List<SyncObject>();
     Dictionary<int, SyncObject> updataList = new Dictionary<int, SyncObject>();
-
+    public byte[][] playerInput = new byte[10][];
     protected override void OnInit()
     {
+        for (byte i = 0; i < playerInput.Length; i++)
+        {
+            playerInput[i] = new byte[2];
+        }
     }
 
     protected override void OnClear() { }
 
 
+    public void SetPosInput(byte pos,byte fire1,byte fire2)
+    {
+        byte[] fires = playerInput[pos];
+        fires[0] = fire1;
+        fires[1] = fire2;
+    }
+    public byte[] GetPosInput(byte pos)
+    {
+       return playerInput[pos];
+      
+    }
     /// <summary>
     /// 刷新同步数据
     /// </summary>

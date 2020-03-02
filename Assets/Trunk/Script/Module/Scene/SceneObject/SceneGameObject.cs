@@ -7,6 +7,7 @@ public class SceneGameObject : MonoBehaviour
     protected virtual void OnAwake() { }
     protected virtual void OnUpdate() { }
     protected virtual void OnStart() { }
+    protected virtual void OnSetSync(SyncType type) { }
     protected virtual void OnDestroyed() { }
     SceneObject _sceneObject;
     public SceneObject sceneObject
@@ -196,6 +197,7 @@ public class SceneGameObject : MonoBehaviour
             }
         }
         syncIng = needSync;
+        OnSetSync(syncType);
     }
     
 }

@@ -13,9 +13,7 @@ public class InputCommand : BaseCommand
 
     InputModel model;
     SyncModel syncModel;
-#if UNITY_EDITOR
-    UnityEngine.Profiling.CustomSampler sampler;
-#endif
+
     protected override void OnInit()
     {
         if (Connection.GetInstance().isHost)
@@ -25,9 +23,7 @@ public class InputCommand : BaseCommand
         }
         model = InputController.instance.GetModel<InputModel>(InputModel.name);
         Global.instance.AddUpdateFunction(UpdateInput);
-#if UNITY_EDITOR
-        sampler = UnityEngine.Profiling.CustomSampler.Create("UpdateInput");
-#endif
+
     }
     protected override void OnClear()
     {
@@ -46,27 +42,34 @@ public class InputCommand : BaseCommand
     /// </summary>
     public void UpdateInput()
     {
-#if UNITY_EDITOR
-        sampler.Begin();
-#endif
+
         model.horizontal = Input.GetAxis(INPUT_HORIZONTAL);
         model.vertical = Input.GetAxis(INPUT_VERTICAL);
-
+        bool changeInput = false;
         if (Input.GetButtonDown(INPUT_FIRE1))
-            EventsMgr.FireEvent(EventName.INPUT_BTN1_DOWN);
-        else if (Input.GetButton(INPUT_FIRE1))
-            EventsMgr.FireEvent(EventName.INPUT_BTN1_DOWNING);
+        {
+            model.selfFires[0] = 1;
+            changeInput = true;
+        }
         else if (Input.GetButtonUp(INPUT_FIRE1))
-            EventsMgr.FireEvent(EventName.INPUT_BTN1_UP);
+        {
+            model.selfFires[0] = 0;
+            changeInput = true;
+        }
         if (Input.GetButtonDown(INPUT_FIRE2))
-            EventsMgr.FireEvent(EventName.INPUT_BTN2_DOWN);
-        else if (Input.GetButton(INPUT_FIRE2))
-            EventsMgr.FireEvent(EventName.INPUT_BTN2_DOWNING);
+        {
+            model.selfFires[1] = 1;
+            changeInput = true;
+        }
         else if (Input.GetButtonUp(INPUT_FIRE2))
-            EventsMgr.FireEvent(EventName.INPUT_BTN2_UP);
-#if UNITY_EDITOR
-        sampler.End();
-#endif
+        {
+            model.selfFires[1] = 0;
+            changeInput = true;
+        }
+        if(changeInput)
+           SyncController.instance.SendNetMsg(ProtoIDCfg.SYNC_INPUT);
+
+
     }
 
 

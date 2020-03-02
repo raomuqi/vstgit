@@ -117,7 +117,7 @@ public class GameServer
     /// <summary>
     /// 处理Proto
     /// </summary>
-    void ParseMsg(TcpHost.SocketAccept socket, byte protoID, byte[] protoData)
+    void ParseMsg(TcpHost.SocketAccept socket, byte protoID, byte[] protoData,byte[] srcData)
     {
        
         switch (protoID)
@@ -139,13 +139,9 @@ public class GameServer
             case ProtoIDCfg.CREATE_OBJECTS:
                 OnMsgCreateObject(socket, protoData);
                 break;
-            case ProtoIDCfg.SYNC_OBJECTS:
-                ProtoUdpWarp warp = new ProtoUdpWarp();
-                if (warp.Parse(protoData))
-                {
-                    Broadcast(ProtoIDCfg.SYNC_OBJECTS, warp);
-                }
-            
+            //同步输入
+            case ProtoIDCfg.SYNC_INPUT:
+                Broadcast(srcData);
                 break;
         }
     }
@@ -362,7 +358,7 @@ public class GameServer
                     {
                         int offset =Connection.PACKER_OFFSET;
                         byte[] proto = data.Length==offset?null:SerializeUtil.GetContextData(data, offset, data.Length - offset);
-                        ParseMsg(client, data[1], proto);
+                        ParseMsg(client, data[1], proto,data);
                     }
                 }
                  //心跳
