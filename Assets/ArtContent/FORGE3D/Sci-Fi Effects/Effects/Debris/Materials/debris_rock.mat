@@ -69,6 +69,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0, g: 0, b: 0, a: 0.016}
-    - _FadeInAInBOutAOutB: {r: 1, g: 5, b: 15, a: 33}
+    - _FadeInAInBOutAOutB: {r: 4, g: 5, b: 15, a: 33}
     - _InMinMaxOutMinMax: {r: 0, g: 5, b: 10, a: 20}
     - _TintRGBAmbientAMult: {r: 0.43999997, g: 0.43999997, b: 0.43999997, a: 0.6509804}
