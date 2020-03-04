@@ -22,6 +22,10 @@ public class EventIntArgs : EventArgs
 {
     public int t;
 }
+public class EventIntArrayArgs : EventArgs
+{
+    public int[] t;
+}
 public class EventFloatArgs: EventArgs
 {
     public float t;

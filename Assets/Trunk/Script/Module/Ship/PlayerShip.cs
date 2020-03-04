@@ -8,6 +8,7 @@ public class PlayerShip : SceneGameObject
 
     SceneModel sceneModel;
     DOTweenPath doPath;
+    public Bounds bounds;
     protected override void  OnAwake()
     {
      
@@ -18,6 +19,12 @@ public class PlayerShip : SceneGameObject
         doPath.DOPause();
         EventsMgr.AddEvent(EventName.START_GAME, OnGameStart);
     }
+    protected override void OnUpdate()
+    {
+    }
+
+   
+
     void OnGameStart(EventArgs args)
     {
         if (Connection.GetInstance().isHost)

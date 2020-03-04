@@ -135,7 +135,11 @@ public class GameServer
             case ProtoIDCfg.ENTER_SCENE:
                 OnMsgEnterScene(socket, protoData);
               break;
-             //创建对象
+             //激活场景单位
+            case ProtoIDCfg.ACTIVE_OBJECTS:
+                OnMsgActiveObject(socket, protoData);
+                break;
+            //创建场景单位
             case ProtoIDCfg.CREATE_OBJECTS:
                 OnMsgCreateObject(socket, protoData);
                 break;
@@ -208,16 +212,63 @@ public class GameServer
         }
     }
 
-    void OnMsgCreateObject(TcpHost.SocketAccept socket, byte[] protoData)
+    void OnMsgActiveObject(TcpHost.SocketAccept socket, byte[] protoData)
     {
-        SyncObject syncObj = new SyncObject();
-        if (syncObj.Parse(protoData))
+        ProtoIntArray p = new ProtoIntArray();
+        if (p.Parse(protoData))
         {
-            CreateSceneObject(syncObj);
+            ActiveSceneObject(p.context);
         }
     }
+    void OnMsgCreateObject(TcpHost.SocketAccept socket, byte[] protoData)
+    {
+        ProtoSyncObjectList list = new ProtoSyncObjectList();
+        if (list.Parse(protoData))
+        {
+            for (int i = 0; i < list.objList.Length; i++)
+            {
+                SyncObject obj = list.objList[i];
+                obj.serverID = sceneObjes.Count;
+                //obj.objectIndex = indexs[i];
+                //proto.serverIDs[i] = obj.serverID;
+                //proto.objectIndexs[i] = obj.objectIndex;
+                if (!sceneObjes.ContainsKey(obj.serverID))
+                {
+                    sceneObjes.Add(obj.serverID, obj);
+                    Debug.LogWarning("创建对象：" + obj.objectIndex);
+                }
+            }
+        }
+        Broadcast(ProtoIDCfg.CREATE_OBJECTS, list);
+    }
     /// <summary>
-    /// 创建创建对象
+    /// 激活场景对象
+    /// </summary>
+    void ActiveSceneObject(int[] indexs)
+    {
+        if (indexs == null || indexs.Length < 1)
+            return;
+        ProtoActiveObjects proto = new ProtoActiveObjects();
+        proto.objectIndexs = new int[indexs.Length];
+        proto.serverIDs = new int[indexs.Length];
+        for (int i = 0; i < indexs.Length; i++)
+        {
+            SyncObject obj = new SyncObject();
+            obj.serverID = sceneObjes.Count;
+            obj.objectIndex = indexs[i];
+            proto.serverIDs[i] = obj.serverID;
+            proto.objectIndexs[i] = obj.objectIndex;
+            if (!sceneObjes.ContainsKey(obj.serverID))
+            {
+                sceneObjes.Add(obj.serverID, obj);
+                Debug.LogWarning("创建对象：" + obj.objectIndex);
+            }
+        }
+        Broadcast(ProtoIDCfg.ACTIVE_OBJECTS, proto);
+
+    }
+    /// <summary>
+    /// 创建场景对象
     /// </summary>
     void CreateSceneObject(SyncObject obj)
     {
@@ -226,7 +277,7 @@ public class GameServer
         if (!sceneObjes.ContainsKey(obj.serverID))
         {
             sceneObjes.Add(obj.serverID, obj);
-            Broadcast(ProtoIDCfg.CREATE_OBJECTS, obj);
+            Broadcast(ProtoIDCfg.ACTIVE_OBJECTS, obj);
             Debug.LogWarning("创建对象：" + obj.objectIndex);
         }
     }

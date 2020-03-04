@@ -5,7 +5,14 @@ using System;
 
 public  class ProtoBase
 {
-   
+    protected virtual byte[] OnSerialize()
+    {
+        byte[] temp = null;
+        return temp;
+    }
+    protected virtual void OnParse(byte[] data) { }
+    protected virtual void OnRecycle() { }
+    protected virtual void OnClear() { }
     public byte[] Serialize()
     {
         try
@@ -18,7 +25,6 @@ public  class ProtoBase
             return null;
         }
     }
-
     public bool Parse(byte[] data)
     {
         try
@@ -32,6 +38,10 @@ public  class ProtoBase
             return false;
         }
     }
+    public void Clear()
+    {
+        OnClear();
+    }
     /// <summary>
     /// 回收如对象池
     /// </summary>
@@ -40,22 +50,13 @@ public  class ProtoBase
         OnRecycle();
     }
 
-    protected virtual byte[] OnSerialize()
-    {
-        byte[] temp = null;
-        return temp;
-    }
-    protected virtual void OnParse(byte[] data) { }
+  
 
-
-    protected virtual void OnRecycle()
-    {
-    }
     /// <summary>
     /// 通用数组序列化,必须每个组员长度一样
     /// </summary>
     /// <returns></returns>
-    protected  byte[] ArraySerialize<T>(ProtoBase[] array) where T :ProtoBase
+    protected byte[] ArraySerialize<T>(ProtoBase[] array) where T :ProtoBase
     {
         byte[] result = null;
         if (array != null && array.Length > 0)

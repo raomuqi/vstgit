@@ -34,8 +34,8 @@ public class PlayerNetHandler : BaseNetHandler
     /// </summary>
     void OnLogin(byte[] pData)
     {
-        ProtoPlayerInfo proto=   Util.DeSerializeProto<ProtoPlayerInfo>(pData);
-        if (proto != null)
+        ProtoPlayerInfo proto = ObjectPool.protoPool.GetOrCreate<ProtoPlayerInfo>(ProtoPool.ProtoRecycleType.PlayerInfo);  
+        if (proto.Parse(pData))
         {
             model.SetPlayerInfo(proto);
             Connection.GetInstance().RemoveBroadCastPort(proto.id);

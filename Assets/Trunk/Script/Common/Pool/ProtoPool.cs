@@ -10,7 +10,9 @@ public class ProtoPool
         SyncObject,
         Int,
         PlayerInfo,
-        String
+        String,
+        IntArray,
+        CreateObjects
     }
     Dictionary<ProtoRecycleType, Stack<ProtoBase>> pool = new Dictionary<ProtoRecycleType, Stack<ProtoBase>>();
 

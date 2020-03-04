@@ -26,6 +26,18 @@ public class SyncCreater : MonoBehaviour
     {
         instance = this;
     }
+    public int GetIndex(GameObject target)
+    {
+        for (int i = 0; i < preSetPrefabs.Length; i++)
+        {
+            if (preSetPrefabs[i] == target)
+            {
+                return i;
+            }
+        }
+        return int.MaxValue;
+
+    }
     /// <summary>
     /// objectIndex是对象索引，预制在场景的是正数，当态创建的是负数
     /// </summary>
@@ -52,11 +64,7 @@ public class SyncCreater : MonoBehaviour
         }
         return go;
     }
-    /// <summary>
-    /// 创建场景对象
-    /// </summary>
-    /// <param name="objInfo"></param>
-    public void CreateObject(int objectIndex,int serverID,SyncObject sync)
+    public void ActiveObject(int objectIndex, int serverID)
     {
         bool isPreSet = objectIndex >= 0;
         int index = isPreSet ? objectIndex : -objectIndex;
@@ -81,24 +89,33 @@ public class SyncCreater : MonoBehaviour
 
             }
         }
-        else
-        {
-            if (index < preSetPrefabs.Length)
-            {
+    }
+    /// <summary>
+    /// 创建场景对象
+    /// </summary>
+    /// <param name="objInfo"></param>
+    public void CreateObject(int objectIndex,int serverID,SyncObject sync)
+    {
 
-                GameObject prefab =  cratePrefabs[index];
-                if (prefab == null)
-                    return;
-                GameObject  go = GameObject.Instantiate(prefab);
-                SceneGameObject sgo = go.GetComponent<SceneGameObject>();
-                if (sgo != null)
+        bool isPreSet = objectIndex >= 0;
+        int index = isPreSet ? objectIndex : -objectIndex;
+        if (index < cratePrefabs.Length)
+        {
+
+            GameObject prefab =  cratePrefabs[index];
+            if (prefab == null)
+                return;
+            GameObject  go = GameObject.Instantiate(prefab);
+            if (!go.activeSelf)
+                go.SetActive(true);
+            SceneGameObject sgo = go.GetComponent<SceneGameObject>();
+            if (sgo != null)
+            {
+                ProtoPlayerInfo selfInfo = playerModel.GetPlayerInfo();
+                if (selfInfo != null)
                 {
-                    ProtoPlayerInfo selfInfo = playerModel.GetPlayerInfo();
-                    if (selfInfo != null)
-                    {
-                        sgo.SetSyncStatus(objectIndex, serverID, true, selfInfo.pos, sync.GetPos(), sync.GetRot());
-                        sceneModel.AddSceneObject(sgo.sceneObject);
-                    }
+                    sgo.SetSyncStatus(objectIndex, serverID, true, selfInfo.pos, sync.GetPos(), sync.GetRot());
+                    sceneModel.AddSceneObject(sgo.sceneObject);
                 }
             }
         }

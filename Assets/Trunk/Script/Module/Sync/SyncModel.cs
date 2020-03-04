@@ -54,7 +54,7 @@ public class SyncModel : BaseModel
             else
             {
                 if (SyncCreater.instance != null)
-                    SyncCreater.instance.CreateObject(updateObj.objectIndex, updateObj.serverID, updateObj);
+                    SyncCreater.instance.ActiveObject(updateObj.objectIndex, updateObj.serverID);
             }
             updateObj.Recycle();
         }

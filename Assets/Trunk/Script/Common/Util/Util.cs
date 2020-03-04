@@ -15,6 +15,60 @@ public static class Util
         Debug.Log(sb.ToString());
         Debug.Log(data.Length);
     }
+    public static void DebugDraw(this Bounds bounds, Matrix4x4 worldMat, Color color)
+    {
+        DebugDrawBox(bounds.ToWorldVertexs(worldMat), color);
+    }
+    public static Vector3[] ToWorldVertexs(this Bounds bounds, Matrix4x4? worldMat)
+    {
+        Vector3[] vs = bounds.ToVertexs();
+        if (worldMat.HasValue)
+        {
+            Matrix4x4 mat = worldMat.Value;
+            for (int i = 0; i < 8; i++)
+            {
+                vs[i] = mat.MultiplyPoint(vs[i]);
+            }
+        }
+        return vs;
+    }
+    public static void DebugDraw(this Bounds bounds, Color color)
+    {
+        DebugDrawBox(bounds.ToVertexs(), color);
+    }
+    public static Vector3[] ToVertexs(this Bounds bounds)
+    {
+        Vector3 min = bounds.min;
+        Vector3 max = bounds.max;
+        return new Vector3[8]
+        {
+        new Vector3(min.x, min.y, min.z),
+        new Vector3(min.x, min.y, max.z),
+        new Vector3(max.x, min.y, max.z),
+        new Vector3(max.x, min.y, min.z),
+        new Vector3(min.x, max.y, min.z),
+        new Vector3(min.x, max.y, max.z),
+        new Vector3(max.x, max.y, max.z),
+        new Vector3(max.x, max.y, min.z)
+        };
+    }
+
+
+    private static void DebugDrawBox(Vector3[] vs, Color color)
+    {
+        Debug.DrawLine(vs[0], vs[1], color);
+        Debug.DrawLine(vs[1], vs[2], color);
+        Debug.DrawLine(vs[2], vs[3], color);
+        Debug.DrawLine(vs[3], vs[0], color);
+        Debug.DrawLine(vs[4], vs[5], color);
+        Debug.DrawLine(vs[5], vs[6], color);
+        Debug.DrawLine(vs[6], vs[7], color);
+        Debug.DrawLine(vs[7], vs[4], color);
+        Debug.DrawLine(vs[0], vs[4], color);
+        Debug.DrawLine(vs[1], vs[5], color);
+        Debug.DrawLine(vs[2], vs[6], color);
+        Debug.DrawLine(vs[3], vs[7], color);
+    }
 
     /// <summary>
     /// 序列化Proto
