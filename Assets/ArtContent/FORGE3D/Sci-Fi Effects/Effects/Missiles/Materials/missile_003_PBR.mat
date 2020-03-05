@@ -120,7 +120,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 2, g: 2, b: 2, a: 1}
+    - _EmissionColor: {r: 5.656855, g: 5.656855, b: 5.656855, a: 1}
     - _SpecColor: {r: 0.28676468, g: 0.28676468, b: 0.28676468, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

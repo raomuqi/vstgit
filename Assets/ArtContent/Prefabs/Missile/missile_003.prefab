@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2610832833231890395}
   - component: {fileID: 2602850973331112589}
   m_Layer: 0
-  m_Name: missile_003_PBR
+  m_Name: missile_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2615233311148322581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0.76, z: 6.82}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3654708249639110103}
