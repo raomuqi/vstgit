@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54388f8b0df87f4418b619dfabba127a, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  appearSets:
+  - time: 10
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: -15
+      YAngle: 10
+      distance: 100
+      hp: 100
+      speed: 1
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 15
+      YAngle: 10
+      distance: 100
+      hp: 100
+      speed: 1
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  - time: 20
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: 0
+      YAngle: 10
+      distance: 1000
+      hp: 1
+      speed: 20
+      aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+  - time: 40
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: -10
+      YAngle: 10
+      distance: 100
+      hp: 100
+      speed: 1
+      aiCfg: {fileID: 11400000, guid: 69e67e9e2d7abb94e93b3efc613ad7de, type: 2}
+    - objectIndex: 0
+      XAngle: 10
+      YAngle: 10
+      distance: 0
+      hp: 100
+      speed: 1
+      aiCfg: {fileID: 11400000, guid: 69e67e9e2d7abb94e93b3efc613ad7de, type: 2}
+  activeSets: []
