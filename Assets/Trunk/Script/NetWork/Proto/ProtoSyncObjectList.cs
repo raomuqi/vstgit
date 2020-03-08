@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ProtoSyncObjectList : ProtoBase
 {
-    public SyncObject[] objList;
+    public ProtoCreateObject[] objList;
 
     protected override byte[] OnSerialize()
     {
         if (objList == null || objList.Length < 1)
             return null;
-        return ArraySerialize<SyncObject>(objList);
+        return ArraySerialize<ProtoCreateObject>(objList);
     }
 
     protected override void OnParse(byte[] data)
@@ -22,7 +22,7 @@ public class ProtoSyncObjectList : ProtoBase
                 objList[i].Recycle();
             }
         }
-        objList = ArrayDeSerializem<SyncObject>(data, ProtoPool.ProtoRecycleType.SyncObject);
+        objList = ArrayDeSerializem<ProtoCreateObject>(data, ProtoPool.ProtoRecycleType.CreateObject);
     }
     protected override void OnRecycle()
     {

@@ -4,27 +4,40 @@ using UnityEngine;
 
 public class SceneGameObject : MonoBehaviour
 {
+    public int hp = 100;
+    public float moveSpeed = 2;
+
     protected virtual void OnAwake() { }
     protected virtual void OnUpdate() { }
     protected virtual void OnStart() { }
     protected virtual void OnSetSync(SyncType type) { }
     protected virtual void OnDestroyed() { }
-    SceneObject _sceneObject;
-    public SceneObject sceneObject
+
+    public SyncObject _sync;
+    public SyncObject sync
     {
         get
         {
-            if (_sceneObject == null)
-                _sceneObject = new SceneObject(this);
-            return _sceneObject;
+            if (_sync == null)
+                _sync = new SyncObject();
+            return _sync;
         }
     }
+    SceneModel _sceneModel;
+    protected SceneModel sceneModel{
+        get {
+            if (_sceneModel==null)
+                _sceneModel = SceneController.instance.GetModel<SceneModel>(SceneModel.name);
+            return _sceneModel;
+        }
+    }
+
     bool syncIng=false;
     private Vector3 latestCorrectPos = Vector3.zero;
     private Vector3 movementVector = Vector3.zero;
     private Vector3 errorVector = Vector3.zero;
     private double lastTime = 0;
-    [Header("控制权(0:主机  >0:玩家ID)")]
+    [Header("控制权(-1:本地 0:主机  >0:玩家ID)")]
     public int controlPos = -1;
     public SyncSetting syncSetting=SyncSetting.LocalPosAndRot;
     protected SyncModel _syncModel;
@@ -62,27 +75,27 @@ public class SceneGameObject : MonoBehaviour
 
             if (syncSetting == SyncSetting.LocalPos || syncSetting == SyncSetting.LocalPosAndRot)
             {
-                sceneObject.sync.SetPos(transform.localPosition);
+                sync.SetPos(transform.localPosition);
             }
             else if (syncSetting == SyncSetting.WorldPos || syncSetting == SyncSetting.WorldPosAndRot)
             {
-                sceneObject.sync.SetPos(transform.position);
+                sync.SetPos(transform.position);
             }
 
             if (syncSetting == SyncSetting.LocalRot || syncSetting == SyncSetting.LocalPosAndRot)
             {
-                sceneObject.sync.SetRot(transform.localRotation);
+                sync.SetRot(transform.localRotation);
             }
             else if (syncSetting == SyncSetting.WorldRot || syncSetting == SyncSetting.WorldPosAndRot)
             {
-                sceneObject.sync.SetRot(transform.rotation);
+                sync.SetRot(transform.rotation);
             }
         }
-        else
+        else if(syncType==SyncType.UpDate)
         {
            
-            SmoothPos(sceneObject.sync.GetPos());
-            SmoothRot(sceneObject.sync.GetRot());
+            SmoothPos(sync.GetPos());
+            SmoothRot(sync.GetRot());
         }
     }
    
@@ -152,22 +165,52 @@ public class SceneGameObject : MonoBehaviour
         }
         OnUpdate();
     }
+    public void ReqDestroy()
+    {
+        EventIntArrayArgs obj = new EventIntArrayArgs();
+        obj.t = new int[] { sync.serverID};
+        SyncController.instance.SendNetMsg(ProtoIDCfg.REMOVE_OBJECTS, obj);
+
+    }
+    public void RemoveObject()
+    {
+        RemoveSync();
+       sceneModel.RemoveSceneObject(this);
+        GameObject.DestroyImmediate(gameObject);
+    }
+    void RemoveSync()
+    {
+        if (_sync != null)
+        {
+            Debug.Log("销毁对象"+sync.serverID);
+            syncIng = false;
+            if (syncType == SyncType.UpLoad)
+                syncModel.RemoveUpLoadObj(sync);
+            else if (syncType == SyncType.UpDate)
+                syncModel.RemoveUpDataObj(sync);
+        }
+    }
     /// <summary>
     /// 设置同步
     /// </summary>
     public void SetSyncStatus(int prefabIndex, int serverID, bool needSync,int pos,Vector3 position,Quaternion rot)
     {
-        if (controlPos == 0 && Connection.GetInstance().isHost)
-            syncType= SyncType.UpLoad;
-        else if(controlPos == pos)
+        if (controlPos == -1)
+        {
+            syncType = SyncType.None;
+            return;
+        }
+        else if (controlPos == 0 && Connection.GetInstance().isHost)
+            syncType = SyncType.UpLoad;
+        else if (controlPos == pos)
             syncType = SyncType.UpLoad;
         else
             syncType = SyncType.UpDate;
 
         if (needSync)
         {
-            sceneObject.sync.serverID = serverID;
-            sceneObject.sync.objectIndex = prefabIndex;
+            sync.serverID = serverID;
+            sync.objectIndex = prefabIndex;
 
             if (syncSetting == SyncSetting.LocalPos || syncSetting == SyncSetting.LocalPosAndRot)
             {
@@ -182,18 +225,18 @@ public class SceneGameObject : MonoBehaviour
             SmoothRot(rot);
 
             if (syncType==SyncType.UpLoad)
-                syncModel.AddUpLoadList(sceneObject.sync);
-            else
-                syncModel.AddUpUpdateList(sceneObject.sync);
+                syncModel.AddUpLoadList(sync);
+            else if (syncType == SyncType.UpDate)
+                syncModel.AddUpUpdateList(sync);
         }
         else
         {
-            if (sceneObject.sync != null)
+            if (sync != null)
             {
                 if (syncType == SyncType.UpLoad)
-                    syncModel.RemoveUpLoadObj(sceneObject.sync);
-                else
-                    syncModel.RemoveUpDataObj(sceneObject.sync);
+                    syncModel.RemoveUpLoadObj(sync);
+                else if(syncType==SyncType.UpDate)
+                    syncModel.RemoveUpDataObj(sync);
             }
         }
         syncIng = needSync;

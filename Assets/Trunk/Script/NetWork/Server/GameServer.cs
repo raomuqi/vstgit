@@ -48,7 +48,7 @@ public class GameServer
 
     public Dictionary<int, SyncObject> sceneObjes = new Dictionary<int, SyncObject>();
 
-
+    int objectIDCounter = 0;
     public GameServer(bool autoConnect, int port,int broadCastPort,string netGroup)
     {
         maxPlayer = AppCfg.expose.MaxPlayer;
@@ -143,6 +143,11 @@ public class GameServer
             case ProtoIDCfg.CREATE_OBJECTS:
                 OnMsgCreateObject(socket, protoData);
                 break;
+            //销毁对象
+            case ProtoIDCfg.REMOVE_OBJECTS:
+                RemoveSceneObject(socket, protoData);
+                Broadcast(srcData);
+                break;
             //同步输入
             case ProtoIDCfg.SYNC_INPUT:
                 Broadcast(srcData);
@@ -228,14 +233,15 @@ public class GameServer
             for (int i = 0; i < list.objList.Length; i++)
             {
                 SyncObject obj = list.objList[i];
-                obj.serverID = sceneObjes.Count;
+                obj.serverID = objectIDCounter;
+                objectIDCounter++;
                 //obj.objectIndex = indexs[i];
                 //proto.serverIDs[i] = obj.serverID;
                 //proto.objectIndexs[i] = obj.objectIndex;
                 if (!sceneObjes.ContainsKey(obj.serverID))
                 {
                     sceneObjes.Add(obj.serverID, obj);
-                    Debug.LogWarning("创建对象：" + obj.objectIndex);
+                    Debug.LogWarning("创建对象：" + obj.serverID);
                 }
             }
         }
@@ -254,14 +260,15 @@ public class GameServer
         for (int i = 0; i < indexs.Length; i++)
         {
             SyncObject obj = new SyncObject();
-            obj.serverID = sceneObjes.Count;
+            obj.serverID = objectIDCounter;
+            objectIDCounter++;
             obj.objectIndex = indexs[i];
             proto.serverIDs[i] = obj.serverID;
             proto.objectIndexs[i] = obj.objectIndex;
             if (!sceneObjes.ContainsKey(obj.serverID))
             {
                 sceneObjes.Add(obj.serverID, obj);
-                Debug.LogWarning("创建对象：" + obj.objectIndex);
+                Debug.LogWarning("创建对象：" + obj.serverID);
             }
         }
         Broadcast(ProtoIDCfg.ACTIVE_OBJECTS, proto);
@@ -282,6 +289,28 @@ public class GameServer
         }
     }
 
+    /// <summary>
+    /// 销毁场景单位
+    /// </summary>
+    /// <param name="indexs"></param>
+    void RemoveSceneObject(TcpHost.SocketAccept socket, byte[] protoData)
+    {
+        int[] indexs = null;
+        ProtoIntArray proto = new ProtoIntArray();
+        proto.Parse(protoData);
+        indexs = proto.context;
+        if (indexs == null || indexs.Length < 1)
+            return;
+        for (int i = 0; i < indexs.Length; i++)
+        {
+        
+            if (sceneObjes.ContainsKey(indexs[i]))
+            {
+                sceneObjes.Remove(indexs[i]);
+                Debug.LogWarning("销毁：" + indexs[i]);
+            }
+        }
+    }
     /// <summary>
     /// 用户加入
     /// </summary>

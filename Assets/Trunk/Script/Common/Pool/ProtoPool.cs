@@ -12,6 +12,7 @@ public class ProtoPool
         PlayerInfo,
         String,
         IntArray,
+        CreateObject,
         CreateObjects
     }
     Dictionary<ProtoRecycleType, Stack<ProtoBase>> pool = new Dictionary<ProtoRecycleType, Stack<ProtoBase>>();

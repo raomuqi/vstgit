@@ -43,4 +43,8 @@ public static class ProtoIDCfg
     /// 同步输入
     /// </summary>
     public const byte SYNC_INPUT = 9;
+    /// <summary>
+    /// 删除对象
+    /// </summary>
+    public const byte REMOVE_OBJECTS = 10;
 }

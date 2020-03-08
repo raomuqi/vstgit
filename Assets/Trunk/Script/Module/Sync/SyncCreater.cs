@@ -83,7 +83,7 @@ public class SyncCreater : MonoBehaviour
                     if (selfInfo != null)
                     {
                         sgo.SetSyncStatus(objectIndex, serverID, true, selfInfo.pos, sgo.GetStartPos(), sgo.GetStartRot());
-                        sceneModel.AddSceneObject(sgo.sceneObject);
+                        sceneModel.AddSceneObject(sgo);
                     }
                 }
 
@@ -94,7 +94,7 @@ public class SyncCreater : MonoBehaviour
     /// 创建场景对象
     /// </summary>
     /// <param name="objInfo"></param>
-    public void CreateObject(int objectIndex,int serverID,SyncObject sync)
+    public void CreateObject(int objectIndex,int serverID,ProtoCreateObject sync)
     {
 
         bool isPreSet = objectIndex >= 0;
@@ -106,16 +106,39 @@ public class SyncCreater : MonoBehaviour
             if (prefab == null)
                 return;
             GameObject  go = GameObject.Instantiate(prefab);
+#if UNITY_EDITOR
+            go.name = ""+serverID;
+#endif
             if (!go.activeSelf)
                 go.SetActive(true);
             SceneGameObject sgo = go.GetComponent<SceneGameObject>();
+            if (Connection.GetInstance().isHost == true)
+            {
+                BaseAI ai = go.GetComponent<BaseAI>();
+                if (ai != null)
+                {
+                    AppearObjectData objCfg = AICreater.GetObjectCfg(sync.hashCode);
+                    if (objCfg != null)
+                    {
+                        if (objCfg.aiCfg == null)
+                            Debug.LogError("无AI配置");
+                        ai.cfg = objCfg.aiCfg;
+                        ai.moveSpeed = objCfg.speed;
+                        ai.hp = objCfg.hp;
+                    }
+                    else
+                    {
+                        Debug.Log("无效配置");
+                    }
+                }
+            }
             if (sgo != null)
             {
                 ProtoPlayerInfo selfInfo = playerModel.GetPlayerInfo();
                 if (selfInfo != null)
                 {
                     sgo.SetSyncStatus(objectIndex, serverID, true, selfInfo.pos, sync.GetPos(), sync.GetRot());
-                    sceneModel.AddSceneObject(sgo.sceneObject);
+                    sceneModel.AddSceneObject(sgo);
                 }
             }
         }

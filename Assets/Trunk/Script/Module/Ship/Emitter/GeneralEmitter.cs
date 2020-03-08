@@ -12,6 +12,7 @@ public class GeneralEmitter : BaseEmitter
     {
         if (fireStatue == 1 && !fireCD)
         {
+            fireCD = true;
             GameObject bulletGo = ObjectPool.goPool.GetObj(bulletPrefab.GetInstanceID());
 
             if (bulletGo == null)

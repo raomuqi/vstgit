@@ -7,7 +7,7 @@ public class SceneModel : BaseModel
     public const string name = "SceneModel";
     public int mapID = 0;
     SyncModel syncModel;
-    Dictionary<int, SceneObject> sceneObjs = new Dictionary<int, SceneObject>();
+    Dictionary<int, SceneGameObject> sceneObjs = new Dictionary<int, SceneGameObject>();
     PlayerShip playerShip;
     protected override void OnInit()
     {
@@ -25,11 +25,14 @@ public class SceneModel : BaseModel
         playerShip = inputShip;
     }
 
- 
+    public PlayerShip GetPlayerShip()
+    {
+        return playerShip;
+    }
     /// <summary>
     /// 移除场景物体
     /// </summary>
-    public void RemoveSceneObject(SceneObject sObject)
+    public void RemoveSceneObject(SceneGameObject sObject)
     {
         if (sceneObjs.ContainsKey(sObject.sync.serverID))
         {
@@ -37,11 +40,18 @@ public class SceneModel : BaseModel
         }
     }
 
-    public void AddSceneObject(SceneObject sObject)
+    public void AddSceneObject(SceneGameObject sObject)
     {
         if (!sceneObjs.ContainsKey(sObject.sync.serverID))
         {
             sceneObjs.Add(sObject.sync.serverID,sObject);
         }
+    }
+
+    public SceneGameObject GetSceneObject(int serverID)
+    {
+        SceneGameObject result = null;
+        sceneObjs.TryGetValue(serverID, out result);
+        return result;
     }
 }

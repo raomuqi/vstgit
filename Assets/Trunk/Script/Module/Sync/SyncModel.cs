@@ -53,8 +53,21 @@ public class SyncModel : BaseModel
             }
             else
             {
-                if (SyncCreater.instance != null)
-                    SyncCreater.instance.ActiveObject(updateObj.objectIndex, updateObj.serverID);
+                if (SyncCreater.instance != null && Connection.GetInstance().isHost==false)
+                {
+                    if (updateObj.objectIndex >= 0)
+                        SyncCreater.instance.ActiveObject(updateObj.objectIndex, updateObj.serverID);
+                    else
+                    {
+                        ProtoCreateObject create = new ProtoCreateObject();
+                        create.objectIndex = updateObj.objectIndex;
+                        create.hashCode = -1;
+                        create.serverID = updateObj.serverID;
+                        create.SetPos(updateObj.GetPos());
+                        create.SetRot(updateObj.GetRot());
+                        SyncCreater.instance.CreateObject(updateObj.objectIndex, updateObj.serverID, create);
+                    }
+                }   
             }
             updateObj.Recycle();
         }

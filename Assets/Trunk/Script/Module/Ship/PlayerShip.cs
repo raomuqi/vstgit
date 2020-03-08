@@ -6,12 +6,11 @@ using UnityEngine;
 public class PlayerShip : SceneGameObject
 {
 
-    SceneModel sceneModel;
     DOTweenPath doPath;
     public Bounds bounds;
     protected override void  OnAwake()
     {
-     
+        sceneModel.SetPlayerShip(this);
     }
     protected override void OnStart()
     {

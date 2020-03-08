@@ -105,7 +105,7 @@ public class SceneNetHandler : BaseNetHandler
         EventObjectArgs objectArgs = args as EventObjectArgs;
         if (objectArgs != null && objectArgs.t != null)
         {
-            SyncObject[] list= objectArgs.t as SyncObject[];
+            ProtoCreateObject[] list= objectArgs.t as ProtoCreateObject[];
             ProtoSyncObjectList createObjectProto = ObjectPool.protoPool.GetOrCreate<ProtoSyncObjectList>(ProtoPool.ProtoRecycleType.CreateObjects);
             createObjectProto.objList = list;
             Send(ProtoIDCfg.CREATE_OBJECTS, createObjectProto, ProtoType.Importance);

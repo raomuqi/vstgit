@@ -22,6 +22,8 @@ public class SyncNetHandler : BaseNetHandler
         RegisterSendProto(ProtoIDCfg.SYNC_INPUT, SendSyncInput);
         RegisterListenProto(ProtoIDCfg.SYNC_INPUT, OnSyncInput);
         RegisterListenProto(ProtoIDCfg.SYNC_OBJECTS, OnSyncObjectList);
+        RegisterSendProto(ProtoIDCfg.REMOVE_OBJECTS, ReqRemoveObject);
+        RegisterListenProto(ProtoIDCfg.REMOVE_OBJECTS, OnRemoveObject);
     }
     protected override void OnClear()
     {
@@ -77,6 +79,41 @@ public class SyncNetHandler : BaseNetHandler
         {
             SyncObject[] protoList = upDateWarp.objList;
             model.UpdateSyncData(protoList);
+        }
+
+    }
+
+    /// <summary>
+    /// 请求删除对象
+    /// </summary>
+    void ReqRemoveObject(EventArgs args)
+    {
+        EventIntArrayArgs objsEvent = args as EventIntArrayArgs;
+        int[] t = objsEvent.t ;
+        if (t != null)
+        {
+            ProtoIntArray proto = ObjectPool.protoPool.GetOrCreate<ProtoIntArray>(ProtoPool.ProtoRecycleType.IntArray);
+            proto.context = t;
+            Send(ProtoIDCfg.REMOVE_OBJECTS, proto, ProtoType.Importance);
+            proto.Recycle();
+        }
+
+    }
+    void OnRemoveObject(byte[] data)
+    {
+        ProtoIntArray proto = ObjectPool.protoPool.GetOrCreate<ProtoIntArray>(ProtoPool.ProtoRecycleType.IntArray);
+        if (proto.Parse(data))
+        {
+            int[] ints = proto.context;
+            SceneModel sceneModel = SceneController.instance.GetModel<SceneModel>(SceneModel.name);
+            for (int i = 0; i < ints.Length; i++)
+            {
+               SceneGameObject obj= sceneModel.GetSceneObject(ints[i]);
+                if (obj != null)
+                {
+                    obj.RemoveObject();
+                }
+            }
         }
 
     }
