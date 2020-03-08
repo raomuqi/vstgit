@@ -10,7 +10,7 @@ public class ProtoIntArray : ProtoBase
         byte[] temp = new byte[context.Length*4];
         for (int i = 0; i < context.Length; i++)
         {
-            Array.Copy(System.BitConverter.GetBytes(context[i]), 0, temp,  i * context.Length, 4);
+            Array.Copy(System.BitConverter.GetBytes(context[i]), 0, temp,  4 * i, 4);
         }
         return temp;
     }

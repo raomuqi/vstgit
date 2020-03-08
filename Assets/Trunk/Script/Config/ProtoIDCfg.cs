@@ -47,4 +47,8 @@ public static class ProtoIDCfg
     /// 删除对象
     /// </summary>
     public const byte REMOVE_OBJECTS = 10;
+    /// <summary>
+    /// 同步对象行为
+    /// </summary>
+    public const byte OBJECT_ACTION = 11;
 }

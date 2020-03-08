@@ -65,6 +65,8 @@ public class BaseAI : SceneGameObject
     {
         playerShip = sceneModel.GetPlayerShip();
         playerShipTransform = playerShip.transform;
+        fireSync[0] = sync.serverID;
+        fireSync[1] = 0;
         lifeTime = 0;
         if (type == SyncType.UpLoad)
         {
@@ -73,12 +75,33 @@ public class BaseAI : SceneGameObject
     }
     protected virtual void OnEnterStatus (AIState state)
     {
+        switch (curState.fire)
+        {
+            case AIFireEnum.Fire:
+                if (fireSync[1] != 1)
+                {
+                    fireSync[1] = 1;
+                    RqSyncAction(fireSync);
+                }
+                // Fire(1);
+                break;
+            case AIFireEnum.None:
+                if (fireSync[1] != 0)
+                {
+                    fireSync[1] = 0;
+                    RqSyncAction(fireSync);
+                }
+                //  Fire(0);
+                break;
 
+        }
     }
     protected virtual void OnExitStatus(AIState state)
     {
 
     }
+    int[] fireSync = new int[2];
+    byte fireStatus = 0;
     protected virtual void UpdateAILogic()
     {
         if (curState != null)
@@ -104,16 +127,7 @@ public class BaseAI : SceneGameObject
                     MoveToPlayer(0);
                     break;
             }
-            switch (curState.fire)
-            {
-                case AIFireEnum.Fire:
-                    Fire(1);
-                    break;
-                case AIFireEnum.None:
-                    Fire(0);
-                    break;
-
-            }
+       
         }
 
 
@@ -126,7 +140,11 @@ public class BaseAI : SceneGameObject
             UpdateAILogic();
             CheckLiftTime();
         }
-        else if (syncType == SyncType.UpDate){}
+        else if (syncType == SyncType.UpDate)
+        {
+            
+        }
+        Fire(fireStatus);
     }
 
      void CheckLiftTime()
@@ -168,7 +186,6 @@ public class BaseAI : SceneGameObject
         }
         else
         {
-           
             if(curState.keepTime==-1)
               NextAIState();
         }
@@ -182,5 +199,10 @@ public class BaseAI : SceneGameObject
     {
         Vector3 dir =  transform.forward;
         transform.position += dir * moveSpeed * Time.deltaTime * 10;
+    }
+
+    public override void SyncAction(int[] intArray)
+    {
+        fireStatus = (byte)intArray[1];
     }
 }

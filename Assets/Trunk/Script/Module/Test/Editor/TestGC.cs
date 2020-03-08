@@ -12,12 +12,15 @@ public static class TestGC
     [MenuItem("Test/Proto")]
     public static void TestProto()
     {
-        ProtoActiveObjects a = new ProtoActiveObjects();
-        a.objectIndexs = new int[4] { 8, 6, 4, 2 };
-        a.serverIDs = new int[4] { 4, 3, 2, 1 };
-
-        ProtoActiveObjects b = new ProtoActiveObjects();
-        b.Parse(a.Serialize());
+        ProtoIntArray tt = new ProtoIntArray();
+        tt.context = new int[5] { 2, 1,4,100,5656 };
+        byte[] b = tt.Serialize();
+        tt.Parse(b);
+        Debug.Log(tt.context[0]);
+        Debug.Log(tt.context[1]);
+        Debug.Log(tt.context[2]);
+        Debug.Log(tt.context[3]);
+        Debug.Log(tt.context[4]);
     }
 
 

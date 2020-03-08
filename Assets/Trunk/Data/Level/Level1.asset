@@ -45,13 +45,13 @@ MonoBehaviour:
       YAngle: 10
       distance: 100
       hp: 100
-      speed: 1
+      speed: 5
       aiCfg: {fileID: 11400000, guid: 69e67e9e2d7abb94e93b3efc613ad7de, type: 2}
     - objectIndex: 0
       XAngle: 10
       YAngle: 10
       distance: 0
       hp: 100
-      speed: 1
+      speed: 5
       aiCfg: {fileID: 11400000, guid: 69e67e9e2d7abb94e93b3efc613ad7de, type: 2}
   activeSets: []

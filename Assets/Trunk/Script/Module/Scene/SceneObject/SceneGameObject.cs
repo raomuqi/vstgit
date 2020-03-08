@@ -242,5 +242,18 @@ public class SceneGameObject : MonoBehaviour
         syncIng = needSync;
         OnSetSync(syncType);
     }
-    
+    /// <summary>
+    /// 同步操作
+    /// </summary>
+    public virtual void SyncAction(int[] intArray){ }
+
+    /// <summary>
+    /// 请求同步操作
+    /// </summary>
+    public virtual void RqSyncAction(int[] data)
+    {
+        EventIntArrayArgs args = new EventIntArrayArgs();
+        args.t = data;
+        SyncController.instance.SendNetMsg(ProtoIDCfg.OBJECT_ACTION, args);
+    }
 }

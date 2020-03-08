@@ -54,4 +54,11 @@ public class SceneModel : BaseModel
         sceneObjs.TryGetValue(serverID, out result);
         return result;
     }
+
+    public void SetSceneObjectAciton(int serverID,int[] data)
+    {
+        SceneGameObject obj= GetSceneObject(serverID);
+        if (obj != null)
+            obj.SyncAction(data);
+    }
 }

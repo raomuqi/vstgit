@@ -152,6 +152,10 @@ public class GameServer
             case ProtoIDCfg.SYNC_INPUT:
                 Broadcast(srcData);
                 break;
+            //对象行为
+            case ProtoIDCfg.OBJECT_ACTION:
+                Broadcast(srcData);
+                break;
         }
     }
     void OnMsgLogin(TcpHost.SocketAccept socket,  byte[] protoData)
