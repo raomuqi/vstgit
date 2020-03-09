@@ -21,8 +21,12 @@ public class PlayerShip : SceneGameObject
     protected override void OnUpdate()
     {
     }
-
-   
+    /// <summary>
+    /// 受伤表现
+    /// </summary>
+    public override void OnGetDamage(int damage, Vector3 point)
+    {
+    }
 
     void OnGameStart(EventArgs args)
     {

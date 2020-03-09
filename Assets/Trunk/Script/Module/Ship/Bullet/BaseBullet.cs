@@ -6,6 +6,9 @@ public class BaseBullet : MonoBehaviour
 {
     public int pookKey { get; set; }
     protected Vector3 dir;
+    public string tagetTag = string.Empty;
+    public int power = 1;
+
     protected virtual void OnUpdate() { }
     protected virtual void OnStart() { }
     protected virtual void OnRecycle() { }
@@ -30,8 +33,7 @@ public class BaseBullet : MonoBehaviour
             GameObject.DestroyImmediate(gameObject);
         }
     }
-
-   
+ 
     void Start()
     {
         OnStart();

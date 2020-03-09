@@ -256,4 +256,19 @@ public class SceneGameObject : MonoBehaviour
         args.t = data;
         SyncController.instance.SendNetMsg(ProtoIDCfg.OBJECT_ACTION, args);
     }
+    /// <summary>
+    /// 受伤表现
+    /// </summary>
+    public virtual void OnGetDamage(int damage,Vector3 point) { }
+
+    public virtual void SetDamage(int atk,Vector3 point)
+    {
+        hp = hp - atk;
+        OnGetDamage(atk, point);
+        if (Connection.GetInstance().isHost)
+        {
+            if (hp < 0)
+                ReqDestroy();
+        }
+    }
 }

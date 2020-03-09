@@ -15,7 +15,7 @@ public class PlayerGun : BaseGun
     }
     protected override void OnStart()
     {
-       
+        emitter.SetTag(TagCfg.AI);
     }
     protected override void OnSetSync(SyncType type)
     {

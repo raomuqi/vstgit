@@ -14,4 +14,8 @@ public class BaseGun : SceneGameObject
         if (emitter != null)
             emitter.Fire(fireStatue, dir);
     }
+    public void SetTag(string tag)
+    {
+        emitter.SetTag(tag);
+    }
 }
