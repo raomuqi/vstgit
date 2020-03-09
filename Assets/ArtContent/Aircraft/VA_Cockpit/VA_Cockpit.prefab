@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 8615142897097450234}
   - component: {fileID: 7898269350274089489}
   m_Layer: 2
-  m_Name: '* just for blocking Flare'
+  m_Name: Collider for blocking Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -567,4 +567,4 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 6279199059231915167, guid: 5297b4ee646cce447942408b6d338969, type: 3}
+  m_Mesh: {fileID: -1948906874532486111, guid: 4dcd0f9935ef730429d74f1b21b017a1, type: 3}

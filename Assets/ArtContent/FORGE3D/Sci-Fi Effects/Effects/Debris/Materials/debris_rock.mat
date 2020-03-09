@@ -52,6 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Cutoff: 0.5
     - _DiffusePower: 2.4
     - _FresnelMult: 0
     - _FresnelPower: 1
@@ -69,6 +70,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0, g: 0, b: 0, a: 0.016}
-    - _FadeInAInBOutAOutB: {r: 4, g: 5, b: 30, a: 66}
+    - _FadeInAInBOutAOutB: {r: 4, g: 5, b: 60, a: 130}
     - _InMinMaxOutMinMax: {r: 0, g: 5, b: 10, a: 20}
     - _TintRGBAmbientAMult: {r: 0.4399999, g: 0.4399999, b: 0.4399999, a: 0.6509804}

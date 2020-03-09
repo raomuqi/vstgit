@@ -48,7 +48,7 @@ Material:
     - _Cutoff: 0.5
     - _Exp: 0.66
     - _FadeDistance: 555
-    - _FadeMax: 757
+    - _FadeMax: 700
     - _FadeMin: 0
     - _InvFade: 3
     - _MaxFadeEnd: 873.4
