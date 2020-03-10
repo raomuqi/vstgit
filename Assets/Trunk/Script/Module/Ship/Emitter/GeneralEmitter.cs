@@ -30,10 +30,15 @@ public class GeneralEmitter : BaseEmitter
                 bullet.SetDir(dir);
 
             }
-
             bulletGo.SetActive(true);
+            OnFire();
 
         }
+    }
+    protected virtual void OnFire()
+    {
+
+
     }
     protected override void OnUpdate()
     {
