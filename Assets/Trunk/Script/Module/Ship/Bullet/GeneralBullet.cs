@@ -15,15 +15,21 @@ public class GeneralBullet : BaseBullet
         
     }
 
-    private void OnCollisionExit(Collision collision)
+   
+    private void OnTriggerEnter(Collider other)
     {
-
+        if (other.gameObject.CompareTag(tagetTag))
+        {
+            SceneGameObject sgo = other.gameObject.GetComponent<SceneGameObject>();
+            if (sgo != null)
+            {
+                sgo.SetDamage(power,transform.position);
+            }
+            Recycle();
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-    }
+   
     protected override void OnReset()
     {
         lifeTime = 0;

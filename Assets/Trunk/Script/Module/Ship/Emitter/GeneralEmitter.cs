@@ -23,16 +23,22 @@ public class GeneralEmitter : BaseEmitter
 
             BaseBullet bullet = bulletGo.GetComponent<BaseBullet>();
             bullet.ResetBullet();
+            bullet.tagetTag = tagetTag;
             bullet.pookKey = bulletPrefab.GetInstanceID();
             if (bullet != null)
             {
                 bullet.SetDir(dir);
 
             }
-
             bulletGo.SetActive(true);
+            OnFire();
 
         }
+    }
+    protected virtual void OnFire()
+    {
+
+
     }
     protected override void OnUpdate()
     {

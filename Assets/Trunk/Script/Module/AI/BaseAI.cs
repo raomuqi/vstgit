@@ -10,6 +10,7 @@ public class BaseAI : SceneGameObject
     public float maxLifeTime=20;
     float lifeTime = -1;
     public float maxDistance = 40;
+    public int rushPower = 10;
     public enum AIActionEnum
     {
         None,
@@ -60,7 +61,16 @@ public class BaseAI : SceneGameObject
 
         OnEnterStatus(curState);
     }
-
+    protected override void OnStart()
+    {
+        if (emitterArray != null)
+        {
+            for (int i = 0; i < emitterArray.Length; i++)
+            {
+                emitterArray[i].SetTag(TagCfg.SHIP);
+            }
+        }
+    }
     protected override void OnSetSync(SyncType type)
     {
         playerShip = sceneModel.GetPlayerShip();
@@ -204,5 +214,37 @@ public class BaseAI : SceneGameObject
     public override void SyncAction(int[] intArray)
     {
         fireStatus = (byte)intArray[1];
+    }
+    /// <summary>
+    /// 撞击回调
+    /// </summary>
+    protected virtual void OnRush()
+    {
+        if (Connection.GetInstance().isHost)
+        {
+            ReqDestroy();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag(TagCfg.SHIP))
+        {
+            SceneGameObject sgo = other.gameObject.GetComponent<SceneGameObject>();
+            if (sgo != null)
+            {
+                sgo.SetDamage(rushPower,transform.position);
+                OnRush();
+            }
+        }
+    }
+    /// <summary>
+    /// 受伤表现
+    /// </summary>
+    public override void OnGetDamage(int damage, Vector3 point)
+    {
     }
 }
