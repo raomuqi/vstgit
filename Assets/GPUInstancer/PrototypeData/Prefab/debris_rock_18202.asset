@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: debris_rock_18202
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 135690, guid: 6abbc4ed7fcb5c54e94b08345eba46e9, type: 3}
-  isShadowCasting: 1
+  isShadowCasting: 0
   useCustomShadowDistance: 0
   shadowDistance: 0
   shadowLODMap:

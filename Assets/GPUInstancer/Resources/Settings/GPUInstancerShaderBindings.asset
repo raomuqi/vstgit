@@ -15,6 +15,11 @@ MonoBehaviour:
   shaderInstances:
   - name: FORGE3D/Debris New
     instancedShader: {fileID: 4800000, guid: 9fddcebbff13e7647912d4d3e9ea1005, type: 3}
-    modifiedDate: 03/01/2020 22:09:09.266
+    modifiedDate: 03/06/2020 20:23:29.704
     isOriginalInstanced: 0
+    extensionCode: 
+  - name: GPUInstancer/AsteroidHaze
+    instancedShader: {fileID: 4800000, guid: a1fe6b00539636f49bae5f911c8ccc55, type: 3}
+    modifiedDate: 03/05/2020 22:11:58.422
+    isOriginalInstanced: 1
     extensionCode: 

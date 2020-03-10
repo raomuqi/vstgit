@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: debris_junk_18200
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 128974, guid: 9d54a28af8f583144ada3e476703d431, type: 3}
-  isShadowCasting: 1
+  isShadowCasting: 0
   useCustomShadowDistance: 0
   shadowDistance: 0
   shadowLODMap:
