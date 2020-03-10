@@ -164,7 +164,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6280674508041683717}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.11
   m_Height: 1
@@ -182,6 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cbf2ec53b6f3b409823216d9d6de48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tagetTag: 
+  power: 1
   speed: 1
   power: 1
   maxLifeTime: 15
