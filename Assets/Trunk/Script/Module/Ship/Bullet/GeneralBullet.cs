@@ -5,7 +5,6 @@ using UnityEngine;
 public class GeneralBullet : BaseBullet
 {
     public float speed = 1;
-    public int power = 1;
     public float maxLifeTime = 10;
      float lifeTime = 0;
 
