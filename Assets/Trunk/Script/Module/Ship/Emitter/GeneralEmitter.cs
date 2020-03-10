@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GeneralEmitter : BaseEmitter
 {
@@ -8,6 +9,7 @@ public class GeneralEmitter : BaseEmitter
     public float fireInterval = 0.5f;
     float curFireTime = 0;
     bool fireCD = false;
+    public UnityEvent onFireEvent;
     protected override void OnFire(byte fireStatue,Vector3 dir)
     {
         if (fireStatue == 1 && !fireCD)
@@ -37,8 +39,9 @@ public class GeneralEmitter : BaseEmitter
     }
     protected virtual void OnFire()
     {
-
-
+        if(onFireEvent != null){
+            onFireEvent.Invoke();
+        }
     }
     protected override void OnUpdate()
     {
