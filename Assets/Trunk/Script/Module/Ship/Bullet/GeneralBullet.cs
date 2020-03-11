@@ -11,6 +11,8 @@ public class GeneralBullet : BaseBullet
     // Start is called before the first frame update
     void Start()
     {
+
+
         
     }
 
