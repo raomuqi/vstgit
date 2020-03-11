@@ -346,6 +346,9 @@ MonoBehaviour:
   bounds:
     m_Center: {x: 0, y: 0.8954343, z: 38.8}
     m_Extent: {x: 15.43, y: 6.05, z: 11.11}
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6171446445607147482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,7 +408,7 @@ GameObject:
   - component: {fileID: 9149663841892475369}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -418,7 +421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5683941446590352337}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8404539764572716135}
@@ -459,7 +462,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 0
+  m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
@@ -965,6 +968,11 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 8125487079142367861}
+    - target: {fileID: 8459210266814191054, guid: 7e4ca8e1c790d0e41b048f7084aeb4cc,
+        type: 3}
+      propertyPath: controlPos
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e4ca8e1c790d0e41b048f7084aeb4cc, type: 3}
 --- !u!4 &8718351540724737087 stripped
@@ -1135,6 +1143,11 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 8125487079142367861}
+    - target: {fileID: 8459210266814191054, guid: 7e4ca8e1c790d0e41b048f7084aeb4cc,
+        type: 3}
+      propertyPath: controlPos
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e4ca8e1c790d0e41b048f7084aeb4cc, type: 3}
 --- !u!4 &6399505901057631232 stripped
