@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaseAI : SceneGameObject
 {
@@ -11,6 +12,7 @@ public class BaseAI : SceneGameObject
     float lifeTime = -1;
     public float maxDistance = 40;
     public int rushPower = 10;
+    public UnityEvent onHitEvent;
     public enum AIActionEnum
     {
         None,
@@ -246,5 +248,11 @@ public class BaseAI : SceneGameObject
     /// </summary>
     public override void OnGetDamage(int damage, Vector3 point)
     {
+        if(onHitEvent != null){
+            onHitEvent.Invoke();
+        }
+        //* testing
+        ArtTemp artTemp = GetComponent<ArtTemp>();
+        if(artTemp != null) artTemp.SpawnExplosion(point);
     }
 }

@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerShip : SceneGameObject
 {
 
     DOTweenPath doPath;
     public Bounds bounds;
+    public UnityEvent onHitEvent;
     protected override void  OnAwake()
     {
         sceneModel.SetPlayerShip(this);
@@ -26,6 +28,9 @@ public class PlayerShip : SceneGameObject
     /// </summary>
     public override void OnGetDamage(int damage, Vector3 point)
     {
+        if(onHitEvent != null){
+            onHitEvent.Invoke();
+        }
     }
 
     void OnGameStart(EventArgs args)

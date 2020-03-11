@@ -34,9 +34,9 @@ public class PlayerGun : BaseGun
     {
         if (syncType == SyncType.UpLoad)
         {
-            float h = Mathf.Lerp(-90, 90, (inputModel.horizontal + 1f) * 0.5f);
-            float v = Mathf.Lerp(-90, 90, (inputModel.vertical + 1f) * 0.5f);
-            transform.localEulerAngles = new Vector3(-v, h, 0);
+            // float h = Mathf.Lerp(-90, 90, (inputModel.horizontal + 1f) * 0.5f);
+            // float v = Mathf.Lerp(-90, 90, (inputModel.vertical + 1f) * 0.5f);
+            // transform.localEulerAngles = new Vector3(-v, h, 0);
             SetFire(fires[fireIndex], transform.forward);
         }
         else if (syncType == SyncType.UpDate)
