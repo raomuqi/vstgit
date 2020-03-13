@@ -18,11 +18,17 @@ MonoBehaviour:
     fire: 1
     keepTime: -1
     randomNext: 0
+    fireKeepTime: 2
+    fireCDTime: 2
   - action: 2
     fire: 1
     keepTime: 7
     randomNext: 0
+    fireKeepTime: 2
+    fireCDTime: 2
   - action: 3
     fire: 0
     keepTime: 0
     randomNext: 0
+    fireKeepTime: -1
+    fireCDTime: -1
