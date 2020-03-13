@@ -52,13 +52,13 @@ public class SceneNetHandler : BaseNetHandler
         //船
         if (Connection.GetInstance().isHost)
         {
-            SendActiveObjectProto(new int[] { 0 });
+            SendActiveObjectProto(new int[] {19, 0 });
         }
         var player = playerModel.GetPlayerInfo();
         if (player!=null)
         {
-            //炮
-            SendActiveObjectProto(new int[] { playerModel.GetPlayerInfo().pos });
+            //炮  机舱
+            SendActiveObjectProto(new int[] { playerModel.GetPlayerInfo().pos, playerModel.GetPlayerInfo().pos + 6 });
         }
 
         
