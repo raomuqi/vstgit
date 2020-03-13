@@ -12,6 +12,7 @@ public class BaseAI : SceneGameObject
     float lifeTime = -1;
     public float maxDistance = 40;
     public int rushPower = 10;
+    float fireTime = 0;
     public UnityEvent onHitEvent;
     public enum AIActionEnum
     {
@@ -60,7 +61,7 @@ public class BaseAI : SceneGameObject
         curState = cfg.statusArray[nextIndex];
         curStateIndex = nextIndex;
         curStateTime = 0;
-
+        fireTime = 0;
         OnEnterStatus(curState);
     }
     protected override void OnStart()
@@ -87,6 +88,7 @@ public class BaseAI : SceneGameObject
     }
     protected virtual void OnEnterStatus (AIState state)
     {
+        fireTime = 0;
         switch (curState.fire)
         {
             case AIFireEnum.Fire:
@@ -95,7 +97,6 @@ public class BaseAI : SceneGameObject
                     fireSync[1] = 1;
                     RqSyncAction(fireSync);
                 }
-                // Fire(1);
                 break;
             case AIFireEnum.None:
                 if (fireSync[1] != 0)
@@ -103,9 +104,7 @@ public class BaseAI : SceneGameObject
                     fireSync[1] = 0;
                     RqSyncAction(fireSync);
                 }
-                //  Fire(0);
                 break;
-
         }
     }
     protected virtual void OnExitStatus(AIState state)
@@ -141,8 +140,25 @@ public class BaseAI : SceneGameObject
             }
        
         }
-
-
+        fireTime += Time.deltaTime;
+        if (fireSync[1] == 1 && curState.fireKeepTime>0)
+        {
+            if (fireTime >= curState.fireKeepTime)
+            {
+                fireSync[1] = 0;
+                fireTime = 0;
+                RqSyncAction(fireSync);
+            }
+        }
+        else if (fireSync[1] == 0 && curState.fireCDTime > 0)
+        {
+            if (fireTime >= curState.fireCDTime)
+            {
+                fireSync[1] = 0;
+                fireTime = 1;
+                RqSyncAction(fireSync);
+            }
+        }
 
     }
     protected override void OnUpdate()

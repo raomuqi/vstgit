@@ -17,11 +17,15 @@ public class AIState
 {
     [Header("移动行为")]
     public BaseAI.AIActionEnum action;
-    [Header("攻击行为")]
+    [Header("进入状态时是否开火")]
     public BaseAI.AIFireEnum fire;
     [Header("持续时间(-1自动）(0持续)")]
     public float keepTime = 7;
     [Header("随机切换下个状态")]
     public bool randomNext = false;
+    [Header("攻击持续时间")]
+    public float fireKeepTime = -1;
+    [Header("攻击冷却时间")]
+    public float fireCDTime = -1;
 }
 

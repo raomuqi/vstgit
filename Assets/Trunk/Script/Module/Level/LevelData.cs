@@ -44,6 +44,8 @@ public class AppearObjectData
     public int hp = 100;
     [Header("速度")]
     public float speed = 1;
+    [Header("销毁时间")]
+    public float destroyTime = 300;
     [Header("行为配置")]
     public AIStatusData aiCfg;
 }

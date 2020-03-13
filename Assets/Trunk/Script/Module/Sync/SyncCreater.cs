@@ -125,6 +125,7 @@ public class SyncCreater : MonoBehaviour
                         ai.cfg = objCfg.aiCfg;
                         ai.moveSpeed = objCfg.speed;
                         ai.hp = objCfg.hp;
+                        ai.maxLifeTime=objCfg.destroyTime;
                     }
                     else
                     {
