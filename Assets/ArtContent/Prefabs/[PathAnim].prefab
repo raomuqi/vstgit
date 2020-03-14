@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1342442140467838615}
   - component: {fileID: 5727797337589298590}
   - component: {fileID: 225505440233832506}
+  - component: {fileID: 6275815628535512524}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -103,6 +104,26 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   moveArea: 5
+--- !u!114 &6275815628535512524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626239973023520373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1e1cd50fc06374babb457e5da18660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable:
+    m_PersistentCalls:
+      m_Calls: []
+  explosionGO: {fileID: 0}
+  delayDestroy: 3
+  aiStatusData: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  attackStateColor: {r: 0, g: 0, b: 0, a: 0}
+  isHitStateColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &3558387125674804911
 GameObject:
   m_ObjectHideFlags: 0

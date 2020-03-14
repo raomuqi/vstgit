@@ -22,7 +22,7 @@ MonoBehaviour:
     fireCDTime: 2
   - action: 2
     fire: 1
-    keepTime: 7
+    keepTime: 3
     randomNext: 0
     fireKeepTime: 2
     fireCDTime: 2

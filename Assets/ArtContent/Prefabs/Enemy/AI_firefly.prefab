@@ -73,7 +73,18 @@ MonoBehaviour:
   rushPower: 10
   onHitEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9219989337151972747}
+        m_MethodName: ActiveHitState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7521105619984684792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +121,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9219989337151972747}
-        m_MethodName: ActiveState
+        m_MethodName: ActiveFireState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -154,6 +165,8 @@ MonoBehaviour:
   explosionGO: {fileID: 7251092864589022047, guid: 59e61257171bbd044b597376a2894cf0,
     type: 3}
   delayDestroy: 3
+  attackStateColor: {r: 0.8396226, g: 0.5622643, b: 0.011881431, a: 0}
+  isHitStateColor: {r: 0.799, g: 0, b: 0, a: 0}
 --- !u!1001 &7521105618426872790
 PrefabInstance:
   m_ObjectHideFlags: 0

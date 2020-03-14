@@ -268,7 +268,11 @@ public class BaseAI : SceneGameObject
             onHitEvent.Invoke();
         }
         //* testing
-        ArtTemp artTemp = GetComponent<ArtTemp>();
-        if(artTemp != null) artTemp.SpawnExplosion(point);
+        hp -= 20;
+        if(hp <= 0)
+        {
+            ArtTemp artTemp = GetComponent<ArtTemp>();
+            if(artTemp != null) artTemp.SpawnExplosion(point);
+        }
     }
 }
