@@ -69,5 +69,27 @@ public static class CfgGenerate
 
     }
 
-  
+        [MenuItem("Assets/拷贝路径")]
+        public static void PathHelper
+()
+        {
+            TextEditor te = new TextEditor();
+            string[] temp = Selection.assetGUIDs;
+            string result = string.Empty;
+            for (int i = 0; i < temp.Length; i++)
+            {
+                string p = AssetDatabase.GUIDToAssetPath(temp[i]);
+                if (p != ("Assets/Editor/Resources/BundleSetting.asset"))
+                {
+                    result = p;
+                    break;
+                }
+            }
+
+            te.text = result;
+            te.SelectAll();
+            te.Copy();
+            Debug.Log("已复制:" + te.text);
+        }
+
 }
