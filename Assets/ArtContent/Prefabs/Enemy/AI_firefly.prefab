@@ -68,12 +68,12 @@ MonoBehaviour:
   syncSetting: 0
   emitterArray:
   - {fileID: 7521105619984684792}
-  onHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
   maxLifeTime: 30
   maxDistance: 40
   rushPower: 10
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7521105619984684792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +108,18 @@ MonoBehaviour:
   fireInterval: 1
   onFireEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9219989337151972747}
+        m_MethodName: ActiveState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &-1818767173462801702
 Rigidbody:
   m_ObjectHideFlags: 0
