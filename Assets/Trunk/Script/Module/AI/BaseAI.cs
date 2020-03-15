@@ -268,7 +268,7 @@ public class BaseAI : SceneGameObject
             onHitEvent.Invoke();
         }
         //* testing
-        hp -= 20;
+        hp -= 35;
         if(hp <= 0)
         {
             ArtTemp artTemp = GetComponent<ArtTemp>();

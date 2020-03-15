@@ -36,8 +36,8 @@ public class PlayerShip : SceneGameObject
             float h = Mathf.Lerp(-moveArea, moveArea, (inputModel.horizontal + 1f) * 0.5f);
             float v = Mathf.Lerp(-moveArea, moveArea, (inputModel.vertical + 1f) * 0.5f);
             Vector3 target = new Vector3(h, v, 0);
-            float rx = Mathf.LerpAngle(transform.localEulerAngles.x, -v, Time.deltaTime * 10);
-            float ry = Mathf.LerpAngle(transform.localEulerAngles.y, h, Time.deltaTime * 10);
+            float rx = Mathf.LerpAngle(transform.localEulerAngles.x, -v, Time.deltaTime);
+            float ry = Mathf.LerpAngle(transform.localEulerAngles.y, h, Time.deltaTime);
             transform.localEulerAngles = new Vector3(rx, ry, 0);
             //  Vector3 dir =Vector3.Normalize(target- transform.localPosition);
             //  transform.localPosition += dir * Time.deltaTime * speed;
@@ -53,6 +53,9 @@ public class PlayerShip : SceneGameObject
         if(onHitEvent != null){
             onHitEvent.Invoke();
         }
+        ArtTemp artTemp = GetComponent<ArtTemp>();
+        if (artTemp != null) artTemp.SpawnHitEffect(point);
+        //Debug.LogError("GetHit");
     }
 
     void OnGameStart(EventArgs args)
