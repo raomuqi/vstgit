@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 //* for testing
 public class ArtTemp : MonoBehaviour
@@ -19,7 +20,7 @@ public class ArtTemp : MonoBehaviour
     public GameObject explosionGO;
     public float delayDestroy = 3;
     //* tween state
-    private MeshRenderer meshRender;
+    [SerializeField] private MeshRenderer meshRender;
     MaterialPropertyBlock matBlock;
     private Tweener tweenState;
     private float stateIns = 0.0f;
@@ -41,19 +42,23 @@ public class ArtTemp : MonoBehaviour
         }
     }
     void Start(){
-        meshRender = GetComponentInChildren<MeshRenderer>();
+        if(meshRender == null) meshRender = GetComponentInChildren<MeshRenderer>();
         matBlock = new MaterialPropertyBlock();
-        tweenState = DOTween.To(() => stateIns, x => stateIns = x, 1, 1.2f).SetAutoKill(false).SetEase(EaseFactory.StopMotion(5, Ease.OutFlash)).Pause();
+        tweenState = DOTween.To(() => stateIns, x => stateIns = x, 1, 2.0f).SetAutoKill(false).SetEase(EaseFactory.StopMotion(5, Ease.OutFlash)).Pause();
     }    
     void OnEnable()
     {
         if(onEnable != null) onEnable.Invoke();
     }
-
+    void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.R)) { SceneManager.LoadScene(0, LoadSceneMode.Single); }
+        if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
+    }
     //* auto spawn ai
     void AutoSpawnAI()
     {
-        int aiWaves = 5;
+        int aiWaves = 20;
         levelData.appearSets = new AppearSetData[aiWaves];
         for (int p = 0; p < aiWaves; p++){ levelData.appearSets[p] = new AppearSetData(); }     //* must initialize each element
         levelData.activeSets = new ActiveSetData[1];
@@ -63,7 +68,7 @@ public class ArtTemp : MonoBehaviour
         {
             AppearSetData wave = levelData.appearSets[i];
             wave.time = (i + 1) * 20;
-            int aiCount = 3;
+            int aiCount = Random.Range(6, 10);
             wave.objectCfgs = new AppearObjectData[aiCount];
             for(int p = 0; p < aiCount; p++) { wave.objectCfgs[p] = new AppearObjectData(); }
             for (int j = 0; j < aiCount; j++)
@@ -71,7 +76,7 @@ public class ArtTemp : MonoBehaviour
                 AppearObjectData aiCraft = wave.objectCfgs[j];
                 aiCraft.objectIndex = 0;
                 aiCraft.XAngle      = Random.Range(-20, 20);
-                aiCraft.YAngle      = Random.Range(0, 10);
+                aiCraft.YAngle      = Random.Range(-5, 5);
                 aiCraft.distance    = Random.Range(200, 500);
                 aiCraft.hp = 100;
                 aiCraft.speed = 1;
@@ -102,7 +107,13 @@ public class ArtTemp : MonoBehaviour
     public void SpawnExplosion(Vector3 pos){
         if(explosionGO != null)
             Instantiate(explosionGO, transform.position, Quaternion.identity);
-        gameObject.SetActive(false);    
+        gameObject.SetActive(true);    
+    }
+
+    public void SpawnHitEffect(Vector3 pos)
+    {
+        if (explosionGO != null)
+            Instantiate(explosionGO, transform.position, Quaternion.identity);
     }
     //* common function
     public void Destroy(){

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 435690}
   - component: {fileID: 3335690}
   - component: {fileID: 2335690}
-  - component: {fileID: 305417433480642127}
+  - component: {fileID: 2202687243389305636}
   m_Layer: 0
   m_Name: debris_rock
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &305417433480642127
+--- !u!114 &2202687243389305636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,6 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPrototype: {fileID: 11400000, guid: 01df1140e8168f74aab8fb0bb56094d3, type: 2}
+  prefabPrototype: {fileID: 11400000, guid: af4f09d27dd046f45b740c329a7f8e13, type: 2}
   gpuInstancerID: 0
   state: 0

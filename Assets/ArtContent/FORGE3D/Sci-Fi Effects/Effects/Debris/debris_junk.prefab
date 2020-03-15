@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 428974}
   - component: {fileID: 3328974}
   - component: {fileID: 2328974}
-  - component: {fileID: 869745734290362847}
+  - component: {fileID: 5406814959596774607}
   m_Layer: 0
   m_Name: debris_junk
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &869745734290362847
+--- !u!114 &5406814959596774607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,6 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPrototype: {fileID: 11400000, guid: 3abeca17d4d5f014dae0f3324d3bcee2, type: 2}
+  prefabPrototype: {fileID: 11400000, guid: c753a78f3c9dc8c4abc4c9ebdf012077, type: 2}
   gpuInstancerID: 0
   state: 0

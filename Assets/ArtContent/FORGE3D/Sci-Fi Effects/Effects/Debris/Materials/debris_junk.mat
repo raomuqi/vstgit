@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: debris_junk
-  m_Shader: {fileID: 4800000, guid: 9fddcebbff13e7647912d4d3e9ea1005, type: 3}
+  m_Shader: {fileID: 4800000, guid: a7118371a6306964f9fab4346a68d237, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -72,6 +72,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0, g: 0, b: 0, a: 0.016}
-    - _FadeInAInBOutAOutB: {r: 4, g: 5, b: 60, a: 130}
+    - _FadeInAInBOutAOutB: {r: 4, g: 5, b: 80, a: 150}
     - _InMinMaxOutMinMax: {r: 0, g: 5, b: 10, a: 20}
     - _TintRGBAmbientAMult: {r: 0.43999994, g: 0.43999994, b: 0.43999994, a: 0.6509804}

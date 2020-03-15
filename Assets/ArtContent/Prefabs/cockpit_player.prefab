@@ -118,10 +118,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795152541163500082}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: -1
   m_Mesh: {fileID: 858073074453608529, guid: 4dcd0f9935ef730429d74f1b21b017a1, type: 3}
 --- !u!1 &2226812485121124648
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2935330943249570619}
   m_Layer: 0
-  m_Name: VA_Cockpit
+  m_Name: cockpit_player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
