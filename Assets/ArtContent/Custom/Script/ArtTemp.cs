@@ -67,8 +67,9 @@ public class ArtTemp : MonoBehaviour
         for (int i = 0; i < aiWaves; i++)
         {
             AppearSetData wave = levelData.appearSets[i];
-            wave.time = (i + 1) * 20;
-            int aiCount = Random.Range(6, 10);
+            wave.time = (i + 1) * 3;
+            //Debug.LogError("µÚ"+i+"²¨: "+wave.time);
+            int aiCount = Random.Range(3, 5);
             wave.objectCfgs = new AppearObjectData[aiCount];
             for(int p = 0; p < aiCount; p++) { wave.objectCfgs[p] = new AppearObjectData(); }
             for (int j = 0; j < aiCount; j++)

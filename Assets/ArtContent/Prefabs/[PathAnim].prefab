@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c2cd7dac9965e4385ecb35a617a621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 1000
   moveSpeed: 1
   controlPos: 0
   syncSetting: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   meshRender: {fileID: 2738126944918111622}
   aiStatusData: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
   attackStateColor: {r: 0, g: 0, b: 0, a: 0}
-  isHitStateColor: {r: 0.253, g: 0.01518, b: 0.01518, a: 0}
+  isHitStateColor: {r: 0.12100001, g: 0.007446154, b: 0.007446154, a: 0}
 --- !u!64 &6372793162584387942
 MeshCollider:
   m_ObjectHideFlags: 0
