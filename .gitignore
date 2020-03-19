@@ -59,5 +59,28 @@ sysinfo.txt
 crashlytics-build.properties
 
 /.vscode
-/Assets/ArtContent
-/Assets/ArtContent.meta
+
+# # all images
+*.psd
+*.psd.meta
+*.bmp
+*.bmp.meta
+*.png
+*.png.meta
+*.tga
+*.tga.meta
+*.tif
+*.tif.meta
+*.jpg
+*.jpg.meta
+# # Explorer filter: *.psd.meta OR *.bmp.meta OR *.png.meta OR *.tga.meta OR *.tif.meta OR *.jpg.meta
+
+# # all audio
+*.wav
+*.wav.meta
+*.mp3
+*.mp3.meta
+
+# # misc
+/Assets/Scenes/Scene_temp.unity
+/Assets/Scenes/Scene_temp.unity.meta
