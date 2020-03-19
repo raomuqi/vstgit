@@ -26,7 +26,7 @@ public class EDWinLevelData : EditorWindow
 
     private void OnDestroy()
     {
-        if (EditorUtility.DisplayDialog("提示", "即将关闭窗口是否保存", "是", "取消"))
+        if (EditorUtility.DisplayDialog("提示", "即将关闭窗口是否保存", "保存", "扔掉"))
             Save();
     }
 
@@ -321,31 +321,33 @@ public class EDWinLevelData : EditorWindow
                     }
                 }
             }
-            if (openStatus == null || openStatus.Length != curCreateData.objectCfgs.Length)
-                openStatus = new byte[curCreateData.objectCfgs.Length];
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Item:");
-            for (int i = 0; i < curCreateData.objectCfgs.Length; i++)
+            if (curCreateData.objectCfgs != null && curCreateData.objectCfgs.Length>0)
             {
-                EditorGUILayout.BeginVertical();
-                if (GUILayout.Button("对象:" + i.ToString()))
+                if (openStatus == null || openStatus.Length != curCreateData.objectCfgs.Length)
+                    openStatus = new byte[curCreateData.objectCfgs.Length];
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Item:");
+                for (int i = 0; i < curCreateData.objectCfgs.Length; i++)
                 {
-                    if (openStatus[i] == 0)
+                    EditorGUILayout.BeginVertical();
+                    if (GUILayout.Button("对象:" + i.ToString()))
                     {
-                        openStatus[i] = 1;
+                        if (openStatus[i] == 0)
+                        {
+                            openStatus[i] = 1;
+                        }
+                        else
+                        {
+                            openStatus[i] = 0;
+                        }
                     }
-                    else
+                    if (openStatus[i] == 1)
                     {
-                        openStatus[i] = 0;
+                        DrawAppearObjectData(curCreateData.objectCfgs[i]);
                     }
+                    EditorGUILayout.EndVertical();
                 }
-                if (openStatus[i] == 1)
-                {
-                    DrawAppearObjectData(curCreateData.objectCfgs[i]);
-                }
-                EditorGUILayout.EndVertical();
             }
-
             EditorGUILayout.Space();
             EditorGUILayout.EndScrollView();
         }
