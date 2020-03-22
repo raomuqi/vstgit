@@ -16,42 +16,471 @@ MonoBehaviour:
   - time: 10
     objectCfgs:
     - objectIndex: 0
-      XAngle: -15
-      YAngle: 10
-      distance: 100
-      hp: 100
-      speed: 1
+      XAngle: 5.655224
+      YAngle: 3.1076694
+      distance: 368.90524
+      hp: 53
+      speed: 1.0805326
+      destroyTime: 295.38605
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -9.853661
+      YAngle: 3.2094016
+      distance: 289.88568
+      hp: 50
+      speed: 0.95172215
+      destroyTime: 286.36136
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 15
-      YAngle: 10
-      distance: 100
-      hp: 100
-      speed: 1
+      XAngle: 1.5663347
+      YAngle: 4.414839
+      distance: 261.0758
+      hp: 69
+      speed: 0.6529929
+      destroyTime: 295.6724
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -9.430979
+      YAngle: 0.9674741
+      distance: 413.576
+      hp: 78
+      speed: 0.60878867
+      destroyTime: 291.09
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 3.2526395
+      YAngle: 5.0550785
+      distance: 423.42834
+      hp: 52
+      speed: 1.0462153
+      destroyTime: 281.03964
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -6.726425
+      YAngle: 4.3954864
+      distance: 349.95453
+      hp: 70
+      speed: 0.7513604
+      destroyTime: 289.72534
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -6.093125
+      YAngle: 3.1182675
+      distance: 344.10904
+      hp: 78
+      speed: 1.0978463
+      destroyTime: 300.47607
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -5.3601475
+      YAngle: 3.497001
+      distance: 272.33215
+      hp: 93
+      speed: 0.9295792
+      destroyTime: 296.62653
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 9.535015
+      YAngle: 2.7072814
+      distance: 219.06293
+      hp: 67
+      speed: 0.8475177
+      destroyTime: 339.31628
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
   - time: 20
     objectCfgs:
     - objectIndex: 0
-      XAngle: 0
-      YAngle: 10
-      distance: 1000
-      hp: 1
-      speed: 20
+      XAngle: 1.7508593
+      YAngle: 2.1609263
+      distance: 304.9517
+      hp: 78
+      speed: 1.3184607
+      destroyTime: 299.19614
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 7.3751183
+      YAngle: 4.6586833
+      distance: 417.94864
+      hp: 53
+      speed: 1.5127571
+      destroyTime: 286.76215
       aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+    - objectIndex: 0
+      XAngle: 1.7581186
+      YAngle: 3.647354
+      distance: 490.11295
+      hp: 51
+      speed: 1.1322058
+      destroyTime: 299.46503
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 2.3714962
+      YAngle: -1.6013222
+      distance: 485.68134
+      hp: 74
+      speed: 1.0287681
+      destroyTime: 338.40158
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -8.722157
+      YAngle: 3.625325
+      distance: 478.42798
+      hp: 60
+      speed: 1.9903237
+      destroyTime: 284.89212
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 7.2459006
+      YAngle: 4.315652
+      distance: 311.52576
+      hp: 93
+      speed: 1.1713424
+      destroyTime: 309.99493
+      aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+    - objectIndex: 0
+      XAngle: 6.0879016
+      YAngle: 4.726399
+      distance: 440.9469
+      hp: 59
+      speed: 1.9285487
+      destroyTime: 284.55896
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -4.7439394
+      YAngle: 5.3317156
+      distance: 401.75522
+      hp: 96
+      speed: 1.9174861
+      destroyTime: 295.9597
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 5.986061
+      YAngle: 1.9047232
+      distance: 310.41766
+      hp: 51
+      speed: 1.7940457
+      destroyTime: 299.99832
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
   - time: 40
     objectCfgs:
     - objectIndex: 0
-      XAngle: -10
-      YAngle: 10
-      distance: 100
-      hp: 100
-      speed: 5
-      aiCfg: {fileID: 11400000, guid: 69e67e9e2d7abb94e93b3efc613ad7de, type: 2}
+      XAngle: -4.7359858
+      YAngle: 1.9838321
+      distance: 379.14154
+      hp: 90
+      speed: 1.6504264
+      destroyTime: 307.19305
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 10
-      YAngle: 10
-      distance: 0
-      hp: 100
-      speed: 5
-      aiCfg: {fileID: 11400000, guid: 69e67e9e2d7abb94e93b3efc613ad7de, type: 2}
+      XAngle: 4.256444
+      YAngle: 4.767432
+      distance: 307.7507
+      hp: 71
+      speed: 1.5807762
+      destroyTime: 283.9315
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 6.824991
+      YAngle: 1.4046402
+      distance: 419.97845
+      hp: 76
+      speed: 1.0964307
+      destroyTime: 308.5158
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -8.986172
+      YAngle: 3.6420927
+      distance: 323.05057
+      hp: 72
+      speed: 1.3558357
+      destroyTime: 288.91327
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -9.902399
+      YAngle: 2.1333346
+      distance: 437.4754
+      hp: 66
+      speed: 1.0750667
+      destroyTime: 299.8704
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -4.6980753
+      YAngle: 1.8313427
+      distance: 434.70175
+      hp: 71
+      speed: 1.8194891
+      destroyTime: 313.37567
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 6.1181545
+      YAngle: 2.111803
+      distance: 479.15463
+      hp: 93
+      speed: 1.2344406
+      destroyTime: 295.78534
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 2.4637356
+      YAngle: 1.077189
+      distance: 325.6377
+      hp: 81
+      speed: 1.5185239
+      destroyTime: 284.8591
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  - time: 50
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: 6.4151382
+      YAngle: 3.2421303
+      distance: 398.7306
+      hp: 85
+      speed: 1.5913568
+      destroyTime: 319.52173
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 0.7747898
+      YAngle: 1.1658068
+      distance: 529.18164
+      hp: 96
+      speed: 1.8049737
+      destroyTime: 300.3593
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -8.486874
+      YAngle: 6.3682747
+      distance: 433.3399
+      hp: 78
+      speed: 1.8311672
+      destroyTime: 298.70435
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 8.315296
+      YAngle: 1.6491756
+      distance: 448.9592
+      hp: 77
+      speed: 1.9091604
+      destroyTime: 274.17175
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 5.420499
+      YAngle: 6.566469
+      distance: 444.63498
+      hp: 94
+      speed: 1.6890118
+      destroyTime: 297.2682
+      aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+    - objectIndex: 0
+      XAngle: 1.7014465
+      YAngle: 2.086049
+      distance: 352.34982
+      hp: 67
+      speed: 1.5472772
+      destroyTime: 274.0084
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -8.950775
+      YAngle: 7.650131
+      distance: 462.94943
+      hp: 93
+      speed: 1.4083886
+      destroyTime: 319.94333
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 8.687386
+      YAngle: 3.782232
+      distance: 547.1663
+      hp: 68
+      speed: 1.7552655
+      destroyTime: 265.6441
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 5.644676
+      YAngle: 5.4285564
+      distance: 512.81494
+      hp: 74
+      speed: 1.2311527
+      destroyTime: 259.53912
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  - time: 60
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: -1.2235174
+      YAngle: 2.9044642
+      distance: 470.92996
+      hp: 84
+      speed: 1.2801371
+      destroyTime: 263.73434
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -4.101614
+      YAngle: 4.0053296
+      distance: 433.9646
+      hp: 77
+      speed: 1.1484871
+      destroyTime: 293.56976
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -7.804523
+      YAngle: 6.242716
+      distance: 455.79688
+      hp: 78
+      speed: 1.6995081
+      destroyTime: 255.5679
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -2.6975117
+      YAngle: 4.631681
+      distance: 431.08014
+      hp: 89
+      speed: 1.1601878
+      destroyTime: 295.27692
+      aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+    - objectIndex: 1
+      XAngle: 0.54937744
+      YAngle: 3.9296389
+      distance: 506.33984
+      hp: 70
+      speed: 1.7392908
+      destroyTime: 290.10938
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -2.035183
+      YAngle: 3.0464659
+      distance: 511.61057
+      hp: 63
+      speed: 1.7236538
+      destroyTime: 282.55536
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 2.261962
+      YAngle: 5.647833
+      distance: 529.8345
+      hp: 65
+      speed: 1.1729976
+      destroyTime: 295.16736
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  - time: 70
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: 5.8394003
+      YAngle: 3.3397517
+      distance: 379.80646
+      hp: 77
+      speed: 1.4981046
+      destroyTime: 292.9629
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 2.4282207
+      YAngle: 3.7556255
+      distance: 469.73364
+      hp: 87
+      speed: 1.64979
+      destroyTime: 292.3775
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 7.583475
+      YAngle: 0.44204426
+      distance: 391.21014
+      hp: 69
+      speed: 1.3732729
+      destroyTime: 282.79062
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -9.607801
+      YAngle: 3.090034
+      distance: 413.94138
+      hp: 80
+      speed: 1.2472744
+      destroyTime: 290.0644
+      aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+    - objectIndex: 1
+      XAngle: -1.6482534
+      YAngle: 2.9069924
+      distance: 445.2209
+      hp: 84
+      speed: 1.8958777
+      destroyTime: 258.8441
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -8.547247
+      YAngle: 2.9536474
+      distance: 439.90625
+      hp: 90
+      speed: 1.5758739
+      destroyTime: 253.95784
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -5.994687
+      YAngle: 4.66886
+      distance: 415.04218
+      hp: 98
+      speed: 1.3488426
+      destroyTime: 273.99014
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  - time: 80
+    objectCfgs:
+    - objectIndex: 0
+      XAngle: 9.842236
+      YAngle: 2.8288493
+      distance: 420.31775
+      hp: 78
+      speed: 1.015334
+      destroyTime: 264.05966
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 0.7166014
+      YAngle: 7.8251486
+      distance: 460.75604
+      hp: 65
+      speed: 1.8741239
+      destroyTime: 284.6541
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 1.2764969
+      YAngle: 2.5685868
+      distance: 452.38983
+      hp: 64
+      speed: 1.5532467
+      destroyTime: 284.9616
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 2.520597
+      YAngle: 2.9946218
+      distance: 507.9606
+      hp: 68
+      speed: 1.4673758
+      destroyTime: 263.48596
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 8.805069
+      YAngle: 4.4886837
+      distance: 404.7506
+      hp: 98
+      speed: 1.7614692
+      destroyTime: 294.5208
+      aiCfg: {fileID: 11400000, guid: db16710b20141fa498c650365eb00ef5, type: 2}
+    - objectIndex: 0
+      XAngle: -8.383112
+      YAngle: 7.6321
+      distance: 521.1032
+      hp: 99
+      speed: 1.1681105
+      destroyTime: 268.3041
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -0.8007374
+      YAngle: 5.189891
+      distance: 423.8015
+      hp: 87
+      speed: 1.5244739
+      destroyTime: 269.51733
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -4.0372934
+      YAngle: 3.5813441
+      distance: 478.35394
+      hp: 98
+      speed: 1.1321381
+      destroyTime: 303.5219
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
   activeSets: []

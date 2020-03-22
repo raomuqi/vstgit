@@ -34,12 +34,12 @@ public class ArtTemp : MonoBehaviour
     private void Awake()
     {
         //* ai creater
-        levelData = ScriptableObject.CreateInstance("LevelData") as LevelData;
-        aiCreater = GetComponent<AICreater>();
-        if(aiCreater != null)
-        {
-            AutoSpawnAI();
-        }
+        //levelData = ScriptableObject.CreateInstance("LevelData") as LevelData;
+        //aiCreater = GetComponent<AICreater>();
+        //if(aiCreater != null)
+        //{
+        //    AutoSpawnAI();
+        //}
     }
     void Start(){
         if(meshRender == null) meshRender = GetComponentInChildren<MeshRenderer>();
