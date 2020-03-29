@@ -54,9 +54,6 @@ public class PlayerShip : SceneGameObject
         if(onHitEvent != null){
             onHitEvent.Invoke();
         }
-        ArtTemp artTemp = GetComponent<ArtTemp>();
-        if (artTemp != null) artTemp.SpawnHitEffect(point);
-        //Debug.LogError("GetHit");
     }
 
     void OnGameStart(EventArgs args)
