@@ -133,6 +133,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  row: 1
+  bulletSpace: 1
 --- !u!54 &-1818767173462801702
 Rigidbody:
   m_ObjectHideFlags: 0
