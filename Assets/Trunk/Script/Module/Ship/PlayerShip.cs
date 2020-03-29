@@ -29,6 +29,7 @@ public class PlayerShip : SceneGameObject
             inputModel = InputController.instance.GetModel<InputModel>(InputModel.name);
         }
     }
+
     protected override void OnUpdate()
     {
         if (syncType == SyncType.UpLoad)
@@ -68,5 +69,17 @@ public class PlayerShip : SceneGameObject
     protected override void OnDestroyed()
     {
         EventsMgr.RemoveEvent(EventName.START_GAME, OnGameStart);
+    }
+    public override void OnGetAction(int[] intArray)
+    {
+        int action = intArray[1];
+        switch (action)
+        {
+            case SceneObjectActionCfg.GET_PROP:
+                int scrObject = intArray[2];
+                int extID = intArray[3];
+                ExtElementFactory.Get(extID).Use(this);
+                break;
+        }
     }
 }

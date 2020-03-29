@@ -139,6 +139,8 @@ public class EDWinLevelData : EditorWindow
 
         }
     }
+    AppearSetData copyAppearData = null;
+    int copyDataIndex = -1;
     /// <summary>
     /// 绘制创建列表
     /// </summary>
@@ -151,7 +153,11 @@ public class EDWinLevelData : EditorWindow
             var item = new AppearSetData();
             createList.Insert(inserIndex, item);
         }
-  
+        if (copyAppearData != null && GUILayout.Button("粘贴配置在:"+copyDataIndex+"插入:" + inserIndex))
+        {
+            createList.Insert(inserIndex, copyAppearData);
+        }
+      
         if (GUILayout.Button("清除所有"))
         {
             createList.Clear();
@@ -175,6 +181,13 @@ public class EDWinLevelData : EditorWindow
                 dataTitle = "第" + curIndex + "波";
                 curCreateData = curItem;
                 createBar = 1;
+            }
+            if (GUILayout.Button("复制"))
+            {
+                copyAppearData = curItem;
+                copyDataIndex = curIndex;
+
+
             }
             if (GUILayout.Button("删除"))
             {
@@ -206,6 +219,8 @@ public class EDWinLevelData : EditorWindow
     float destroyTimeMax = 300;
     AIStatusData[] randomAiStatus;
     byte[] openStatus;
+    int[] randomObjectIndexs;
+    int randomObjectCount = 1;
     /// <summary>
     /// 绘制创建数据
     /// </summary>
@@ -229,42 +244,71 @@ public class EDWinLevelData : EditorWindow
             EditorGUILayout.BeginVertical();
             curCreateData.time = EditorGUILayout.FloatField("时间点:", curCreateData.time);
             EditorGUILayout.EndVertical();
+            EditorGUILayout.Space(20);
 
             EditorGUILayout.BeginVertical();
-            setObjectIndex = EditorGUILayout.IntField("随机对象索引:", setObjectIndex);
+            randomObjectCount = EditorGUILayout.IntField("随机对象数组大小:", randomObjectCount);
+            if (randomObjectCount < 1)
+                randomObjectCount = 1;
             EditorGUILayout.EndVertical();
-
+            //随机对象索引列表UI
+            if (randomObjectIndexs == null)
+            {
+                randomObjectIndexs = new int[randomObjectCount];
+            }
+            else
+            {
+                if (randomObjectIndexs.Length != randomObjectCount)
+                {
+                    int[] temp = randomObjectIndexs;
+                    randomObjectIndexs = new int[randomObjectCount];
+                    for (int i = 0; i < randomObjectCount; i++)
+                    {
+                        if (temp.Length - 1 < i)
+                            break;
+                        randomObjectIndexs[i] = temp[i];
+                    }
+                }
+            }
+            for (int i = 0; i < randomObjectCount; i++)
+            {
+                EditorGUILayout.BeginVertical();
+                randomObjectIndexs[i] = EditorGUILayout.IntField("随机对象Index:", randomObjectIndexs[i]);
+                EditorGUILayout.EndVertical();
+            }
+            EditorGUILayout.Space(20);
+            //随机数量UI
             EditorGUILayout.BeginHorizontal();
             createCountRangeMin = EditorGUILayout.IntField("随机数量最小值:", createCountRangeMin);
             if (createCountRangeMin < 1)
                 createCountRangeMin = 1;
             createCountRangeMax = EditorGUILayout.IntField("随机数量最大值:", createCountRangeMax);
             EditorGUILayout.EndHorizontal();
-
+            //随机距离UI
             EditorGUILayout.BeginHorizontal();
             randomCreateDistanceMin = EditorGUILayout.FloatField("随机距离最小值:", randomCreateDistanceMin);
             randomCreateDistanceMax = EditorGUILayout.FloatField("随机距离最大值:", randomCreateDistanceMax);
             EditorGUILayout.EndHorizontal();
-
+            //随机XY角度UI
             EditorGUILayout.BeginHorizontal();
             xAngleMin = EditorGUILayout.FloatField("随机x夹角最小:", xAngleMin);
             xAngleMax = EditorGUILayout.FloatField("随机x夹角最大:", xAngleMax);
             yAngleMin = EditorGUILayout.FloatField("随机y夹角最小:", yAngleMin);
             yAngleMax = EditorGUILayout.FloatField("随机y夹角最大:", yAngleMax);
             EditorGUILayout.EndHorizontal();
-
+            //随机属性UI
             EditorGUILayout.BeginHorizontal();
             hpMin = EditorGUILayout.IntField("随机hp最小值:", hpMin);
             hpMax = EditorGUILayout.IntField("随机hp最大值:", hpMax);
             speedMin = EditorGUILayout.FloatField("随机速度最小:", speedMin);
             speedMax = EditorGUILayout.FloatField("随机速度最大:", speedMax);
             EditorGUILayout.EndHorizontal();
-
             EditorGUILayout.BeginHorizontal();
             destroyTimeMin = EditorGUILayout.FloatField("随机销毁时间最小:", destroyTimeMin);
             destroyTimeMax = EditorGUILayout.FloatField("随机销毁时间最大:", destroyTimeMax);
             EditorGUILayout.EndHorizontal();
-
+            //随机AI配置UI
+            EditorGUILayout.Space(20);
             randomAIStatusCount = EditorGUILayout.IntField("随机AI配置(>0):", randomAIStatusCount);
             randomAIStatusCount = randomAIStatusCount <= 0 ? 1 : randomAIStatusCount;
             if (randomAiStatus == null)
@@ -287,15 +331,14 @@ public class EDWinLevelData : EditorWindow
                     }
                 }
             }
-
             for (int i = 0; i < randomAIStatusCount; i++)
             {
                 EditorGUILayout.BeginVertical();
                 randomAiStatus[i] = EditorGUILayout.ObjectField(randomAiStatus[i], typeof(AIStatusData)) as AIStatusData;
                 EditorGUILayout.EndVertical();
             }
-
-
+            EditorGUILayout.Space(20);
+            //生成随机数据
             if (GUILayout.Button("随机数量(会重置所有Item)"))
             {
                 if (randomAiStatus[0] == null)
@@ -309,7 +352,7 @@ public class EDWinLevelData : EditorWindow
                     for (int i = 0; i < count; i++)
                     {
                         var temp = new AppearObjectData();
-                        temp.objectIndex = setObjectIndex;
+                        temp.objectIndex = randomObjectIndexs[Random.Range(0, randomObjectCount)]; ;
                         temp.speed = Random.Range(speedMin, speedMax);
                         temp.hp = Random.Range(hpMin, hpMax);
                         temp.distance = Random.Range(randomCreateDistanceMin, randomCreateDistanceMax);

@@ -26,6 +26,7 @@ public class GeneralEmitter : BaseEmitter
             BaseBullet bullet = bulletGo.GetComponent<BaseBullet>();
             bullet.ResetBullet();
             bullet.tagetTag = tagetTag;
+            bullet.master = master;
             bullet.pookKey = bulletPrefab.GetInstanceID();
             if (bullet != null)
             {

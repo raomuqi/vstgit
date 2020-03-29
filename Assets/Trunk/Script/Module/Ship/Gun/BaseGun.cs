@@ -5,7 +5,6 @@ using UnityEngine;
 public class BaseGun : SceneGameObject
 {
    public BaseEmitter emitter;
-
     /// <summary>
     /// 0关 1开
     /// </summary>
@@ -14,8 +13,9 @@ public class BaseGun : SceneGameObject
         if (emitter != null)
             emitter.Fire(fireStatue, dir);
     }
-    public void SetTag(string tag)
+    public void SetTag(string tag, SceneGameObject master)
     {
-        emitter.SetTag(tag);
+        emitter.SetTag(tag,master);
     }
+  
 }

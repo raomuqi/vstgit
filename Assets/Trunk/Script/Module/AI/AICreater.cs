@@ -60,22 +60,25 @@ public class AICreater : MonoBehaviour
                     if (gameTime >= apData.time)
                     {
                         appearTag[i] = true;
-                        Debug.Log("第" + i + "波");
-                        ProtoCreateObject[] list = new ProtoCreateObject[apData.objectCfgs.Length];
-                        for (int z = 0; z < list.Length; z++)
+                        if (apData.objectCfgs != null && apData.objectCfgs.Length > 0)
                         {
-                            var objData = apData.objectCfgs[z];
-                                
-                            list[z] = new ProtoCreateObject();
-                            list[z].objectIndex = objData.objectIndex;
-                            int id = GetCreateID();
-                            list[z].hashCode = id;
-                            AddObjectCfg(id, objData);
-                            list[z].SetPos(GetPosByRadian(transform.position, objData.XAngle, objData.distance, objData.YAngle));
+                            Debug.Log("第" + i + "波");
+                            ProtoCreateObject[] list = new ProtoCreateObject[apData.objectCfgs.Length];
+                            for (int z = 0; z < list.Length; z++)
+                            {
+                                var objData = apData.objectCfgs[z];
+
+                                list[z] = new ProtoCreateObject();
+                                list[z].objectIndex = objData.objectIndex;
+                                int id = GetCreateID();
+                                list[z].hashCode = id;
+                                AddObjectCfg(id, objData);
+                                list[z].SetPos(GetPosByRadian(transform.position, objData.XAngle, objData.distance, objData.YAngle));
+                            }
+                            var t = new EventObjectArgs();
+                            t.t = list;
+                            SceneController.instance.SendNetMsg(ProtoIDCfg.CREATE_OBJECTS, t);
                         }
-                        var t = new EventObjectArgs();
-                        t.t = list;
-                        SceneController.instance.SendNetMsg(ProtoIDCfg.CREATE_OBJECTS, t);
                     }
                 }
             }

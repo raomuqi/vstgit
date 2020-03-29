@@ -22,7 +22,7 @@ public class GeneralBullet : BaseBullet
             SceneGameObject sgo = other.gameObject.GetComponent<SceneGameObject>();
             if (sgo != null)
             {
-                sgo.SetDamage(power,transform.position);
+                sgo.SetDamage(power,transform.position,master);
             }
             Recycle();
         }

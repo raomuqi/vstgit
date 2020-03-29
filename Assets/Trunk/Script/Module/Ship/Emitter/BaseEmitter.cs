@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseEmitter : MonoBehaviour
 {
-    BaseGun gun;
+    public SceneGameObject master;
     protected string tagetTag = string.Empty;
     protected virtual void OnFire(byte fireStatue, Vector3 dir) { }
     protected virtual void OnUpdate() { }
@@ -12,14 +12,13 @@ public class BaseEmitter : MonoBehaviour
     {
         OnFire(fireStatue, dir);
     }
-    public void SetTag(string tag)
+
+    public void SetTag(string tag, SceneGameObject master)
     {
         tagetTag=tag;
+        this.master = master;
     }
-    public void Init(BaseGun inputGun)
-    {
-        gun = inputGun;
-    }
+  
     private void Update()
     {
         OnUpdate();

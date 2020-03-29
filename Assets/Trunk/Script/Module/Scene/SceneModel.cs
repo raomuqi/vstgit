@@ -59,6 +59,6 @@ public class SceneModel : BaseModel
     {
         SceneGameObject obj= GetSceneObject(serverID);
         if (obj != null)
-            obj.SyncAction(data);
+            obj.OnGetAction(data);
     }
 }

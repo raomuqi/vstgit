@@ -6,11 +6,15 @@ public class SceneGameObject : MonoBehaviour
 {
     public int hp = 100;
     public float moveSpeed = 2;
-
+    public ExtElement[] extList= new ExtElement[ExtElementCfg.MAX_CCOUNT];
     protected virtual void OnAwake() { }
     protected virtual void OnUpdate() { }
     protected virtual void OnStart() { }
+    /// <summary>
+    /// 生成时调用，根据主机和从机信息设置同步状态
+    /// </summary>
     protected virtual void OnSetSync(SyncType type) { }
+    
     protected virtual void OnDestroyed() { }
 
     public SyncObject _sync;
@@ -41,7 +45,8 @@ public class SceneGameObject : MonoBehaviour
     public int controlPos = -1;
     public SyncSetting syncSetting=SyncSetting.LocalPosAndRot;
     protected SyncModel _syncModel;
-    protected SyncType syncType=SyncType.None;
+    [HideInInspector]
+    public SyncType syncType=SyncType.None;
     protected SyncModel syncModel
     {
         get
@@ -68,6 +73,9 @@ public class SceneGameObject : MonoBehaviour
     {
         OnDestroyed();
     }
+    /// <summary>
+    /// 更新/上传的Tranform信息
+    /// </summary>
     public void UplodeSync()
     {
         if (syncType==SyncType.UpLoad)
@@ -98,7 +106,15 @@ public class SceneGameObject : MonoBehaviour
             SmoothRot(sync.GetRot());
         }
     }
-   
+ 
+    void UpdateExtElement()
+    {
+        for (int i = 0; i < extList.Length; i++)
+        {
+            if (extList[i] != null)
+                extList[i].Update();
+        }
+    }
     void SmoothPos(Vector3 pos)
     {
         double timeDiffOfUpdates = Time.time - this.lastTime;
@@ -165,8 +181,15 @@ public class SceneGameObject : MonoBehaviour
         }
         OnUpdate();
     }
+    bool reqDestroying = false;
+
+    /// <summary>
+    /// 主机调用，请求销毁
+    /// </summary>
     public void ReqDestroy()
     {
+        if (reqDestroying) return;
+        reqDestroying = true;
         EventIntArrayArgs obj = new EventIntArrayArgs();
         obj.t = new int[] { sync.serverID};
         SyncController.instance.SendNetMsg(ProtoIDCfg.REMOVE_OBJECTS, obj);
@@ -245,7 +268,7 @@ public class SceneGameObject : MonoBehaviour
     /// <summary>
     /// 同步操作
     /// </summary>
-    public virtual void SyncAction(int[] intArray){ }
+    public virtual void OnGetAction(int[] intArray){ }
 
     /// <summary>
     /// 请求同步操作
@@ -260,15 +283,21 @@ public class SceneGameObject : MonoBehaviour
     /// 受伤表现
     /// </summary>
     public virtual void OnGetDamage(int damage,Vector3 point) { }
-
-    public virtual void SetDamage(int atk,Vector3 point)
+    /// <summary>
+    /// 触发伤害者调用
+    /// </summary>
+    /// <param name="atk"></param>
+    /// <param name="point"></param>
+    public virtual void SetDamage(int atk,Vector3 point,SceneGameObject from)
     {
         hp = hp - atk;
         OnGetDamage(atk, point);
         if (Connection.GetInstance().isHost)
         {
             if (hp < 0)
+            {
                 ReqDestroy();
+            }
         }
     }
 }

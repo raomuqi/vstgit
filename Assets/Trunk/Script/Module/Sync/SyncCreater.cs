@@ -101,17 +101,19 @@ public class SyncCreater : MonoBehaviour
         int index = isPreSet ? objectIndex : -objectIndex;
         if (index < cratePrefabs.Length)
         {
-
             GameObject prefab =  cratePrefabs[index];
             if (prefab == null)
+            {
+                Debug.LogError("生成AI:无效对象索引" + objectIndex);
                 return;
+            }
             GameObject  go = GameObject.Instantiate(prefab);
 #if UNITY_EDITOR
             go.name = ""+serverID;
 #endif
             if (!go.activeSelf)
                 go.SetActive(true);
-            SceneGameObject sgo = go.GetComponent<SceneGameObject>();
+            //获取/初始化配置数据
             if (Connection.GetInstance().isHost == true)
             {
                 BaseAI ai = go.GetComponent<BaseAI>();
@@ -120,19 +122,12 @@ public class SyncCreater : MonoBehaviour
                     AppearObjectData objCfg = AICreater.GetObjectCfg(sync.hashCode);
                     if (objCfg != null)
                     {
-                        if (objCfg.aiCfg == null)
-                            Debug.LogError("无AI配置");
-                        ai.cfg = objCfg.aiCfg;
-                        ai.moveSpeed = objCfg.speed;
-                        ai.hp = objCfg.hp;
-                        ai.maxLifeTime=objCfg.destroyTime;
-                    }
-                    else
-                    {
-                        Debug.Log("无效配置");
+                        ai.InitAIData(objCfg);
                     }
                 }
             }
+            //设置同步组件
+            SceneGameObject sgo = go.GetComponent<SceneGameObject>();
             if (sgo != null)
             {
                 ProtoPlayerInfo selfInfo = playerModel.GetPlayerInfo();
@@ -142,6 +137,12 @@ public class SyncCreater : MonoBehaviour
                     sceneModel.AddSceneObject(sgo);
                 }
             }
+
+
+        }
+        else
+        {
+            Debug.LogError("生成AI:无效对象索引"+ objectIndex);
         }
     }
 }

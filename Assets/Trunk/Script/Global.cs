@@ -8,6 +8,7 @@ public class Global : MonoBehaviour {
     Connection connection { get; set; }
     System.Action OnUpdate;
     public static Global instance;
+ 
        // Use this for initialization
     void Awake ()
     {
@@ -30,7 +31,8 @@ public class Global : MonoBehaviour {
     }
     void Update ()
     {
-          connection.OnUpdate();
+     
+        connection.OnUpdate();
         if (OnUpdate != null)
             OnUpdate();
 

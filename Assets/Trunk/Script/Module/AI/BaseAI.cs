@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BaseAI : SceneGameObject
+public class BaseAI : InteractiveScneeGameObject
 {
-    PlayerShip playerShip;
     public BaseGun[] emitterArray;
-    Transform playerShipTransform;
-    public float maxLifeTime=20;
-    float lifeTime = -1;
-    public float maxDistance = 40;
-    public int rushPower = 10;
-    float fireTime = 0;
-    public UnityEvent onHitEvent;
+     public float maxDistance = 40;
+     public int rushPower = 10;
+    protected float fireTime = 0;
+    protected int[] actionSync = new int[3];
+    protected byte fireStatus = 0;
+    public AIStatusData cfg { get; set; }
+    AIState curState;
+    float curStateTime = 0;
+    int curStateIndex = 0;
     public enum AIActionEnum
     {
         None,
@@ -27,92 +28,91 @@ public class BaseAI : SceneGameObject
         None,
         Fire,
     }
-    public AIStatusData cfg { get; set; }
-    AIState curState;
-    float curStateTime = 0;
-    int curStateIndex = 0;
-    //切换下个状态
-    protected virtual void NextAIState()
+    /// <summary>
+    /// 初始化AI数据
+    /// </summary>
+    public void InitAIData(AppearObjectData cfg)
     {
-        int nextIndex = 0;
-        if((curState != null))
-        {
-            OnExitStatus(curState);
-            if (curState.randomNext)
-            {
-                nextIndex = Random.Range(0, cfg.statusArray.Length);
-            }
-            else
-            {
-                nextIndex=curStateIndex+1;
-                if (nextIndex >= cfg.statusArray.Length)
-                {
-                    if (cfg.statusLoop)
-                        nextIndex = 0;
-                    else
-                    {
-                        curState = null;
-                        return;
-                    }
-                }
-            }
-        }
-
-        curState = cfg.statusArray[nextIndex];
-        curStateIndex = nextIndex;
-        curStateTime = 0;
-        fireTime = 0;
-        OnEnterStatus(curState);
+       this.cfg = cfg.aiCfg;
+       moveSpeed = cfg.speed;
+       hp = cfg.hp;
+       maxLifeTime = cfg.destroyTime;
     }
     protected override void OnStart()
     {
+        //初始化发射器
         if (emitterArray != null)
         {
             for (int i = 0; i < emitterArray.Length; i++)
             {
-                emitterArray[i].SetTag(TagCfg.SHIP);
+                emitterArray[i].SetTag(TagCfg.SHIP, this);
             }
         }
     }
+    protected override void OnUpdate()
+    {
+        //主机更新逻辑
+        if (Connection.GetInstance().isHost)
+        {
+            UpdateAILogic();
+            CheckLiftTime();
+        }
+        //设置开火状态
+        Fire(fireStatus);
+    }
+
     protected override void OnSetSync(SyncType type)
     {
-        playerShip = sceneModel.GetPlayerShip();
-        playerShipTransform = playerShip.transform;
-        fireSync[0] = sync.serverID;
-        fireSync[1] = 0;
+        base.OnSetSync(type);
+        actionSync[0] = sync.serverID;
+        actionSync[1] = SceneObjectActionCfg.FIRE_STATUS;
+        actionSync[2] = 0;
         lifeTime = 0;
-        if (type == SyncType.UpLoad)
+        if (Connection.GetInstance().isHost)
         {
             NextAIState();
         }
     }
-    protected virtual void OnEnterStatus (AIState state)
+
+    /// <summary>
+    /// 设置同步行为
+    /// </summary>
+    /// <param name="intArray"></param>
+    public override void OnGetAction(int[] intArray)
+    {
+        if (intArray[1] == SceneObjectActionCfg.FIRE_STATUS)
+        {
+            fireStatus = (byte)intArray[1];
+        }
+    }
+    /// <summary>
+    /// 触发状态
+    /// </summary>
+    /// <param name="state"></param>
+    protected virtual void OnEnterStatus(AIState state)
     {
         fireTime = 0;
         switch (curState.fire)
         {
             case AIFireEnum.Fire:
-                if (fireSync[1] != 1)
+                if (actionSync[2] != 1)
                 {
-                    fireSync[1] = 1;
-                    RqSyncAction(fireSync);
+                    actionSync[2] = 1;
+                    RqSyncAction(actionSync);
                 }
                 break;
             case AIFireEnum.None:
-                if (fireSync[1] != 0)
+                if (actionSync[2] != 0)
                 {
-                    fireSync[1] = 0;
-                    RqSyncAction(fireSync);
+                    actionSync[2] = 0;
+                    RqSyncAction(actionSync);
                 }
                 break;
         }
     }
-    protected virtual void OnExitStatus(AIState state)
-    {
-
-    }
-    int[] fireSync = new int[2];
-    byte fireStatus = 0;
+  /// <summary>
+  /// AI更新状态行为
+  /// </summary>
     protected virtual void UpdateAILogic()
     {
         if (curState != null)
@@ -138,55 +138,77 @@ public class BaseAI : SceneGameObject
                     MoveToPlayer(0);
                     break;
             }
-       
+
         }
         fireTime += Time.deltaTime;
-        if (fireSync[1] == 1 && curState.fireKeepTime>0)
+        if (actionSync[2] == 1 && curState.fireKeepTime > 0)
         {
             if (fireTime >= curState.fireKeepTime)
             {
-                fireSync[1] = 0;
+                actionSync[2] = 0;
                 fireTime = 0;
-                RqSyncAction(fireSync);
+                RqSyncAction(actionSync);
             }
         }
-        else if (fireSync[1] == 0 && curState.fireCDTime > 0)
+        else if (actionSync[2] == 0 && curState.fireCDTime > 0)
         {
             if (fireTime >= curState.fireCDTime)
             {
-                fireSync[1] = 0;
+                actionSync[2] = 0;
                 fireTime = 1;
-                RqSyncAction(fireSync);
+                RqSyncAction(actionSync);
             }
         }
 
     }
-    protected override void OnUpdate()
+    /// <summary>
+    /// 退出状态时
+    /// </summary>
+    /// <param name="state"></param>
+    protected virtual void OnExitStatus(AIState state)
     {
-        if (syncType == SyncType.UpLoad)
-        {
-            UpdateAILogic();
-            CheckLiftTime();
-        }
-        else if (syncType == SyncType.UpDate)
-        {
-            
-        }
-        Fire(fireStatus);
-    }
 
-     void CheckLiftTime()
+    }
+    //切换下个状态
+    protected virtual void NextAIState()
     {
-        if (lifeTime >= 0)
+        int nextIndex = 0;
+        if((curState != null))
         {
-            lifeTime += Time.deltaTime;
-            if (lifeTime > maxLifeTime)
+            OnExitStatus(curState);
+            //随机状态
+            if (curState.randomNext)
             {
-                lifeTime = -1;
-                ReqDestroy();
+                nextIndex = Random.Range(0, cfg.statusArray.Length);
+            }
+            else
+            {
+                nextIndex=curStateIndex+1;
+                if (nextIndex >= cfg.statusArray.Length)
+                {
+                    //循环状态
+                    if (cfg.statusLoop)
+                        nextIndex = 0;
+                    else
+                    {
+                        //状态执行完
+                        curState = null;
+                        return;
+                    }
+                }
             }
         }
+
+        curState = cfg.statusArray[nextIndex];
+        curStateIndex = nextIndex;
+        curStateTime = 0;
+        fireTime = 0;
+        OnEnterStatus(curState);
     }
+   
+    /// <summary>
+    /// 开火
+    /// </summary>
     public virtual void Fire(byte open)
     {
         if (emitterArray != null)
@@ -199,39 +221,11 @@ public class BaseAI : SceneGameObject
         }
 
     }
-
   
-   
-    protected virtual void MoveToPlayer(float keepDistance)
+    protected override void OnMoveToPlayerFinish()
     {
-        Vector3 dir = Vector3.Normalize(playerShipTransform.position - transform.position);
-   
-        float curDistance = Vector3.Distance(playerShipTransform.position, transform.position);
-        if (curDistance > keepDistance)
-        {
-            transform.position += dir * moveSpeed * Time.deltaTime * 10;
-            transform.LookAt(playerShipTransform);
-        }
-        else
-        {
-            if(curState.keepTime==-1)
-              NextAIState();
-        }
-     
-    }
-    protected virtual void LookAtPlayer()
-    {
-        transform.LookAt(playerShipTransform);
-    }
-    protected virtual void RunAways()
-    {
-        Vector3 dir =  transform.forward;
-        transform.position += dir * moveSpeed * Time.deltaTime * 10;
-    }
-
-    public override void SyncAction(int[] intArray)
-    {
-        fireStatus = (byte)intArray[1];
+        if (curState.keepTime == -1)
+            NextAIState();
     }
     /// <summary>
     /// 撞击回调
@@ -245,18 +239,6 @@ public class BaseAI : SceneGameObject
         else
         {
             gameObject.SetActive(false);
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag(TagCfg.SHIP))
-        {
-            SceneGameObject sgo = other.gameObject.GetComponent<SceneGameObject>();
-            if (sgo != null)
-            {
-                sgo.SetDamage(rushPower,transform.position);
-                OnRush();
-            }
         }
     }
     /// <summary>
@@ -273,6 +255,19 @@ public class BaseAI : SceneGameObject
         {
             ArtTemp artTemp = GetComponent<ArtTemp>();
             if(artTemp != null) artTemp.SpawnExplosion(point);
+        }
+    }
+ 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag(TagCfg.SHIP))
+        {
+            SceneGameObject sgo = other.gameObject.GetComponent<SceneGameObject>();
+            if (sgo != null)
+            {
+                sgo.SetDamage(rushPower, transform.position,this);
+                OnRush();
+            }
         }
     }
 }

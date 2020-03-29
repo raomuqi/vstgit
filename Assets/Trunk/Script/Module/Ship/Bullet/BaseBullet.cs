@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
+    public SceneGameObject master;
     public int pookKey { get; set; }
     protected Vector3 dir;
-    public string tagetTag = string.Empty;
+    
+    public string tagetTag { get; set; }
     public int power = 1;
 
     protected virtual void OnUpdate() { }
