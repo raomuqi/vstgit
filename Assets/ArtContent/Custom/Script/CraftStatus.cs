@@ -35,8 +35,6 @@ public class CraftStatus : MonoBehaviour
         meshRender = GetComponent<MeshRenderer>();
         matBlock = new MaterialPropertyBlock();
         tweenState = DOTween.To(() => stateIns, x => stateIns = x, 1, 2.0f).SetAutoKill(false).SetEase(EaseFactory.StopMotion(5, Ease.OutFlash)).Pause();
-        attackStateColor = Color.yellow;
-        isHitStateColor = Color.red;
     }
 
     #region STATE
