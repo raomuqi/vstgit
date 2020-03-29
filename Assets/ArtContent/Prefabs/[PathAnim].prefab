@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1342442140467838615}
   - component: {fileID: 5727797337589298590}
   - component: {fileID: 225505440233832506}
-  - component: {fileID: 6275815628535512524}
   - component: {fileID: 6372793162584387942}
   m_Layer: 0
   m_Name: Root
@@ -100,11 +99,12 @@ MonoBehaviour:
   moveSpeed: 1
   controlPos: 0
   syncSetting: 0
+  syncType: 0
   doPath: {fileID: 3558387125674804909}
   onHitEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6275815628535512524}
+      - m_Target: {fileID: 4771920760933467775}
         m_MethodName: ActiveHitState
         m_Mode: 1
         m_Arguments:
@@ -116,28 +116,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   moveArea: 10
---- !u!114 &6275815628535512524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626239973023520373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b1e1cd50fc06374babb457e5da18660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnable:
-    m_PersistentCalls:
-      m_Calls: []
-  explosionGO: {fileID: 1642364856218616415, guid: e5191b153f046e44088cad1f836e5665,
-    type: 3}
-  delayDestroy: 3
-  meshRender: {fileID: 2738126944918111622}
-  aiStatusData: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-  attackStateColor: {r: 0, g: 0, b: 0, a: 0}
-  isHitStateColor: {r: 0.12100001, g: 0.007446154, b: 0.007446154, a: 0}
 --- !u!64 &6372793162584387942
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -738,7 +716,7 @@ MonoBehaviour:
   _pixelateDownscale: 0
   _antialiasStrength: 5
   _antialiasDepthThreshold: 0.001
-  isDirty: 1
+  isDirty: 0
   bMat: {fileID: 0}
 --- !u!114 &5404580663606237488
 MonoBehaviour:
@@ -1127,12 +1105,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8584523904368363519}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &2738126944918111622 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5971101239335502457, guid: a2c93b913e9b76642b65a6bb4929ef80,
+--- !u!114 &4771920760933467775 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3826687098261963136, guid: a2c93b913e9b76642b65a6bb4929ef80,
     type: 3}
   m_PrefabInstance: {fileID: 8584523904368363519}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101cba437f2e5354cb59c2f1f3d1469f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8917382573681243600
 PrefabInstance:
   m_ObjectHideFlags: 0

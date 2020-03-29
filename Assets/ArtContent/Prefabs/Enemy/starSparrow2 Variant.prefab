@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &7693987561507911451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431392140392638874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101cba437f2e5354cb59c2f1f3d1469f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStateColor: {r: 0.8396226, g: 0.5622643, b: 0.011881431, a: 0}
+  isHitStateColor: {r: 0.799, g: 0, b: 0, a: 0}
 --- !u!1001 &3344529875884164494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +24,7 @@ PrefabInstance:
     - target: {fileID: 140993447299017748, guid: 3fa4f66251db528469298e85ca6d23da,
         type: 3}
       propertyPath: m_Name
-      value: starSparrow2
+      value: starSparrow2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4012620492375367175, guid: 3fa4f66251db528469298e85ca6d23da,
         type: 3}
@@ -69,3 +83,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fa4f66251db528469298e85ca6d23da, type: 3}
+--- !u!1 &3431392140392638874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 140993447299017748, guid: 3fa4f66251db528469298e85ca6d23da,
+    type: 3}
+  m_PrefabInstance: {fileID: 3344529875884164494}
+  m_PrefabAsset: {fileID: 0}

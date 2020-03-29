@@ -9410,7 +9410,6 @@ GameObject:
   - component: {fileID: 1642364856218197631}
   - component: {fileID: 1642364856232352575}
   - component: {fileID: 1642364856232387231}
-  - component: {fileID: 5496872380906624449}
   - component: {fileID: 2262725220087852343}
   m_Layer: 0
   m_Name: vulcan_impact
@@ -14161,49 +14160,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &5496872380906624449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1642364856218616415}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b1e1cd50fc06374babb457e5da18660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5496872380906624449}
-        m_MethodName: Destroy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2262725220087852343}
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  explosionGO: {fileID: 0}
-  delayDestroy: 3
-  meshRender: {fileID: 0}
-  aiStatusData: {fileID: 0}
-  attackStateColor: {r: 0, g: 0, b: 0, a: 0}
-  isHitStateColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &2262725220087852343
 AudioSource:
   m_ObjectHideFlags: 0
