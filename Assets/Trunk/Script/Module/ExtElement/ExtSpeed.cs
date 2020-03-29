@@ -8,7 +8,7 @@ public class ExtSpeed :ExtElement
 {
     public override int guid { get { return ExtElementCfg.SPEED_EXT; } }
     protected override float maxKeepTime { get { return 10; } }
-    public float addValue = 10;
+    public float addValue = 2;
     public override void OnUse()
     {
         if(holder.syncType==SyncType.UpLoad)

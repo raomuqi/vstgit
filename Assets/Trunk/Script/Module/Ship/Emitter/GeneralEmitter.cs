@@ -10,40 +10,50 @@ public class GeneralEmitter : BaseEmitter
     float curFireTime = 0;
     bool fireCD = false;
     public UnityEvent onFireEvent;
+    public int row = 1;
+    public float bulletSpace = 1;
     protected override void OnFire(byte fireStatue,Vector3 dir)
     {
         if (fireStatue == 1 && !fireCD)
         {
             fireCD = true;
-            GameObject bulletGo = ObjectPool.goPool.GetObj(bulletPrefab.GetInstanceID());
-
-            if (bulletGo == null)
-                bulletGo = Instantiate(bulletPrefab) as GameObject;
-
-            bulletGo.transform.position = transform.position;
-            bulletGo.transform.rotation = transform.rotation;
-
-            BaseBullet bullet = bulletGo.GetComponent<BaseBullet>();
-            bullet.ResetBullet();
-            bullet.tagetTag = tagetTag;
-            bullet.master = master;
-            bullet.pookKey = bulletPrefab.GetInstanceID();
-            if (bullet != null)
+            float offset = row % 2 == 1 ? 0 : bulletSpace / 2;
+            float start = -Mathf.Floor(row / 2) * bulletSpace + offset;
+            for (int i = 0; i < row; i++)
             {
-                bullet.SetDir(dir);
+                GameObject bulletGo = ObjectPool.goPool.GetObj(bulletPrefab.GetInstanceID());
+                if (bulletGo == null)
+                    bulletGo = Instantiate(bulletPrefab) as GameObject;
+                float x= start + i * bulletSpace;
+                Debug.Log(x);
+                bulletGo.transform.position = transform.localToWorldMatrix.MultiplyPoint(new Vector3(x, 0,0));
+                bulletGo.transform.rotation = transform.rotation;
 
+                BaseBullet bullet = bulletGo.GetComponent<BaseBullet>();
+                bullet.ResetBullet();
+                bullet.tagetTag = tagetTag;
+                bullet.master = master;
+                bullet.pookKey = bulletPrefab.GetInstanceID();
+                if (bullet != null)
+                {
+                    bullet.SetDir(dir);
+
+                }
+                bulletGo.SetActive(true);
             }
-            bulletGo.SetActive(true);
-            OnFire();
+            ShowFireEff();
+        }
+    }
 
-        }
-    }
-    protected virtual void OnFire()
+    public override void ChangeBullet(GameObject prefab)
     {
-        if(onFireEvent != null){
-            onFireEvent.Invoke();
-        }
+        bulletPrefab = prefab;
     }
+    public override void UpGrade(int addValue)
+    {
+        row += addValue;
+    }
+
     protected override void OnUpdate()
     {
         if (fireCD)
@@ -54,6 +64,13 @@ public class GeneralEmitter : BaseEmitter
                 fireCD = false;
                 curFireTime = 0;
             }
+        }
+    }
+    protected virtual void ShowFireEff()
+    {
+        if (onFireEvent != null)
+        {
+            onFireEvent.Invoke();
         }
     }
 }
