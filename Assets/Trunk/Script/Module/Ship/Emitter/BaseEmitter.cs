@@ -8,19 +8,27 @@ public class BaseEmitter : MonoBehaviour
     protected string tagetTag = string.Empty;
     protected virtual void OnFire(byte fireStatue, Vector3 dir) { }
     protected virtual void OnUpdate() { }
-    public void Fire(byte fireStatue,Vector3 dir)
+    public void Fire(byte fireStatue, Vector3 dir)
     {
         OnFire(fireStatue, dir);
     }
 
     public void SetTag(string tag, SceneGameObject master)
     {
-        tagetTag=tag;
+        tagetTag = tag;
         this.master = master;
     }
-  
+
     private void Update()
     {
         OnUpdate();
     }
+    /// <summary>
+    /// 更换子弹
+    /// </summary>
+    public virtual void ChangeBullet(GameObject prefab) { }
+    /// <summary>
+    /// 升级
+    /// </summary>
+    public virtual void UpGrade(int addValue) { }
 }

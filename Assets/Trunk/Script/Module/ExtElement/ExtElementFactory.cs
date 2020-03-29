@@ -15,6 +15,9 @@ public  class ExtElementFactory
             case ExtElementCfg.SPEED_EXT:
                 element = new ExtSpeed();
                 break;
+            case ExtElementCfg.GUN_ROW_EXT:
+                element = new ExtUpGradeGun();
+                break;
         }
         return element;
     }
