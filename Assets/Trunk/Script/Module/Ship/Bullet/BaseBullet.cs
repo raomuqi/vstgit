@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
+    [System.NonSerialized]
     public SceneGameObject master;
     public int pookKey { get; set; }
     protected Vector3 dir;

@@ -40,6 +40,7 @@ public class BaseAI : InteractiveScneeGameObject
     }
     protected override void OnStart()
     {
+        base.OnStart();
         //初始化发射器
         if (emitterArray != null)
         {
@@ -274,5 +275,14 @@ public class BaseAI : InteractiveScneeGameObject
                 OnRush();
             }
         }
+    }
+
+    protected override void OnBeVisible()
+    {
+        base.OnBeVisible();
+    }
+    protected override void OnBeInVisible()
+    {
+        base.OnBeInVisible();
     }
 }

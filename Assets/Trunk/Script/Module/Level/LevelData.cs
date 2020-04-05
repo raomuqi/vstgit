@@ -13,6 +13,12 @@ public class LevelData : ScriptableObject
 
 
 }
+public enum AppearType
+{
+        AI,
+        PROP
+}
+
 [System.Serializable]
 public class ActiveSetData
 {
@@ -24,11 +30,14 @@ public class ActiveSetData
 [System.Serializable]
 public class AppearSetData
 {
+    [Header("出现类型")]
+    public AppearType type = AppearType.AI;
     [Header("出现时间")]
     public float time = 10;
     [Header("对象")]
     public AppearObjectData[] objectCfgs;
 }
+
 [System.Serializable]
 public class AppearObjectData
 {

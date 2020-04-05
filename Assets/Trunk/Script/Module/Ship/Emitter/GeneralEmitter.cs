@@ -25,7 +25,6 @@ public class GeneralEmitter : BaseEmitter
                 if (bulletGo == null)
                     bulletGo = Instantiate(bulletPrefab) as GameObject;
                 float x= start + i * bulletSpace;
-                Debug.Log(x);
                 bulletGo.transform.position = transform.localToWorldMatrix.MultiplyPoint(new Vector3(x, 0,0));
                 bulletGo.transform.rotation = transform.rotation;
 

@@ -300,4 +300,40 @@ public class SceneGameObject : MonoBehaviour
             }
         }
     }
+    public bool beVisible = false;
+    /// <summary>
+    /// 检查可见性
+    /// </summary>
+    protected void InitVisibleChecker()
+    {
+        Renderer[] renders = gameObject.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < renders.Length; i++)
+        {
+            GameObject go = renders[i].gameObject;
+            var checker= go.GetComponent<VisibleChecker>();
+            if(checker==null)
+                checker= go.AddComponent<VisibleChecker>();
+
+            checker.Init(this);
+            break;
+        }
+    }
+    protected virtual void OnBeVisible()
+    {
+        Debug.Log("enter ");
+    }
+    protected virtual void OnBeInVisible()
+    {
+        Debug.Log("exit");
+    }
+    public void SetVisible(bool beVis)
+    {
+        if (beVisible == beVis)
+            return;
+        beVisible = beVis;
+        if (beVis)
+            OnBeVisible();
+        else
+            OnBeInVisible();
+    }
 }

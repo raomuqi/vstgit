@@ -11,6 +11,10 @@ public static class ExtElementCfg
     /// </summary>
     public const int GUN_ROW_EXT = 1;
     /// <summary>
+    ///换子弹
+    /// </summary>
+    public const int GUN_CHANGE_BULLET = 2;
+    /// <summary>
     /// 最大值
     /// </summary>
     public const int MAX_CCOUNT = 20;

@@ -5,9 +5,14 @@ using UnityEngine;
 public class SimpleProp : InteractiveScneeGameObject
 {
     bool geted = false;
+    [Header("道具ID(1:加速,2子弹加排,3换子弹)")]
     public int extElemntID=0;
-    //0道具ID 1协议行为 2目标ID 3获得的拓展元素
-    int[] propProtoData = new int[4];
+    [Header("子弹加排:(填加排数) 换子弹:(子弹ID)")]
+    public int propParameter1 = 1;
+    [Header("备用)")]
+    public int propParameter2 = 0;
+    //0道具ID 1协议行为 2目标ID 3获得的拓展元素 4-5道具参数
+    int[] propProtoData = new int[6];
     protected override void OnSetSync(SyncType type)
     {
         base.OnSetSync(type);
@@ -15,6 +20,8 @@ public class SimpleProp : InteractiveScneeGameObject
         propProtoData[1] = SceneObjectActionCfg.GET_PROP;
         propProtoData[2] = sync.serverID;
         propProtoData[3] = extElemntID;
+        propProtoData[4] = propParameter1;
+        propProtoData[5] = propParameter2;
     }
     protected override void OnUpdate()
     {
@@ -53,5 +60,13 @@ public class SimpleProp : InteractiveScneeGameObject
         RqSyncAction(propProtoData);
         ReqDestroy();
 
+    }
+    protected override void OnBeVisible()
+    {
+        base.OnBeVisible();
+    }
+    protected override void OnBeInVisible()
+    {
+        base.OnBeInVisible();
     }
 }
