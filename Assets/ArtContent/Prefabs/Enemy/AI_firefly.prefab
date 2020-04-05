@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7521105619984684792}
   - component: {fileID: 7521105619984684799}
   - component: {fileID: -1818767173462801702}
+  - component: {fileID: 3834209107941639004}
   m_Layer: 0
   m_Name: AI_firefly
   m_TagString: Ai
@@ -81,6 +82,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDestroyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3834209107941639004}
+        m_MethodName: SpawnExplosion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  beVisible: 0
   emitterArray:
   - {fileID: 7521105619984684792}
   maxDistance: 40
@@ -151,6 +167,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3834209107941639004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7521105619984684769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d145176323878bd44a449ab32768b7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionGO: {fileID: 7251092864589022047, guid: 59e61257171bbd044b597376a2894cf0,
+    type: 3}
+  delayDestroy: 3
 --- !u!1001 &7521105618426872790
 PrefabInstance:
   m_ObjectHideFlags: 0
