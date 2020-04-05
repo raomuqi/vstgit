@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class BaseAI : InteractiveScneeGameObject
 {
@@ -256,10 +255,11 @@ public class BaseAI : InteractiveScneeGameObject
         if(onHitEvent != null){
             onHitEvent.Invoke();
         }
-        //* testing
+        //* destroy
         hp -= Random.Range(35, 60);
-        if(hp <= 0)
+        if(hp <= 0 && onDestroyEvent != null)
         {
+            onDestroyEvent.Invoke();
         }
     }
  

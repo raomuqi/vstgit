@@ -11,7 +11,7 @@ public class InteractiveScneeGameObject : SceneGameObject
     protected Transform playerShipTransform;
     public float maxLifeTime = 20;
     protected float lifeTime = -1;
-    public UnityEvent onHitEvent;
+    public UnityEvent onHitEvent, onDestroyEvent;
     public bool beVisible = false;
   
     protected override void OnSetSync(SyncType type)

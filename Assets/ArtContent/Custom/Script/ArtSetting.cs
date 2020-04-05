@@ -1,18 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ArtSetting : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject explosionGO;
+    public float delayDestroy = 3;
+    public UnityEvent onEnableEvent;
+    void OnEnable()
     {
+        if (onEnableEvent != null) onEnableEvent.Invoke();
+    }
+    public void SpawnExplosion()
+    {
+        if (explosionGO != null)
+        {
+            GameObject go = Instantiate(explosionGO, transform.position, Quaternion.identity);
+            //go.SetActive(true);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDestroy()
     {
-        
+        Destroy(gameObject, delayDestroy);
     }
 
 }
