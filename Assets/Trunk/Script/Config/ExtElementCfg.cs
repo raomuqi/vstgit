@@ -5,15 +5,15 @@ public static class ExtElementCfg
     /// <summary>
     /// 速度拓展
     /// </summary>
-    public const int SPEED_EXT = 0;
+    public const int SPEED_EXT = 1;
     /// <summary>
     /// 添加一排子弹
     /// </summary>
-    public const int GUN_ROW_EXT = 1;
+    public const int GUN_ROW_EXT = 2;
     /// <summary>
     ///换子弹
     /// </summary>
-    public const int GUN_CHANGE_BULLET = 2;
+    public const int GUN_CHANGE_BULLET = 3;
     /// <summary>
     /// 最大值
     /// </summary>

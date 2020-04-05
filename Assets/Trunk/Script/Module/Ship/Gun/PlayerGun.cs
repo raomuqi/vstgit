@@ -23,6 +23,7 @@ public class PlayerGun : BaseGun
         {
             inputModel = InputController.instance.GetModel<InputModel>(InputModel.name);
             fires = inputModel.selfFires;
+            sceneModel.SetPlayerGun(this);
         }
         else if (syncType == SyncType.UpDate)
         {
@@ -52,7 +53,10 @@ public class PlayerGun : BaseGun
             case SceneObjectActionCfg.GET_PROP:
                 int scrObject = intArray[2];
                 int extID = intArray[3];
-                   ExtElementFactory.Get(extID,intArray).Use(sceneModel.GetPlayerShip());
+                if(extID== ExtElementCfg.SPEED_EXT)
+                    ExtElementFactory.Get(extID, intArray).Use(sceneModel.GetPlayerShip());
+                else
+                       ExtElementFactory.Get(extID,intArray).Use(this);
                 break;
         }
     }

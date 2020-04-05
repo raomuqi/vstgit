@@ -69,14 +69,15 @@ public class PlayerShip : SceneGameObject
     }
     public override void OnGetAction(int[] intArray)
     {
-        int action = intArray[1];
-        switch (action)
-        {
-            case SceneObjectActionCfg.GET_PROP:
-                int scrObject = intArray[2];
-                int extID = intArray[3];
-                ExtElementFactory.Get(extID,intArray).Use(this);
-                break;
-        }
+        //int action = intArray[1];
+        //switch (action)
+        //{
+        //    case SceneObjectActionCfg.GET_PROP:
+        //        int scrObject = intArray[2];
+        //        int extID = intArray[3];
+        //        ExtElementFactory.Get(extID,intArray).Use(this);
+        //        break;
+        //}
+        Debug.Log("??");
     }
 }

@@ -11,7 +11,7 @@ public class SimpleProp : InteractiveScneeGameObject
     public int propParameter1 = 1;
     [Header("备用)")]
     public int propParameter2 = 0;
-    //0道具ID 1协议行为 2目标ID 3获得的拓展元素 4-5道具参数
+    //0作用目标ID 1协议行为 2这个对象ID 3获得的拓展元素 4-5道具参数
     int[] propProtoData = new int[6];
     protected override void OnSetSync(SyncType type)
     {
@@ -35,10 +35,7 @@ public class SimpleProp : InteractiveScneeGameObject
         if (other.gameObject.CompareTag(TagCfg.SHIP))
         {
             SceneGameObject sgo = other.gameObject.GetComponent<SceneGameObject>();
-            if (sgo != null )
-            {
-                ReqGetProp(sceneModel.GetPlayerShip());
-            }
+            ReqGetProp(null);
         }
     }
     public override void SetDamage(int atk, Vector3 point,SceneGameObject sgo)
@@ -56,7 +53,10 @@ public class SimpleProp : InteractiveScneeGameObject
         if (geted || !Connection.GetInstance().isHost)
             return;
         geted = true;
-        propProtoData[0] = trigger.sync.serverID;
+        if (trigger!=null)
+            propProtoData[0] = trigger.sync.serverID;
+        else
+            propProtoData[0] = sceneModel.GetPlayerGun().sync.serverID;
         RqSyncAction(propProtoData);
         ReqDestroy();
 

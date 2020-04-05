@@ -6,6 +6,9 @@ public class SceneGameObject : MonoBehaviour
 {
     public int hp = 100;
     public float moveSpeed = 2;
+    [System.NonSerialized]
+    public bool beVisible = false;
+
     public ExtElement[] extList= new ExtElement[ExtElementCfg.MAX_CCOUNT];
     protected virtual void OnAwake() { }
     protected virtual void OnUpdate() { }
@@ -300,7 +303,6 @@ public class SceneGameObject : MonoBehaviour
             }
         }
     }
-    public bool beVisible = false;
     /// <summary>
     /// 检查可见性
     /// </summary>
@@ -320,11 +322,9 @@ public class SceneGameObject : MonoBehaviour
     }
     protected virtual void OnBeVisible()
     {
-        Debug.Log("enter ");
     }
     protected virtual void OnBeInVisible()
     {
-        Debug.Log("exit");
     }
     public void SetVisible(bool beVis)
     {

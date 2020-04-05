@@ -8,7 +8,7 @@ public class ExtUpGradeGun : ExtElement
 {
     public override int guid { get { return ExtElementCfg.GUN_ROW_EXT; } }
     protected override float maxKeepTime { get { return 0; } }
-    public int addValue = 10;
+    public int addValue = 1;
     public override void SetParameter(int[] par)
     {
         addValue = par[4];
@@ -18,7 +18,7 @@ public class ExtUpGradeGun : ExtElement
        BaseGun gun= holder as BaseGun;
         if (gun != null && gun.emitter!=null)
             gun.emitter.UpGrade(addValue);
-        Debug.Log("升级子弹"+holder.gameObject.name);
+        Debug.Log("升级子弹"+holder.gameObject.name +" "+ addValue);
 
     }
     public override void OnOverLay()

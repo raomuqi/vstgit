@@ -24,6 +24,8 @@ public  class ExtElementFactory
         }
         if (element != null)
             element.SetParameter(parameter);
+        else
+            Debug.LogError("拓展ID错误" + elementID);
         return element;
     }
 }

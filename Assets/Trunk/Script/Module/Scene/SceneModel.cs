@@ -9,6 +9,7 @@ public class SceneModel : BaseModel
     SyncModel syncModel;
     Dictionary<int, SceneGameObject> sceneObjs = new Dictionary<int, SceneGameObject>();
     PlayerShip playerShip;
+    PlayerGun playerGun;
     List<BaseAI> aiList = new List<BaseAI>();
     protected override void OnInit()
     {
@@ -17,7 +18,18 @@ public class SceneModel : BaseModel
     protected override void OnClear()
     {
     }
+    /// <summary>
+    /// 设置玩家炮台
+    /// </summary>
+    public void SetPlayerGun(PlayerGun gun)
+    {
+        playerGun = gun;
+    }
 
+    public PlayerGun GetPlayerGun()
+    {
+        return playerGun;
+    }
     /// <summary>
     /// 设置飞船数据
     /// </summary>

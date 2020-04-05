@@ -205,11 +205,19 @@ public class EDWinLevelData : EditorWindow
         if (GUILayout.Button("插入新配置在:"+inserIndex))
         {
             var item = new AppearSetData();
+            if (createListType == 0)
+                item.type = AppearType.AI;
+            else if (createListType == 1)
+                item.type = AppearType.PROP;
             list.Insert(inserIndex, item);
         }
         if (copyAppearData != null && GUILayout.Button("复制:"+copyDataIndex+"插入:" + inserIndex))
         {
             var copye= Util.CopyInstance(copyAppearData) as AppearSetData; ;
+            if (createListType == 0)
+                copye.type = AppearType.AI;
+            else if (createListType == 1)
+                copye.type = AppearType.PROP;
             list.Insert(inserIndex, copye);
         }
       
@@ -400,7 +408,7 @@ public class EDWinLevelData : EditorWindow
             //生成随机数据
             if (GUILayout.Button("随机数量(会重置所有Item)"))
             {
-                if (randomAiStatus[0] == null)
+                if (createListType==0 && randomAiStatus[0] == null)
                 {
                     EditorUtility.DisplayDialog("提示", "没放入AI配置", "OK");
                 }
@@ -418,7 +426,8 @@ public class EDWinLevelData : EditorWindow
                         temp.XAngle = Random.Range(xAngleMin, xAngleMax);
                         temp.YAngle = Random.Range(yAngleMin, yAngleMax);
                         temp.destroyTime = Random.Range(destroyTimeMin, destroyTimeMax);
-                        temp.aiCfg = randomAiStatus[Random.Range(0, randomAIStatusCount)];
+                        if(createListType == 0)
+                         temp.aiCfg = randomAiStatus[Random.Range(0, randomAIStatusCount)];
                         curCreateData.objectCfgs[i] = temp;
                     }
                 }

@@ -9,9 +9,10 @@ public class ExtSpeed :ExtElement
     public override int guid { get { return ExtElementCfg.SPEED_EXT; } }
     protected override float maxKeepTime { get { return 10; } }
     public float addValue = 2;
+    SceneModel sceneModel;
     public override void OnUse()
     {
-        if(holder.syncType==SyncType.UpLoad)
+        if (holder.syncType==SyncType.UpLoad)
            holder.moveSpeed += addValue;
 
         Debug.Log("激活速度装置");
