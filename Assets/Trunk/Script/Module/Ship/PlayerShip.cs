@@ -75,7 +75,7 @@ public class PlayerShip : SceneGameObject
             case SceneObjectActionCfg.GET_PROP:
                 int scrObject = intArray[2];
                 int extID = intArray[3];
-                ExtElementFactory.Get(extID).Use(this);
+                ExtElementFactory.Get(extID,intArray).Use(this);
                 break;
         }
     }

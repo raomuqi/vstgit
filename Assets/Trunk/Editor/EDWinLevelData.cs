@@ -11,12 +11,16 @@ public class EDWinLevelData : EditorWindow
     LevelData levelData;
     List<AppearSetData> createList = new List<AppearSetData>();
     List<ActiveSetData> activeList = new List<ActiveSetData>();
+    List<AppearSetData> aiList = new List<AppearSetData>();
+    List<AppearSetData> propList = new List<AppearSetData>();
     LevelData lastLevelData;
     AppearSetData curCreateData ;
     string dataTitle = string.Empty;
     int inserIndex = 0;
     int createBar = 0;
     int listBar = 0;
+    int createListType = 0;
+    int lastListType = 0;
     [MenuItem("配置工具/关卡配置编辑器")]
     static public void ShowWindow()
     {
@@ -56,6 +60,14 @@ public class EDWinLevelData : EditorWindow
     {
         if (levelData == null)
             return;
+        for(int i = 0; i < aiList.Count; i++)
+        {
+            createList.Add(aiList[i]);
+        }
+        for (int i = 0; i < propList.Count; i++)
+        {
+            createList.Add(propList[i]);
+        }
         levelData.appearSets = createList.ToArray();
         levelData.SetDirty();
         AssetDatabase.SaveAssets();
@@ -65,6 +77,8 @@ public class EDWinLevelData : EditorWindow
         curCreateData = null;
         createList.Clear();
         activeList.Clear();
+        aiList.Clear();
+        propList.Clear();
         dataTitle = string.Empty;
      
         if (levelData == null)
@@ -74,7 +88,15 @@ public class EDWinLevelData : EditorWindow
             AppearSetData[] createArray = levelData.appearSets;
             for (int i = 0; i < createArray.Length; i++)
             {
-                createList.Add(createArray[i]);
+                if (createArray[i].type == AppearType.AI)
+                {
+                    aiList.Add(createArray[i]);
+                }
+                else if (createArray[i].type == AppearType.PROP)
+                {
+                    propList.Add(createArray[i]);
+                }
+              //  createList.Add(createArray[i]);
             }
         }
         if (levelData.activeSets != null)
@@ -101,7 +123,7 @@ public class EDWinLevelData : EditorWindow
         {
             case 0:
                 {
-                    DrawCreateListLayer();
+                    DrawSelectTypeList();
                 }
                 break;
             case 1:
@@ -114,9 +136,41 @@ public class EDWinLevelData : EditorWindow
         EditorGUILayout.EndVertical();
     }
     /// <summary>
+    /// 选择列表类型
+    /// </summary>
+    void DrawSelectTypeList()
+    {
+        EditorGUILayout.BeginVertical();
+        createListType = GUILayout.Toolbar(createListType, new GUIContent[]
+            {
+                new GUIContent("AI"),
+                new GUIContent("道具")
+            });
+        if (lastListType != createListType)
+        {
+            lastListType = createListType;
+            curCreateData=null;
+        }
+        switch (createListType)
+        {
+            case 0:
+                {
+                    DrawCreateListLayer(aiList);
+                }
+                break;
+            case 1:
+                {
+                    DrawCreateListLayer(propList);
+                }
+                break;
+
+        }
+        EditorGUILayout.EndVertical();
+    }
+    /// <summary>
     /// 列表/数据
     /// </summary>
-    void DrawCreateListLayer()
+    void DrawCreateListLayer(List<AppearSetData> list)
     {
         createBar = GUILayout.Toolbar(createBar, new GUIContent[]
             {
@@ -127,13 +181,13 @@ public class EDWinLevelData : EditorWindow
         {
             case 0:
                 {
-                    DrawCreateList();
+                    DrawCreateList(list);
 
                 }
                 break;
             case 1:
                 {
-                    DrawCreateData();
+                    DrawCreateData(list);
                 }
                 break;
 
@@ -144,32 +198,33 @@ public class EDWinLevelData : EditorWindow
     /// <summary>
     /// 绘制创建列表
     /// </summary>
-    void DrawCreateList()
+    void DrawCreateList(List<AppearSetData> list)
     {
         EditorGUILayout.BeginHorizontal();
         inserIndex = EditorGUILayout.IntField("目标索引",inserIndex);
         if (GUILayout.Button("插入新配置在:"+inserIndex))
         {
             var item = new AppearSetData();
-            createList.Insert(inserIndex, item);
+            list.Insert(inserIndex, item);
         }
-        if (copyAppearData != null && GUILayout.Button("粘贴配置在:"+copyDataIndex+"插入:" + inserIndex))
+        if (copyAppearData != null && GUILayout.Button("复制:"+copyDataIndex+"插入:" + inserIndex))
         {
-            createList.Insert(inserIndex, copyAppearData);
+            var copye= Util.CopyInstance(copyAppearData) as AppearSetData; ;
+            list.Insert(inserIndex, copye);
         }
       
         if (GUILayout.Button("清除所有"))
         {
-            createList.Clear();
+            list.Clear();
         }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space();
         EditorGUILayout.BeginVertical();
         listPos = EditorGUILayout.BeginScrollView(listPos);
-        for (int i = 0; i < createList.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             int curIndex = i;
-            var curItem= createList[curIndex];
+            var curItem= list[curIndex];
             EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
             string count = curItem.objectCfgs == null ? "0" : curItem.objectCfgs.Length.ToString();
@@ -191,7 +246,7 @@ public class EDWinLevelData : EditorWindow
             }
             if (GUILayout.Button("删除"))
             {
-                createList.Remove(curItem);
+                list.Remove(curItem);
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
@@ -224,14 +279,14 @@ public class EDWinLevelData : EditorWindow
     /// <summary>
     /// 绘制创建数据
     /// </summary>
-    void DrawCreateData()
+    void DrawCreateData(List<AppearSetData> list)
     {
         if (curCreateData == null)
         {
-            if (createList.Count > 0)
+            if (list.Count > 0)
             {
                 dataTitle = "第0波";
-                curCreateData = createList[0];
+                curCreateData = list[0];
             }
             else
             {
@@ -307,37 +362,41 @@ public class EDWinLevelData : EditorWindow
             destroyTimeMin = EditorGUILayout.FloatField("随机销毁时间最小:", destroyTimeMin);
             destroyTimeMax = EditorGUILayout.FloatField("随机销毁时间最大:", destroyTimeMax);
             EditorGUILayout.EndHorizontal();
-            //随机AI配置UI
-            EditorGUILayout.Space(20);
-            randomAIStatusCount = EditorGUILayout.IntField("随机AI配置(>0):", randomAIStatusCount);
-            randomAIStatusCount = randomAIStatusCount <= 0 ? 1 : randomAIStatusCount;
-            if (randomAiStatus == null)
+            //AI
+            if (createListType == 0)
             {
-                randomAiStatus = new AIStatusData[randomAIStatusCount];
-                openStatus = new byte[randomAIStatusCount];
-            }
-            else
-            {
-                if (randomAiStatus.Length != randomAIStatusCount)
+                //随机AI配置UI
+                EditorGUILayout.Space(20);
+                randomAIStatusCount = EditorGUILayout.IntField("随机AI配置(>0):", randomAIStatusCount);
+                randomAIStatusCount = randomAIStatusCount <= 0 ? 1 : randomAIStatusCount;
+                if (randomAiStatus == null)
                 {
-                    AIStatusData[] temp = randomAiStatus;
                     randomAiStatus = new AIStatusData[randomAIStatusCount];
                     openStatus = new byte[randomAIStatusCount];
-                    for (int i = 0; i < randomAIStatusCount; i++)
+                }
+                else
+                {
+                    if (randomAiStatus.Length != randomAIStatusCount)
                     {
-                        if (temp.Length - 1 < i)
-                            break;
-                        randomAiStatus[i] = temp[i];
+                        AIStatusData[] temp = randomAiStatus;
+                        randomAiStatus = new AIStatusData[randomAIStatusCount];
+                        openStatus = new byte[randomAIStatusCount];
+                        for (int i = 0; i < randomAIStatusCount; i++)
+                        {
+                            if (temp.Length - 1 < i)
+                                break;
+                            randomAiStatus[i] = temp[i];
+                        }
                     }
                 }
+                for (int i = 0; i < randomAIStatusCount; i++)
+                {
+                    EditorGUILayout.BeginVertical();
+                    randomAiStatus[i] = EditorGUILayout.ObjectField(randomAiStatus[i], typeof(AIStatusData)) as AIStatusData;
+                    EditorGUILayout.EndVertical();
+                }
+                EditorGUILayout.Space(20);
             }
-            for (int i = 0; i < randomAIStatusCount; i++)
-            {
-                EditorGUILayout.BeginVertical();
-                randomAiStatus[i] = EditorGUILayout.ObjectField(randomAiStatus[i], typeof(AIStatusData)) as AIStatusData;
-                EditorGUILayout.EndVertical();
-            }
-            EditorGUILayout.Space(20);
             //生成随机数据
             if (GUILayout.Button("随机数量(会重置所有Item)"))
             {
@@ -449,14 +508,16 @@ public class EDWinLevelData : EditorWindow
             data.destroyTime = Random.Range(destroyTimeMin, destroyTimeMax);
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
-
-        EditorGUILayout.BeginVertical();
-        EditorGUILayout.BeginHorizontal();
-        data.aiCfg = EditorGUILayout.ObjectField("AI配置",data.aiCfg, typeof(AIStatusData)) as AIStatusData;
-        if (GUILayout.Button("随机"))
-            data.aiCfg = randomAiStatus[Random.Range(0, randomAIStatusCount)];
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.EndVertical();
+        if (createListType == 0)
+        {
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.BeginHorizontal();
+            data.aiCfg = EditorGUILayout.ObjectField("AI配置", data.aiCfg, typeof(AIStatusData)) as AIStatusData;
+            if (GUILayout.Button("随机"))
+                data.aiCfg = randomAiStatus[Random.Range(0, randomAIStatusCount)];
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
+        }
 
     }
 }

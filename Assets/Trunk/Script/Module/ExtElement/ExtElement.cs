@@ -24,6 +24,7 @@ public class ExtElement
         //时间重置
         curKeepTime = 0;
     }
+    public virtual void SetParameter(int[] par) { }
     public  void Use(SceneGameObject holder)
     {
         //叠加效果

@@ -15,7 +15,7 @@ public class PlayerGun : BaseGun
     }
     protected override void OnStart()
     {
-      
+        SetTag(TagCfg.AI, this);
     }
     protected override void OnSetSync(SyncType type)
     {
@@ -29,7 +29,6 @@ public class PlayerGun : BaseGun
             inputModel = InputController.instance.GetModel<InputModel>(InputModel.name);
             fires = syncModel.GetPosInput((byte)controlPos);
         }
-         SetTag(TagCfg.AI,this);
     }
     protected override void OnUpdate()
     {
@@ -53,7 +52,7 @@ public class PlayerGun : BaseGun
             case SceneObjectActionCfg.GET_PROP:
                 int scrObject = intArray[2];
                 int extID = intArray[3];
-                   ExtElementFactory.Get(extID).Use(sceneModel.GetPlayerShip());
+                   ExtElementFactory.Get(extID,intArray).Use(sceneModel.GetPlayerShip());
                 break;
         }
     }

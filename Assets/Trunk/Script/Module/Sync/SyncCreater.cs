@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class SyncCreater : MonoBehaviour
 {
+    public BulletArray bulletArray;
     public static SyncCreater instance;
     public GameObject[] preSetPrefabs;
     public GameObject[] cratePrefabs;

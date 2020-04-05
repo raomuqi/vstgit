@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 
@@ -146,5 +149,35 @@ public static class Util
         }
         return udpWarp;
     }
+    /// <summary>
+    /// 复制实例
+    /// </summary>
+    /// <returns></returns>
+    public static object CopyInstance(object tIn)
+    {
+      byte[] sdata=  ObjectToBytes(tIn);
+        return BytesToObject(sdata); 
+    }
+    public static byte[] ObjectToBytes(object obj)
+    {
+         var   bf = new BinaryFormatter();
+        var memory = new MemoryStream();
+        byte[] data = null;
+        memory.Flush();
+        memory.Position = 0;
+        bf.Serialize(memory, obj);
+        return memory.GetBuffer();
+    }
 
+    public static object BytesToObject(byte[] data)
+    {
+         var   bf = new BinaryFormatter();
+        var    memory = new MemoryStream();
+        memory.Flush();
+        memory.Write(data, 0, data.Length);
+        memory.Position = 0;
+        object obj = null;
+            obj = bf.Deserialize(memory);
+        return obj;
+    }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public  class ExtElementFactory
 {
-    public static ExtElement Get(int elementID)
+    public static ExtElement Get(int elementID,int[] parameter)
     {
         ExtElement element=null;
         switch (elementID)
@@ -18,7 +18,12 @@ public  class ExtElementFactory
             case ExtElementCfg.GUN_ROW_EXT:
                 element = new ExtUpGradeGun();
                 break;
+            case ExtElementCfg.GUN_CHANGE_BULLET:
+                element = new ExtChangeBullet();
+                break;
         }
+        if (element != null)
+            element.SetParameter(parameter);
         return element;
     }
 }
