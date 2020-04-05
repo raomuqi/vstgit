@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+/// <summary>
+/// 交互对象
+/// </summary>
 public class InteractiveScneeGameObject : SceneGameObject
 {
     protected PlayerShip playerShip;
@@ -10,6 +12,8 @@ public class InteractiveScneeGameObject : SceneGameObject
     public float maxLifeTime = 20;
     protected float lifeTime = -1;
     public UnityEvent onHitEvent;
+    public bool beVisible = false;
+  
     protected override void OnSetSync(SyncType type)
     {
         playerShip = sceneModel.GetPlayerShip();
@@ -73,5 +77,17 @@ public class InteractiveScneeGameObject : SceneGameObject
         Vector3 dir = transform.forward;
         transform.position += dir * moveSpeed * Time.deltaTime * 10;
     }
-  
+    public virtual void OnBeVisible(){}
+    public virtual void OnBeInVisible(){}
+    private void OnBecameVisible()
+    {
+        beVisible = true;
+        OnBeVisible();
+    }
+
+    private void OnBecameInvisible()
+    {
+        beVisible = false;
+        OnBeInVisible();
+    }
 }

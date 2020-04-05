@@ -114,10 +114,10 @@ public class SyncCreater : MonoBehaviour
             if (!go.activeSelf)
                 go.SetActive(true);
             //获取/初始化配置数据
-            if (Connection.GetInstance().isHost == true)
+            BaseAI ai = go.GetComponent<BaseAI>();
+            if (ai != null)
             {
-                BaseAI ai = go.GetComponent<BaseAI>();
-                if (ai != null)
+                if (Connection.GetInstance().isHost == true)
                 {
                     AppearObjectData objCfg = AICreater.GetObjectCfg(sync.hashCode);
                     if (objCfg != null)
@@ -125,7 +125,9 @@ public class SyncCreater : MonoBehaviour
                         ai.InitAIData(objCfg);
                     }
                 }
+                sceneModel.RegisterAI(ai);
             }
+           
             //设置同步组件
             SceneGameObject sgo = go.GetComponent<SceneGameObject>();
             if (sgo != null)

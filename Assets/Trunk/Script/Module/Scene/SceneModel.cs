@@ -9,6 +9,7 @@ public class SceneModel : BaseModel
     SyncModel syncModel;
     Dictionary<int, SceneGameObject> sceneObjs = new Dictionary<int, SceneGameObject>();
     PlayerShip playerShip;
+    List<BaseAI> aiList = new List<BaseAI>();
     protected override void OnInit()
     {
         syncModel = SyncController.instance.GetModel<SyncModel>(SyncModel.name);
@@ -60,5 +61,12 @@ public class SceneModel : BaseModel
         SceneGameObject obj= GetSceneObject(serverID);
         if (obj != null)
             obj.OnGetAction(data);
+    }
+
+    public void RegisterAI(BaseAI ai)
+    {
+    }
+    public void UnRegisterAI(BaseAI ai)
+    {
     }
 }

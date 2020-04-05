@@ -6,7 +6,7 @@ public class SimpleProp : InteractiveScneeGameObject
 {
     bool geted = false;
     public int extElemntID=0;
-    //0propID 1协议行为 2目标ID 3获得的拓展元素
+    //0道具ID 1协议行为 2目标ID 3获得的拓展元素
     int[] propProtoData = new int[4];
     protected override void OnSetSync(SyncType type)
     {

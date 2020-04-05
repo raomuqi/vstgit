@@ -241,6 +241,13 @@ public class BaseAI : InteractiveScneeGameObject
             gameObject.SetActive(false);
         }
     }
+    protected override void OnDestroyed()
+    {
+        base.OnDestroyed();
+        sceneModel.UnRegisterAI(this);
+    }
+
+   
     /// <summary>
     /// 受伤表现
     /// </summary>
