@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8207732520840167286}
   - component: {fileID: 8207732520840167281}
   - component: {fileID: 9170908220554947412}
-  - component: {fileID: 7382552044708416517}
   m_Layer: 0
   m_Name: AI_starSparrow2
   m_TagString: Ai
@@ -66,15 +65,12 @@ MonoBehaviour:
   moveSpeed: 2
   controlPos: 0
   syncSetting: 0
-  emitterArray:
-  - {fileID: 8207732520840167286}
+  syncType: 0
   maxLifeTime: 30
-  maxDistance: 40
-  rushPower: 10
   onHitEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7382552044708416517}
+      - m_Target: {fileID: 3570275106172159798}
         m_MethodName: ActiveHitState
         m_Mode: 1
         m_Arguments:
@@ -85,6 +81,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  emitterArray:
+  - {fileID: 8207732520840167286}
+  maxDistance: 40
+  rushPower: 10
 --- !u!114 &8207732520840167286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   moveSpeed: 2
   controlPos: -1
   syncSetting: 3
+  syncType: 0
   emitter: {fileID: 8207732520840167281}
 --- !u!114 &8207732520840167281
 MonoBehaviour:
@@ -114,13 +115,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561173414dcbc6d48a5ea1fab44652fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  master: {fileID: 0}
   bulletPrefab: {fileID: 6280674508041683717, guid: 6bf027e87b77f1a40af5b2724f807453,
     type: 3}
   fireInterval: 1
   onFireEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7382552044708416517}
+      - m_Target: {fileID: 3570275106172159798}
         m_MethodName: ActiveFireState
         m_Mode: 1
         m_Arguments:
@@ -131,6 +133,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  row: 1
+  bulletSpace: 1
 --- !u!54 &9170908220554947412
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -147,28 +151,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7382552044708416517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8207732520840167279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b1e1cd50fc06374babb457e5da18660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnable:
-    m_PersistentCalls:
-      m_Calls: []
-  explosionGO: {fileID: 7251092864589022047, guid: 59e61257171bbd044b597376a2894cf0,
-    type: 3}
-  delayDestroy: 3
-  meshRender: {fileID: 0}
-  aiStatusData: {fileID: 0}
-  attackStateColor: {r: 0.8396226, g: 0.5622643, b: 0.011881431, a: 0}
-  isHitStateColor: {r: 0.799, g: 0, b: 0, a: 0}
 --- !u!1001 &6578249042935689261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -244,3 +226,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6578249042935689261}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3570275106172159798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7693987561507911451, guid: 6d2015757b3584244961f3e89a2784cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 6578249042935689261}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101cba437f2e5354cb59c2f1f3d1469f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

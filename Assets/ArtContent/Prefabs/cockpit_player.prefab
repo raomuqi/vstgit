@@ -500,6 +500,7 @@ GameObject:
   - component: {fileID: 5609030400766856325}
   - component: {fileID: 1890412033756294079}
   - component: {fileID: 5971101239335502457}
+  - component: {fileID: 3826687098261963136}
   m_Layer: 0
   m_Name: VA_HeavyFighterCockpit1_Base_0
   m_TagString: Untagged
@@ -568,3 +569,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3826687098261963136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8198305353178600469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101cba437f2e5354cb59c2f1f3d1469f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStateColor: {r: 0, g: 0, b: 0, a: 0}
+  isHitStateColor: {r: 0.12100001, g: 0.007446154, b: 0.007446154, a: 0}

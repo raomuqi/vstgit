@@ -260,8 +260,6 @@ public class BaseAI : InteractiveScneeGameObject
         hp -= Random.Range(35, 60);
         if(hp <= 0)
         {
-            ArtTemp artTemp = GetComponent<ArtTemp>();
-            if(artTemp != null) artTemp.SpawnExplosion(point);
         }
     }
  
