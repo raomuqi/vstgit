@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 204430665169822209, guid: 4078a2d6995da844c82fa35526a7bf97,
+        type: 3}
+      propertyPath: extElemntID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3224530851203820926, guid: 4078a2d6995da844c82fa35526a7bf97,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -70,7 +75,7 @@ PrefabInstance:
     - target: {fileID: 8007557139349094611, guid: 4078a2d6995da844c82fa35526a7bf97,
         type: 3}
       propertyPath: m_Name
-      value: Energy Prop
+      value: Energy Prop orange
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4078a2d6995da844c82fa35526a7bf97, type: 3}
