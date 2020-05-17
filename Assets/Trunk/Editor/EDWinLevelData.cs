@@ -548,7 +548,7 @@ public class EDWinLevelData : EditorWindow
         if(levelData == null) { Debug.LogError("LevelData对象为空");return; }
         foreach (var item in aiStatus) { if (item == null) { Debug.LogError("AIStatusData对象为空"); return; } }
 
-        int aiWaveCount = 6;
+        int aiWaveCount = 40;
         levelData.appearSets = new AppearSetData[aiWaveCount];
         for (int p = 0; p < aiWaveCount; p++) { levelData.appearSets[p] = new AppearSetData(); }     //* must initialize each element
         levelData.activeSets = new ActiveSetData[1];
