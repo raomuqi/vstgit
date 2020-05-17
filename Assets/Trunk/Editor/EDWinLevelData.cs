@@ -53,7 +53,18 @@ public class EDWinLevelData : EditorWindow
         {
             DrawSelectList();
         }
-       
+
+        EditorGUILayout.BeginHorizontal();
+        for (int i = 0; i < aiStatus.Length; i++)
+        {
+            aiStatus[i] = EditorGUILayout.ObjectField(aiStatus[i], typeof(AIStatusData)) as AIStatusData;
+        }
+        if (GUILayout.Button("创建默认配置"))
+        {
+            CreateDefaultSets();
+        }
+        EditorGUILayout.EndHorizontal();
+
         EditorGUILayout.EndVertical();
     }
     void Save()
@@ -529,4 +540,60 @@ public class EDWinLevelData : EditorWindow
         }
 
     }
+
+    #region create sets by script 
+    AIStatusData[] aiStatus = new AIStatusData[2];
+    void CreateDefaultSets()
+    {
+        if(levelData == null) { Debug.LogError("LevelData对象为空");return; }
+        foreach (var item in aiStatus) { if (item == null) { Debug.LogError("AIStatusData对象为空"); return; } }
+
+        int aiWaveCount = 6;
+        levelData.appearSets = new AppearSetData[aiWaveCount];
+        for (int p = 0; p < aiWaveCount; p++) { levelData.appearSets[p] = new AppearSetData(); }     //* must initialize each element
+        levelData.activeSets = new ActiveSetData[1];
+        for (int p = 0; p < 1; p++) { levelData.activeSets[p] = new ActiveSetData(); }      //* must initialize each element
+
+        for (int i = 0; i < aiWaveCount; i++)
+        {
+            AppearSetData wave = levelData.appearSets[i];
+            wave.time = (i + 1) * 5;
+            //Debug.LogError("第"+i+"波: "+wave.time);
+            int aiCount = Random.Range(3, 5);
+            wave.objectCfgs = new AppearObjectData[aiCount];
+            for (int p = 0; p < aiCount; p++) { wave.objectCfgs[p] = new AppearObjectData(); }
+            for (int j = 0; j < aiCount; j++)
+            {
+                AppearObjectData aiCraft = wave.objectCfgs[j];
+                aiCraft.objectIndex = 0;
+                aiCraft.XAngle = Random.Range(-20, 20);
+                aiCraft.YAngle = Random.Range(-5, 5);
+                aiCraft.distance = Random.Range(200, 500);
+                aiCraft.hp = 100;
+                aiCraft.speed = 1;
+                aiCraft.destroyTime = 300;
+                aiCraft.aiCfg = aiStatus[Random.Range(0, aiStatus.Length-1)];
+                //* aircraft status
+                //int stateCount = 3;
+                //aiCraft.aiCfg.statusLoop = true;
+                //aiCraft.aiCfg.statusArray = new AIState[stateCount];
+                //for(int p = 0; p < stateCount; p++) { aiCraft.aiCfg.statusArray[p] = new AIState(); }
+
+                //for (int k = 0; k < stateCount; k++)
+                //{
+                //    AIState state = aiCraft.aiCfg.statusArray[k];
+                //    state.action = BaseAI.AIActionEnum.ToPlayer;
+                //    state.fire = BaseAI.AIFireEnum.Fire;
+                //    state.keepTime = -1;
+                //    state.randomNext = false;
+                //    state.fireKeepTime = 2 + Random.Range(0, 1);
+                //    state.fireCDTime = 2 + Random.Range(0, 1);
+                //}
+            }
+        }
+
+        OnLevelDataLoad();
+        //Save();
+    }
+    #endregion create sets by script 
 }
