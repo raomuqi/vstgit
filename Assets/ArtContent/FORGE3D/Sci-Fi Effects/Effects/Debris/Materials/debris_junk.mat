@@ -58,11 +58,11 @@ Material:
     - _FresnelMult: 0.96
     - _FresnelPower: 0.37
     - _GlowMult: 0
-    - _Metallic: 0.837
+    - _Metallic: 1
     - _NormalScale: 1
     - _ReflectionDesaturation: 0
     - _ReflectionMult: 0
-    - _Smoothness: 0.569
+    - _Smoothness: 0.182
     - _SpecularA: 55.58
     - _SpecularAdd: 0.14
     - _SpecularB: 1
@@ -74,4 +74,4 @@ Material:
     - _Color0: {r: 0, g: 0, b: 0, a: 0.016}
     - _FadeInAInBOutAOutB: {r: 4, g: 5, b: 80, a: 150}
     - _InMinMaxOutMinMax: {r: 0, g: 5, b: 10, a: 20}
-    - _TintRGBAmbientAMult: {r: 0.43999994, g: 0.43999994, b: 0.43999994, a: 0.6509804}
+    - _TintRGBAmbientAMult: {r: 0.333, g: 0.333, b: 0.333, a: 0.6509804}

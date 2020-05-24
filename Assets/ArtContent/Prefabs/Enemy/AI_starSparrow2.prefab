@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8207732520840167286}
   - component: {fileID: 8207732520840167281}
   - component: {fileID: 9170908220554947412}
+  - component: {fileID: 2590576309892441925}
   m_Layer: 0
   m_Name: AI_starSparrow2
   m_TagString: Ai
@@ -72,6 +73,20 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3570275106172159798}
         m_MethodName: ActiveHitState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDestroyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2590576309892441925}
+        m_MethodName: SpawnExplosion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -151,6 +166,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2590576309892441925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207732520840167279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d145176323878bd44a449ab32768b7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionGO: {fileID: 7251092864589022047, guid: 59e61257171bbd044b597376a2894cf0,
+    type: 3}
+  delayDestroy: 3
+  target: {fileID: 0}
+  xLimit: {x: -45, y: 45}
+  needDamping: 1
+  onEnableEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &6578249042935689261
 PrefabInstance:
   m_ObjectHideFlags: 0

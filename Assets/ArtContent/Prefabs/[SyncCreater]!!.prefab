@@ -73,7 +73,7 @@ MonoBehaviour:
   cratePrefabs:
   - {fileID: 7521105619984684769, guid: da6c90ba8ff6d00499a38f84dead6eb5, type: 3}
   - {fileID: 8207732520840167279, guid: a563c3f1a66d55540b0aa45bbd9baa4c, type: 3}
-  - {fileID: 0}
+  - {fileID: 7107705005670594589, guid: 5828b71a2d063be468262f3b74192ede, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 7251092864589022047, guid: 59e61257171bbd044b597376a2894cf0, type: 3}

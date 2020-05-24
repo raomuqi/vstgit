@@ -4938,7 +4938,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6607573, y: 3.973408, z: 1.6513178}
+  m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: -0.047196984, y: 0.13687146, z: 0.21238625}
 --- !u!54 &6343485445466498306
 Rigidbody:
@@ -4968,10 +4968,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ff66954a4192e43b2778e0fd444a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  moveSpeed: 2
-  controlPos: -1
-  syncSetting: 0
+  hp: 2
+  moveSpeed: 0
+  controlPos: 0
+  syncSetting: 3
   syncType: 0
   maxLifeTime: 20
   onHitEvent:
@@ -4980,6 +4980,6 @@ MonoBehaviour:
   onDestroyEvent:
     m_PersistentCalls:
       m_Calls: []
-  extElemntID: 0
+  extElemntID: 2
   propParameter1: 1
   propParameter2: 0

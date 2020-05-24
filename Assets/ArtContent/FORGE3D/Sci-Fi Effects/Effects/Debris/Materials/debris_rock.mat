@@ -57,7 +57,7 @@ Material:
     - _FresnelMult: 0
     - _FresnelPower: 1
     - _GlowMult: 0
-    - _Metallic: 0.397
+    - _Metallic: 1
     - _ReflectionDesaturation: 0
     - _ReflectionMult: 0
     - _Smoothness: 0.129

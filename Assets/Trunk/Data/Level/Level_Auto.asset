@@ -17,25 +17,25 @@ MonoBehaviour:
     time: 5
     objectCfgs:
     - objectIndex: 0
-      XAngle: 5
+      XAngle: -9
       YAngle: -2
-      distance: 384
+      distance: 485
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -3
-      YAngle: -1
-      distance: 309
+    - objectIndex: 1
+      XAngle: 4
+      YAngle: 4
+      distance: 478
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -4
-      YAngle: -1
-      distance: 435
+    - objectIndex: 2
+      XAngle: -18
+      YAngle: 2
+      distance: 381
       hp: 100
       speed: 1
       destroyTime: 300
@@ -43,34 +43,34 @@ MonoBehaviour:
   - type: 0
     time: 10
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 12
-      YAngle: -4
-      distance: 400
+    - objectIndex: 1
+      XAngle: 18
+      YAngle: -1
+      distance: 471
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 19
-      YAngle: 3
-      distance: 293
+    - objectIndex: 2
+      XAngle: 10
+      YAngle: -2
+      distance: 314
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -17
-      YAngle: -3
-      distance: 387
+    - objectIndex: 1
+      XAngle: -8
+      YAngle: -1
+      distance: 248
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 4
+    - objectIndex: 1
+      XAngle: -9
       YAngle: -5
-      distance: 203
+      distance: 300
       hp: 100
       speed: 1
       destroyTime: 300
@@ -79,25 +79,25 @@ MonoBehaviour:
     time: 15
     objectCfgs:
     - objectIndex: 0
-      XAngle: -2
-      YAngle: -3
-      distance: 289
+      XAngle: 10
+      YAngle: -5
+      distance: 465
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -9
-      YAngle: -3
-      distance: 201
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 0
-      YAngle: 2
+    - objectIndex: 2
+      XAngle: -4
+      YAngle: -2
       distance: 416
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 8
+      YAngle: -4
+      distance: 219
       hp: 100
       speed: 1
       destroyTime: 300
@@ -105,34 +105,26 @@ MonoBehaviour:
   - type: 0
     time: 20
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -18
-      YAngle: 1
-      distance: 410
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 8
+    - objectIndex: 2
+      XAngle: -6
       YAngle: -4
-      distance: 349
+      distance: 247
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
+    - objectIndex: 1
+      XAngle: -13
+      YAngle: -5
+      distance: 332
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 0
       YAngle: 4
-      distance: 377
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -4
-      YAngle: -2
-      distance: 261
+      distance: 315
       hp: 100
       speed: 1
       destroyTime: 300
@@ -141,25 +133,33 @@ MonoBehaviour:
     time: 25
     objectCfgs:
     - objectIndex: 0
-      XAngle: -11
-      YAngle: -4
-      distance: 371
+      XAngle: -3
+      YAngle: -1
+      distance: 412
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -2
+      YAngle: -3
+      distance: 370
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -10
-      YAngle: -3
-      distance: 494
+      XAngle: 7
+      YAngle: -2
+      distance: 393
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 10
-      YAngle: -3
-      distance: 325
+    - objectIndex: 2
+      XAngle: 19
+      YAngle: 0
+      distance: 249
       hp: 100
       speed: 1
       destroyTime: 300
@@ -168,33 +168,25 @@ MonoBehaviour:
     time: 30
     objectCfgs:
     - objectIndex: 0
-      XAngle: -13
+      XAngle: -3
       YAngle: 0
-      distance: 204
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 8
-      YAngle: 3
-      distance: 409
+      distance: 323
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
       XAngle: -14
-      YAngle: -2
-      distance: 290
+      YAngle: 2
+      distance: 461
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 9
-      YAngle: 4
-      distance: 480
+    - objectIndex: 2
+      XAngle: -14
+      YAngle: 0
+      distance: 208
       hp: 100
       speed: 1
       destroyTime: 300
@@ -203,25 +195,25 @@ MonoBehaviour:
     time: 35
     objectCfgs:
     - objectIndex: 0
-      XAngle: -7
-      YAngle: 4
-      distance: 492
+      XAngle: 9
+      YAngle: 0
+      distance: 428
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 14
-      YAngle: -4
-      distance: 283
+    - objectIndex: 2
+      XAngle: 0
+      YAngle: -5
+      distance: 285
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 2
-      YAngle: -1
-      distance: 275
+    - objectIndex: 1
+      XAngle: 9
+      YAngle: -3
+      distance: 472
       hp: 100
       speed: 1
       destroyTime: 300
@@ -230,33 +222,33 @@ MonoBehaviour:
     time: 40
     objectCfgs:
     - objectIndex: 0
-      XAngle: -12
+      XAngle: -8
       YAngle: -1
-      distance: 396
+      distance: 276
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
       XAngle: 3
-      YAngle: -2
-      distance: 364
+      YAngle: 3
+      distance: 491
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 6
+      YAngle: -3
+      distance: 262
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 8
-      YAngle: 1
-      distance: 315
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 2
-      YAngle: -1
-      distance: 399
+      XAngle: 6
+      YAngle: 2
+      distance: 356
       hp: 100
       speed: 1
       destroyTime: 300
@@ -265,25 +257,33 @@ MonoBehaviour:
     time: 45
     objectCfgs:
     - objectIndex: 0
-      XAngle: -19
-      YAngle: 3
-      distance: 464
+      XAngle: 1
+      YAngle: 2
+      distance: 375
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 10
+      YAngle: 2
+      distance: 438
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -11
+      YAngle: -1
+      distance: 227
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -18
-      YAngle: 1
-      distance: 354
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -18
-      YAngle: 1
-      distance: 374
+      XAngle: 16
+      YAngle: -5
+      distance: 357
       hp: 100
       speed: 1
       destroyTime: 300
@@ -291,26 +291,34 @@ MonoBehaviour:
   - type: 0
     time: 50
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 0
-      YAngle: -5
-      distance: 470
+    - objectIndex: 1
+      XAngle: -4
+      YAngle: -3
+      distance: 434
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -20
-      YAngle: -4
-      distance: 250
+      XAngle: 19
+      YAngle: -1
+      distance: 249
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -16
+      YAngle: -3
+      distance: 415
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 16
-      YAngle: 3
-      distance: 272
+      XAngle: 5
+      YAngle: -3
+      distance: 217
       hp: 100
       speed: 1
       destroyTime: 300
@@ -319,33 +327,33 @@ MonoBehaviour:
     time: 55
     objectCfgs:
     - objectIndex: 0
-      XAngle: -19
-      YAngle: -4
-      distance: 245
+      XAngle: 11
+      YAngle: 0
+      distance: 224
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -9
-      YAngle: -2
-      distance: 337
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 0
-      YAngle: 4
-      distance: 256
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
+    - objectIndex: 2
       XAngle: 12
-      YAngle: 4
-      distance: 400
+      YAngle: 1
+      distance: 481
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -12
+      YAngle: 0
+      distance: 367
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: -4
+      YAngle: 3
+      distance: 304
       hp: 100
       speed: 1
       destroyTime: 300
@@ -354,25 +362,25 @@ MonoBehaviour:
     time: 60
     objectCfgs:
     - objectIndex: 0
-      XAngle: -4
-      YAngle: -1
-      distance: 220
+      XAngle: 7
+      YAngle: -5
+      distance: 460
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 9
-      YAngle: -1
-      distance: 275
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -7
+    - objectIndex: 1
+      XAngle: -16
       YAngle: 4
-      distance: 302
+      distance: 459
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -14
+      YAngle: -3
+      distance: 487
       hp: 100
       speed: 1
       destroyTime: 300
@@ -381,33 +389,33 @@ MonoBehaviour:
     time: 65
     objectCfgs:
     - objectIndex: 0
-      XAngle: -1
-      YAngle: 1
-      distance: 321
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 15
+      XAngle: 2
       YAngle: -4
-      distance: 379
+      distance: 401
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -10
+    - objectIndex: 2
+      XAngle: -7
       YAngle: -1
-      distance: 450
+      distance: 498
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -13
-      YAngle: -3
-      distance: 431
+      XAngle: 14
+      YAngle: 3
+      distance: 343
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 16
+      YAngle: -2
+      distance: 405
       hp: 100
       speed: 1
       destroyTime: 300
@@ -416,33 +424,33 @@ MonoBehaviour:
     time: 70
     objectCfgs:
     - objectIndex: 0
-      XAngle: 11
-      YAngle: -1
-      distance: 336
+      XAngle: 8
+      YAngle: -2
+      distance: 445
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -20
-      YAngle: 1
-      distance: 302
+      XAngle: -19
+      YAngle: -2
+      distance: 377
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 15
-      YAngle: 0
-      distance: 298
+    - objectIndex: 1
+      XAngle: 6
+      YAngle: 2
+      distance: 227
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -6
-      YAngle: 0
-      distance: 478
+    - objectIndex: 1
+      XAngle: 5
+      YAngle: -3
+      distance: 398
       hp: 100
       speed: 1
       destroyTime: 300
@@ -451,25 +459,33 @@ MonoBehaviour:
     time: 75
     objectCfgs:
     - objectIndex: 0
-      XAngle: -17
-      YAngle: 0
-      distance: 296
+      XAngle: 18
+      YAngle: -1
+      distance: 227
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -7
-      YAngle: -2
-      distance: 204
+      XAngle: 6
+      YAngle: 1
+      distance: 226
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 0
-      YAngle: 2
-      distance: 477
+    - objectIndex: 2
+      XAngle: 11
+      YAngle: -5
+      distance: 372
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 13
+      YAngle: 4
+      distance: 358
       hp: 100
       speed: 1
       destroyTime: 300
@@ -477,34 +493,34 @@ MonoBehaviour:
   - type: 0
     time: 80
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -16
-      YAngle: -2
-      distance: 224
+    - objectIndex: 2
+      XAngle: 14
+      YAngle: -5
+      distance: 407
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 2
-      YAngle: -2
-      distance: 401
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 16
-      YAngle: 4
-      distance: 496
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
+    - objectIndex: 2
       XAngle: 5
+      YAngle: 1
+      distance: 252
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -2
       YAngle: 2
-      distance: 453
+      distance: 416
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 15
+      YAngle: 0
+      distance: 331
       hp: 100
       speed: 1
       destroyTime: 300
@@ -512,34 +528,34 @@ MonoBehaviour:
   - type: 0
     time: 85
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 17
-      YAngle: 0
-      distance: 368
+    - objectIndex: 1
+      XAngle: -2
+      YAngle: -3
+      distance: 463
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 4
+      YAngle: -3
+      distance: 479
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -6
+      XAngle: -2
       YAngle: -2
-      distance: 386
+      distance: 379
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -16
-      YAngle: -5
-      distance: 350
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -4
-      YAngle: -4
-      distance: 221
+      XAngle: -18
+      YAngle: 1
+      distance: 493
       hp: 100
       speed: 1
       destroyTime: 300
@@ -547,34 +563,26 @@ MonoBehaviour:
   - type: 0
     time: 90
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -6
+    - objectIndex: 2
+      XAngle: -11
+      YAngle: -5
+      distance: 325
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -1
       YAngle: 0
-      distance: 315
+      distance: 254
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -18
+    - objectIndex: 1
+      XAngle: 5
       YAngle: -2
-      distance: 359
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
-      YAngle: 2
-      distance: 490
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -12
-      YAngle: 1
-      distance: 382
+      distance: 362
       hp: 100
       speed: 1
       destroyTime: 300
@@ -582,34 +590,34 @@ MonoBehaviour:
   - type: 0
     time: 95
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -6
-      YAngle: -1
-      distance: 230
+    - objectIndex: 1
+      XAngle: -5
+      YAngle: -2
+      distance: 324
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 7
+      YAngle: 0
+      distance: 297
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -4
+      YAngle: 0
+      distance: 235
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -14
+      XAngle: -1
       YAngle: -3
-      distance: 229
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -13
-      YAngle: 2
-      distance: 202
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 9
-      YAngle: -5
-      distance: 338
+      distance: 486
       hp: 100
       speed: 1
       destroyTime: 300
@@ -618,25 +626,33 @@ MonoBehaviour:
     time: 100
     objectCfgs:
     - objectIndex: 0
-      XAngle: 14
-      YAngle: -5
-      distance: 355
+      XAngle: -18
+      YAngle: 1
+      distance: 492
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 0
+      XAngle: 12
       YAngle: 3
-      distance: 341
+      distance: 348
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -15
+      YAngle: 3
+      distance: 452
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 5
-      YAngle: -3
-      distance: 235
+      XAngle: 1
+      YAngle: 0
+      distance: 389
       hp: 100
       speed: 1
       destroyTime: 300
@@ -645,33 +661,33 @@ MonoBehaviour:
     time: 105
     objectCfgs:
     - objectIndex: 0
-      XAngle: 10
-      YAngle: 3
-      distance: 360
+      XAngle: -9
+      YAngle: -5
+      distance: 227
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -5
+      YAngle: -5
+      distance: 466
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -17
-      YAngle: -2
-      distance: 333
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -2
-      YAngle: -3
-      distance: 398
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 17
+      XAngle: -1
       YAngle: 4
-      distance: 266
+      distance: 458
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 3
+      YAngle: 4
+      distance: 464
       hp: 100
       speed: 1
       destroyTime: 300
@@ -679,34 +695,34 @@ MonoBehaviour:
   - type: 0
     time: 110
     objectCfgs:
-    - objectIndex: 0
+    - objectIndex: 1
       XAngle: 8
       YAngle: -4
-      distance: 427
+      distance: 462
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -9
-      YAngle: 4
-      distance: 453
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -12
-      YAngle: -5
-      distance: 410
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
+    - objectIndex: 1
       XAngle: -10
+      YAngle: -3
+      distance: 364
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -20
       YAngle: -2
-      distance: 323
+      distance: 267
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -9
+      YAngle: -4
+      distance: 225
       hp: 100
       speed: 1
       destroyTime: 300
@@ -714,34 +730,34 @@ MonoBehaviour:
   - type: 0
     time: 115
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 4
-      YAngle: -1
-      distance: 258
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 6
-      YAngle: 4
-      distance: 291
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
+    - objectIndex: 2
+      XAngle: -4
       YAngle: 0
-      distance: 460
+      distance: 272
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 2
+      YAngle: -1
+      distance: 364
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 11
+      YAngle: 0
+      distance: 246
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 9
-      YAngle: -4
-      distance: 397
+      XAngle: 3
+      YAngle: -3
+      distance: 265
       hp: 100
       speed: 1
       destroyTime: 300
@@ -750,25 +766,25 @@ MonoBehaviour:
     time: 120
     objectCfgs:
     - objectIndex: 0
-      XAngle: -12
+      XAngle: 4
       YAngle: -3
-      distance: 204
+      distance: 472
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
-      YAngle: -3
-      distance: 480
+    - objectIndex: 2
+      XAngle: -17
+      YAngle: 2
+      distance: 362
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -20
-      YAngle: 4
-      distance: 447
+    - objectIndex: 1
+      XAngle: 17
+      YAngle: -2
+      distance: 304
       hp: 100
       speed: 1
       destroyTime: 300
@@ -777,33 +793,33 @@ MonoBehaviour:
     time: 125
     objectCfgs:
     - objectIndex: 0
-      XAngle: 11
+      XAngle: 12
       YAngle: 4
-      distance: 346
+      distance: 385
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 15
-      YAngle: -4
-      distance: 322
+    - objectIndex: 2
+      XAngle: -10
+      YAngle: -2
+      distance: 415
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -8
+    - objectIndex: 1
+      XAngle: -14
       YAngle: 1
-      distance: 239
+      distance: 435
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -1
-      YAngle: 2
-      distance: 256
+    - objectIndex: 1
+      XAngle: -3
+      YAngle: -1
+      distance: 272
       hp: 100
       speed: 1
       destroyTime: 300
@@ -812,25 +828,33 @@ MonoBehaviour:
     time: 130
     objectCfgs:
     - objectIndex: 0
-      XAngle: 16
+      XAngle: -7
+      YAngle: 0
+      distance: 403
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 0
+      XAngle: 1
+      YAngle: -5
+      distance: 206
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 2
       YAngle: -1
-      distance: 375
+      distance: 419
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
-      YAngle: -4
-      distance: 452
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 13
-      YAngle: 4
-      distance: 286
+    - objectIndex: 2
+      XAngle: -12
+      YAngle: -5
+      distance: 333
       hp: 100
       speed: 1
       destroyTime: 300
@@ -839,33 +863,25 @@ MonoBehaviour:
     time: 135
     objectCfgs:
     - objectIndex: 0
-      XAngle: 5
-      YAngle: 4
-      distance: 391
+      XAngle: -17
+      YAngle: 0
+      distance: 469
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: 9
+      XAngle: -11
       YAngle: 2
-      distance: 334
+      distance: 490
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
+    - objectIndex: 1
       XAngle: 19
-      YAngle: 2
+      YAngle: -2
       distance: 388
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 1
-      YAngle: 2
-      distance: 487
       hp: 100
       speed: 1
       destroyTime: 300
@@ -873,26 +889,34 @@ MonoBehaviour:
   - type: 0
     time: 140
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -15
-      YAngle: 1
-      distance: 282
+    - objectIndex: 1
+      XAngle: -7
+      YAngle: 2
+      distance: 331
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -4
-      YAngle: -4
-      distance: 394
+    - objectIndex: 2
+      XAngle: -9
+      YAngle: 3
+      distance: 256
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 8
-      YAngle: -5
-      distance: 269
+    - objectIndex: 2
+      XAngle: -9
+      YAngle: 4
+      distance: 404
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 10
+      YAngle: -1
+      distance: 342
       hp: 100
       speed: 1
       destroyTime: 300
@@ -901,33 +925,33 @@ MonoBehaviour:
     time: 145
     objectCfgs:
     - objectIndex: 0
-      XAngle: -8
-      YAngle: -5
-      distance: 300
+      XAngle: -18
+      YAngle: 3
+      distance: 315
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -14
-      YAngle: 2
-      distance: 200
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -3
+    - objectIndex: 2
+      XAngle: 7
       YAngle: -2
-      distance: 208
+      distance: 368
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 8
-      YAngle: 2
-      distance: 408
+    - objectIndex: 2
+      XAngle: 15
+      YAngle: 0
+      distance: 380
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 1
+      YAngle: -5
+      distance: 474
       hp: 100
       speed: 1
       destroyTime: 300
@@ -935,26 +959,26 @@ MonoBehaviour:
   - type: 0
     time: 150
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 1
-      YAngle: -4
-      distance: 403
+    - objectIndex: 2
+      XAngle: 13
+      YAngle: 2
+      distance: 398
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -8
+    - objectIndex: 1
+      XAngle: -18
+      YAngle: 3
+      distance: 261
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 12
       YAngle: 4
-      distance: 235
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -6
-      YAngle: -3
-      distance: 320
+      distance: 491
       hp: 100
       speed: 1
       destroyTime: 300
@@ -962,64 +986,26 @@ MonoBehaviour:
   - type: 0
     time: 155
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 16
-      YAngle: -1
+    - objectIndex: 1
+      XAngle: 11
+      YAngle: 3
       distance: 357
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 6
-      YAngle: 1
-      distance: 306
+    - objectIndex: 2
+      XAngle: -2
+      YAngle: -4
+      distance: 431
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -9
-      YAngle: 0
-      distance: 416
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-  - type: 0
-    time: 160
-    objectCfgs:
-    - objectIndex: 0
-      XAngle: -18
+    - objectIndex: 1
+      XAngle: -14
       YAngle: -2
-      distance: 241
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
-      YAngle: -3
-      distance: 215
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -19
-      YAngle: 3
-      distance: 276
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-  - type: 0
-    time: 165
-    objectCfgs:
-    - objectIndex: 0
-      XAngle: -8
-      YAngle: -5
-      distance: 238
+      distance: 290
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1027,15 +1013,69 @@ MonoBehaviour:
     - objectIndex: 0
       XAngle: -1
       YAngle: 3
-      distance: 287
+      distance: 227
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -14
-      YAngle: 3
-      distance: 284
+  - type: 0
+    time: 160
+    objectCfgs:
+    - objectIndex: 1
+      XAngle: 17
+      YAngle: -3
+      distance: 213
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -17
+      YAngle: 4
+      distance: 398
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 11
+      YAngle: -4
+      distance: 318
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -12
+      YAngle: -4
+      distance: 387
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+  - type: 0
+    time: 165
+    objectCfgs:
+    - objectIndex: 1
+      XAngle: 4
+      YAngle: 2
+      distance: 445
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: 0
+      YAngle: -2
+      distance: 435
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: 5
+      YAngle: -3
+      distance: 481
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1043,26 +1083,26 @@ MonoBehaviour:
   - type: 0
     time: 170
     objectCfgs:
-    - objectIndex: 0
-      XAngle: 5
-      YAngle: 4
-      distance: 415
+    - objectIndex: 1
+      XAngle: 14
+      YAngle: 1
+      distance: 276
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -20
-      YAngle: -4
-      distance: 302
+      XAngle: -16
+      YAngle: 0
+      distance: 316
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -13
-      YAngle: -5
-      distance: 366
+    - objectIndex: 1
+      XAngle: -12
+      YAngle: -1
+      distance: 397
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1070,34 +1110,26 @@ MonoBehaviour:
   - type: 0
     time: 175
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -9
-      YAngle: 2
-      distance: 445
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 0
+    - objectIndex: 1
+      XAngle: -16
       YAngle: -3
-      distance: 249
+      distance: 470
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -9
+      YAngle: -5
+      distance: 322
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -20
-      YAngle: 4
-      distance: 241
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -15
-      YAngle: 3
-      distance: 414
+      XAngle: 3
+      YAngle: 0
+      distance: 314
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1106,33 +1138,25 @@ MonoBehaviour:
     time: 180
     objectCfgs:
     - objectIndex: 0
-      XAngle: 19
-      YAngle: 3
-      distance: 434
+      XAngle: -17
+      YAngle: 0
+      distance: 227
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -4
-      YAngle: -5
-      distance: 365
+    - objectIndex: 1
+      XAngle: 2
+      YAngle: 0
+      distance: 300
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -5
-      YAngle: 3
-      distance: 252
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 16
-      YAngle: 2
-      distance: 279
+    - objectIndex: 2
+      XAngle: -7
+      YAngle: -2
+      distance: 317
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1140,34 +1164,26 @@ MonoBehaviour:
   - type: 0
     time: 185
     objectCfgs:
-    - objectIndex: 0
-      XAngle: -13
-      YAngle: 1
-      distance: 297
+    - objectIndex: 1
+      XAngle: -20
+      YAngle: -1
+      distance: 481
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -6
-      YAngle: 3
-      distance: 320
+    - objectIndex: 1
+      XAngle: -12
+      YAngle: 0
+      distance: 498
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
       XAngle: -11
-      YAngle: -1
-      distance: 442
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 3
-      YAngle: 1
-      distance: 333
+      YAngle: 0
+      distance: 206
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1176,33 +1192,25 @@ MonoBehaviour:
     time: 190
     objectCfgs:
     - objectIndex: 0
-      XAngle: -2
-      YAngle: -1
-      distance: 474
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -16
-      YAngle: -2
-      distance: 225
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
       XAngle: 18
-      YAngle: -4
-      distance: 460
+      YAngle: 2
+      distance: 266
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -12
-      YAngle: 4
-      distance: 472
+    - objectIndex: 1
+      XAngle: 11
+      YAngle: -3
+      distance: 279
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 1
+      XAngle: -3
+      YAngle: -5
+      distance: 441
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1211,25 +1219,25 @@ MonoBehaviour:
     time: 195
     objectCfgs:
     - objectIndex: 0
-      XAngle: 16
+      XAngle: 5
+      YAngle: -4
+      distance: 232
+      hp: 100
+      speed: 1
+      destroyTime: 300
+      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
+    - objectIndex: 2
+      XAngle: -10
       YAngle: 4
-      distance: 402
+      distance: 225
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -3
-      YAngle: 0
-      distance: 432
-      hp: 100
-      speed: 1
-      destroyTime: 300
-      aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: -6
-      YAngle: -2
-      distance: 212
+    - objectIndex: 1
+      XAngle: -13
+      YAngle: 1
+      distance: 291
       hp: 100
       speed: 1
       destroyTime: 300
@@ -1238,25 +1246,25 @@ MonoBehaviour:
     time: 200
     objectCfgs:
     - objectIndex: 0
-      XAngle: 11
-      YAngle: -5
-      distance: 263
+      XAngle: 10
+      YAngle: 4
+      distance: 221
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
     - objectIndex: 0
-      XAngle: -17
+      XAngle: -3
       YAngle: -3
-      distance: 438
+      distance: 231
       hp: 100
       speed: 1
       destroyTime: 300
       aiCfg: {fileID: 11400000, guid: 09ce7aacd4dfdbf4ab1be0d0270a07bb, type: 2}
-    - objectIndex: 0
-      XAngle: 18
-      YAngle: -1
-      distance: 248
+    - objectIndex: 1
+      XAngle: -6
+      YAngle: 1
+      distance: 449
       hp: 100
       speed: 1
       destroyTime: 300

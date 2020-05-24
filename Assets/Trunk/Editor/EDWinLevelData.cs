@@ -565,7 +565,7 @@ public class EDWinLevelData : EditorWindow
             for (int j = 0; j < aiCount; j++)
             {
                 AppearObjectData aiCraft = wave.objectCfgs[j];
-                aiCraft.objectIndex = 0;
+                aiCraft.objectIndex = Random.Range(0, 3);    //* model
                 aiCraft.XAngle = Random.Range(-20, 20);
                 aiCraft.YAngle = Random.Range(-5, 5);
                 aiCraft.distance = Random.Range(200, 500);
