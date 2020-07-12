@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 7791397691325733364}
   - component: {fileID: 4629782872094738189}
   - component: {fileID: 9126159862888664410}
+  - component: {fileID: 8765361106579986852}
   m_Layer: 0
   m_Name: Emitter
   m_TagString: Untagged
@@ -214,12 +215,23 @@ MonoBehaviour:
   master: {fileID: 0}
   bulletPrefab: {fileID: 6280674508041683717, guid: 6bf027e87b77f1a40af5b2724f807453,
     type: 3}
-  fireInterval: 0.3
+  fireInterval: 0.2
   onFireEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9126159862888664410}
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8765361106579986852}
+        m_MethodName: BulletDecrease
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -327,3 +339,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8765361106579986852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103494766893107326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf0df2afd35e7c419c45b3171c5e117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cdTime: 5
+  bulletsOneClip: 20
